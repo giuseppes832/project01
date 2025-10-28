@@ -79,6 +79,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/nodes8/{node}', [NodeController::class, 'updateSublistButton']);
         Route::put('/nodes9/{node}', [NodeController::class, 'updateHtmlCheckbox']);
         Route::put('/nodes10/{node}', [NodeController::class, 'updateHtmlDate']);
+        Route::put('/nodes11/{node}', [NodeController::class, 'updateHtmlTime']);
+        Route::put('/nodes12/{node}', [NodeController::class, 'updateHtmlDateTime']);
 
         Route::get('/apps/{app}/roles', [RoleController::class, 'index']);
         Route::post('/apps/{app}/roles', [RoleController::class, 'store']);

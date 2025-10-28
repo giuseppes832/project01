@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class HtmlDate extends Model
+class HtmlTime extends Model
 {
-
-    protected $table = "html_dates";
+    protected $table = "html_times";
 
     public function node(): MorphOne
     {
@@ -25,7 +24,6 @@ class HtmlDate extends Model
     }
 
     public function transformInput($inputValue) {
-        return $inputValue?date_create_from_format('Y-m-d', $inputValue):null;
+        return $inputValue?date_create_from_format('H:i', $inputValue):null;
     }
-
 }

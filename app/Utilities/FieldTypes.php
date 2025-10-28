@@ -4,11 +4,13 @@ namespace App\Utilities;
 use App\Models\Field;
 use App\Models\FieldTypes\BooleanField;
 use App\Models\FieldTypes\DateField;
+use App\Models\FieldTypes\DateTimeField;
 use App\Models\FieldTypes\EnumField;
 use App\Models\FieldTypes\FKField;
 use App\Models\FieldTypes\FloatField;
 use App\Models\FieldTypes\IntegerField;
 use App\Models\FieldTypes\StringField;
+use App\Models\FieldTypes\TimeField;
 
 class FieldTypes
 {
@@ -48,6 +50,16 @@ class FieldTypes
             "class" => DateField::class,
             "form-component" => null,
             "label" => "Date"
+        ],
+        "TIME" => [
+            "class" => TimeField::class,
+            "form-component" => null,
+            "label" => "Time"
+        ],
+        "DATE_TIME" => [
+            "class" => DateTimeField::class,
+            "form-component" => null,
+            "label" => "Date Time"
         ]
     ];
 

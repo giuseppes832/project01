@@ -12,7 +12,9 @@ use App\Models\HtmlRow;
 use App\Models\HtmlSelect;
 use App\Models\Nodes\HtmlCheckbox;
 use App\Models\Nodes\HtmlDate;
+use App\Models\Nodes\HtmlDateTime;
 use App\Models\Nodes\HtmlStaticSelect;
+use App\Models\Nodes\HtmlTime;
 use App\Models\Nodes\SublistButton;
 use App\Models\Sharing;
 use App\Models\HtmlSharingSelect;
@@ -132,6 +134,22 @@ class HtmlNodeTypes
             "render-component" => "render.html-date",
             "label" => "Html Date",
             "form-component" => "nodes.html-date"
+        ],
+        "HTML_TIME" => [
+            "class" => HtmlTime::class,
+            "preview-component" => null,
+            "start-component" => null,
+            "render-component" => "render.html-time",
+            "label" => "Html Time",
+            "form-component" => "nodes.html-time"
+        ],
+        "HTML_DATE_TIME" => [
+            "class" => HtmlDateTime::class,
+            "preview-component" => null,
+            "start-component" => null,
+            "render-component" => "render.html-date-time",
+            "label" => "Html Date Time",
+            "form-component" => "nodes.html-date-time"
         ]
 
     ];
