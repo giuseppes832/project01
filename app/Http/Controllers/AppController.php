@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Node;
+use App\Models\Resource;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use App\Models\App;
 
@@ -69,6 +72,19 @@ class AppController extends Controller
         ]);
 
 
+    }
+
+    public function panel() {
+
+        $resources = Resource::all();
+        $nodes = Node::all();
+        $roles = Role::all();
+
+        return view("components.apps.apps-list", [
+            "resources" => $resources,
+            "nodes" => $nodes,
+            "roles" => $roles
+        ]);
     }
 
 }

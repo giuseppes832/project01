@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('nodes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->unsignedBigInteger('app_id')->nullable();
-            $table->foreign('app_id')->references('id')->on('apps');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('nodes');
             $table->integer('html_id')->nullable();

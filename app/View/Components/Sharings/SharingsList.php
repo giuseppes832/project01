@@ -13,7 +13,7 @@ class SharingsList extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public AppModel $ddd
+        public $sharings
         )
     {
         //

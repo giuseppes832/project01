@@ -8,32 +8,35 @@ use App\Models\App;
 class ResourceController extends Controller
 {
 
-    public function index(App $app) {
+    public function index() {
+
+        $resources = Resource::all();
 
         return view("components.resources.resources", [
-            "app" => $app
+            "resources" => $resources
         ]);
 
     }
 
 
-    public function store(App $app) {
+    public function store() {
 
         $resource = new Resource;
         $resource->name = request()->name;
-        $resource->app_id = $app->id;
         $resource->save();
 
-        return redirect("/apps/$app->id/resources");
+        return redirect("/resources");
 
     }
 
 
     public  function edit(Resource $resource) {
 
+        $resources = Resource::all();
+
         return view("components.resources.resources", [
             "selectedResource" => $resource,
-            "app" => $resource->app
+            "resources" => $resources
         ]);
 
     }
@@ -60,9 +63,7 @@ class ResourceController extends Controller
 
         $resource->delete();
 
-        $app = $resource->app;
-
-        return redirect("/apps/$app->id/resources");
+        return redirect("/resources");
 
     }
 

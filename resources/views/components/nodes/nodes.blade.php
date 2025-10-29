@@ -12,11 +12,11 @@
 
 			<ul>
 
-            	<li><a href="/apps/{{ $app->id }}/nodes">Radice</a></li>
+            	<li><a href="/nodes">Radice</a></li>
 
             	<ul>
 
-                	@foreach($app->rootNodes as $node)
+                	@foreach($nodes as $node)
 
                 	<li><a href="/nodes/{{ $node->id }}">{{ $node->name }}</a></li>
 
@@ -33,7 +33,7 @@
             </ul>
 
         	@if(!isset($selectedNode))
-            <form action="/apps/{{ $app->id }}/nodes" method="post">
+            <form action="/nodes" method="post">
             	@csrf
             	<div class="row g-1">
             		<div class="col-10">

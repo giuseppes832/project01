@@ -17,8 +17,10 @@ class NodeController extends Controller
 
     public function index(App $app) {
 
+        $nodes = Node::query()->whereNull("parent_id")->get();
+
         return view("components.nodes.nodes", [
-            "app" => $app
+            "nodes" => $nodes
         ]);
 
     }
@@ -27,10 +29,9 @@ class NodeController extends Controller
 
         $node = new Node;
         $node->name = request()->name;
-        $node->app_id = $app->id;
         $node->save();
 
-        return redirect("/apps/$app->id/nodes");
+        return redirect("/nodes");
 
     }
 
@@ -41,8 +42,10 @@ class NodeController extends Controller
 
     public  function edit(Node $node) {
 
+        $nodes = Node::query()->whereNull("parent_id")->get();
+
         return view("components.nodes.nodes", [
-            "app" => $node->app,
+            "nodes" => $nodes,
             "selectedNode" => $node
         ]);
 

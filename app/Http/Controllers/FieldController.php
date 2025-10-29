@@ -35,9 +35,11 @@ class FieldController extends Controller
 
     public  function edit(Field $field) {
 
+        $resources = Resource::all();
+
         return view("components.resources.resources", [
             "selectedField" => $field,
-            "app" => $field->resource->app,
+            "resources" => $resources,
         ]);
 
     }

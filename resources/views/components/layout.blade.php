@@ -28,7 +28,7 @@
                 @endif
                 @if(Auth::user()->isAdmin())
                 <li class="nav-item">
-                  <a class="nav-link" href="/apps">App</a>
+                  <a class="nav-link" href="/panel">App</a>
                 </li>
 
                 @endif

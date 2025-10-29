@@ -30,10 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware(UserIsOwner::class)->group(function () {
 
         // CUSTOMER ROUTES
-        Route::get('/invites', [AppController::class, 'invites']);
+        Route::get('/invites', [InviteController::class, 'start']);
 
-        Route::get('/apps/{app}/sharings', [SharingController::class, 'index']);
-        Route::post('/apps/{app}/sharings', [SharingController::class, 'store']);
+        Route::get('/sharings', [SharingController::class, 'index']);
+        Route::post('/sharings', [SharingController::class, 'store']);
         Route::get('/sharings/{sharing}', [SharingController::class, 'edit']);
         Route::put('/sharings/{sharing}', [SharingController::class, 'update']);
         Route::get('/sharings/{sharing}/delete', [SharingController::class, 'delete']);
@@ -46,14 +46,18 @@ Route::middleware('auth')->group(function () {
     Route::middleware(UserIsAdmin::class)->group(function () {
 
         // ADMIN ROUTES
+        /*
         Route::get('/apps', [AppController::class, 'index']);
         Route::post('/apps', [AppController::class, 'store']);
         Route::get('/apps/{app}', [AppController::class, 'edit']);
         Route::put('/apps/{app}', [AppController::class, 'update']);
         Route::get('/apps/{app}/delete', [AppController::class, 'delete']);
+        */
 
-        Route::get('/apps/{app}/resources', [ResourceController::class, 'index']);
-        Route::post('/apps/{app}/resources', [ResourceController::class, 'store']);
+        Route::get('/panel', [AppController::class, 'panel']);
+
+        Route::get('/resources', [ResourceController::class, 'index']);
+        Route::post('/resources', [ResourceController::class, 'store']);
         Route::get('/resources/{resource}', [ResourceController::class, 'edit']);
         Route::put('/resources/{resource}', [ResourceController::class, 'update']);
         Route::get('/resources/{resource}/delete', [ResourceController::class, 'delete']);
@@ -64,8 +68,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/fields2/{field}', [FieldController::class, 'updateEnumField']);
         Route::get('/fields/{field}/delete', [FieldController::class, 'delete']);
 
-        Route::get('/apps/{app}/nodes', [NodeController::class, 'index']);
-        Route::post('/apps/{app}/nodes', [NodeController::class, 'store']);
+        Route::get('/nodes', [NodeController::class, 'index']);
+        Route::post('/nodes', [NodeController::class, 'store']);
         Route::get('/nodes/{node}', [NodeController::class, 'edit']);
         Route::put('/nodes/{node}', [NodeController::class, 'update']);
         Route::get('/nodes/{node}/delete', [NodeController::class, 'delete']);
@@ -82,8 +86,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/nodes11/{node}', [NodeController::class, 'updateHtmlTime']);
         Route::put('/nodes12/{node}', [NodeController::class, 'updateHtmlDateTime']);
 
-        Route::get('/apps/{app}/roles', [RoleController::class, 'index']);
-        Route::post('/apps/{app}/roles', [RoleController::class, 'store']);
+        Route::get('/roles', [RoleController::class, 'index']);
+        Route::post('/roles', [RoleController::class, 'store']);
         Route::get('/roles/{role}', [RoleController::class, 'edit']);
         Route::put('/roles/{role}', [RoleController::class, 'update']);
         Route::get('/roles/{role}/delete', [RoleController::class, 'delete']);

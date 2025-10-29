@@ -32,13 +32,13 @@ class HtmlList extends Component
         $this->formNodes = NodeModel::whereHasMorph(
             'html',
             [HtmlForm::class]
-            )->where("app_id", $this->selectedNode->app->id)->get();
+            )->get();
 
         $this->nodes = [];
 
         if ($this->selectedNode->html->binding_id) {
 
-            $this->nodes = NodeModel::where("app_id", $this->selectedNode->app->id)->get();
+            $this->nodes = NodeModel::all();
         }
 
 

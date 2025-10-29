@@ -1,27 +1,19 @@
-<ul>
+<x-layout>
+    <ul>
 
-	<li><a href="/apps">Radice</a></li>
-	
-	<ul>
+        <li>App</li>
 
-    	@foreach($apps as $app)
-    	
-    	<li><a href="/apps/{{ $app->id }}">{{ $app->name }}</a></li>
-    	
-    	<ul>
-    	
-    		<li><a href="/apps/{{ $app->id }}/resources">Risorse</a></li>
-    		
-    		<li><a href="/apps/{{ $app->id }}/nodes">Nodi</a></li>
-    		
-    		<li><a href="/apps/{{ $app->id }}/roles">Ruoli</a></li>
-    	
-    	</ul>
-    	
-    	@endforeach
-    	
-    
-    	
+        <ul>
+
+            <li><a href="/resources">Risorse</a></li>
+
+            <li><a href="/nodes">Nodi</a></li>
+
+            <li><a href="/roles">Ruoli</a></li>
+
+        </ul>
+
+
     </ul>
 
-</ul>
+</x-layout>

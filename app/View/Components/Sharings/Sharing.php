@@ -11,11 +11,11 @@ use App\Utilities\SharingTypes;
 
 class Sharing extends Component
 {
-    
+
     public $Utility;
-    
+
     public $sharingFormComponent;
-    
+
     public $roles;
     /**
      * Create a new component instance.
@@ -24,17 +24,17 @@ class Sharing extends Component
         public SharingModel $selectedSharing
         )
     {
-        
+
         $this->Utility = SharingTypes::class;
-        
+
 
         $type = SharingTypes::getSectedSharingType($this->selectedSharing);
 
         if ($type) {
             $this->sharingFormComponent = SharingTypes::$values[$type]["component"];
         }
-        
-        $this->roles = Role::where("app_id", $this->selectedSharing->app->id)->get();
+
+        $this->roles = Role::all();
 
     }
 

@@ -1,17 +1,17 @@
 <ul>
 
-	<li><a href="/apps/{{ $ddd->id }}/sharings">Condivisioni {{ $ddd->name }}</a></li>
-	
+	<li><a href="/sharings">Condivisioni</a></li>
+
 	<ul>
 
-    	@foreach($ddd->sharings as $sharing)
-    	
+    	@foreach($sharings as $sharing)
+
     	<li><a href="/sharings/{{ $sharing->id }}">{{ $sharing->name }}</a></li>
-    	
+
     	@endforeach
-    	
-    
-    	
+
+
+
     </ul>
 
 </ul>

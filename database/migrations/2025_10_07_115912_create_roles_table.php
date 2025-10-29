@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('app_id');
-            $table->foreign('app_id')->references('id')->on('apps');
             $table->timestamps();
         });
     }

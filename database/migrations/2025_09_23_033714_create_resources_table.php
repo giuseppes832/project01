@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->unsignedBigInteger('app_id');
-            $table->foreign('app_id')->references('id')->on('apps')->cascadeOnDelete();
             $table->timestamps();
         });
     }

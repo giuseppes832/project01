@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BootstrapNavbar;
+use App\Models\Node;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Sharing;
@@ -39,10 +41,19 @@ class InviteController extends Controller
 
         Cookie::queue("sharing_id", $sharing->id);
 
-        $menu = $sharing->app->starts[0];
+        $menu = BootstrapNavbar::query()->first();
 
         return redirect("/render/$menu->id");
 
+    }
+
+    public function start() {
+
+        $bootstrapNavbar = BootstrapNavbar::query()->first();
+
+        return view("components.apps.invites", [
+            "node" => $bootstrapNavbar->node
+        ]);
     }
 
 }

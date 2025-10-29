@@ -79,14 +79,10 @@ class DatabaseSeeder extends Seeder
         $invitedUser->user()->save($user3);
 
 
-        $app1 = new App();
-        $app1->name = "Applicazione di Test";
-        $app1->save();
 
 
         $resource1 = new Resource();
         $resource1->name = "Tabella1";
-        $resource1->app_id = $app1->id;
         $resource1->save();
 
 
@@ -141,7 +137,6 @@ class DatabaseSeeder extends Seeder
 
         $node1 = new Node();
         $node1->name = "Form1";
-        $node1->app_id = $app1->id;
         $node1->save();
 
         $htmlForm1 = new HtmlForm();
@@ -152,7 +147,6 @@ class DatabaseSeeder extends Seeder
 
         $node2 = new Node();
         $node2->name = "Input1";
-        $node2->app_id = $app1->id;
         $node2->parent_id = $node1->id;
         $node2->save();
 
@@ -165,7 +159,6 @@ class DatabaseSeeder extends Seeder
 
         $node3 = new Node();
         $node3->name = "Input2";
-        $node3->app_id = $app1->id;
         $node3->parent_id = $node1->id;
         $node3->save();
 
@@ -179,7 +172,6 @@ class DatabaseSeeder extends Seeder
 
         $node4 = new Node();
         $node4->name = "Input3";
-        $node4->app_id = $app1->id;
         $node4->parent_id = $node1->id;
         $node4->save();
 
@@ -192,7 +184,6 @@ class DatabaseSeeder extends Seeder
 
         $node8 = new Node();
         $node8->name = "Sharing field";
-        $node8->app_id = $app1->id;
         $node8->parent_id = $node1->id;
         $node8->save();
 
@@ -205,7 +196,6 @@ class DatabaseSeeder extends Seeder
 
         $node7 = new Node();
         $node7->name = "List1";
-        $node7->app_id = $app1->id;
         $node7->save();
 
         $htmlList1 = new HtmlList();
@@ -220,7 +210,6 @@ class DatabaseSeeder extends Seeder
 
         $node5 = new Node();
         $node5->name = "Menu1";
-        $node5->app_id = $app1->id;
         $node5->save();
 
         $bootstrapNavbar1 = new BootstrapNavbar();
@@ -231,7 +220,6 @@ class DatabaseSeeder extends Seeder
 
         $node6 = new Node();
         $node6->name = "VoceMenu1";
-        $node6->app_id = $app1->id;
         $node6->parent_id = $node5->id;
         $node6->save();
 
@@ -245,7 +233,6 @@ class DatabaseSeeder extends Seeder
 
         $role1 = new Role();
         $role1->name = "Ruolo1";
-        $role1->app_id = $app1->id;
         $role1->save();
 
 
@@ -256,7 +243,6 @@ class DatabaseSeeder extends Seeder
 
         $resource10 = new Resource();
         $resource10->name = "Tabella2";
-        $resource10->app_id = $app1->id;
         $resource10->save();
 
 
@@ -291,7 +277,6 @@ class DatabaseSeeder extends Seeder
 
         $node30 = new Node();
         $node30->name = "Form2";
-        $node30->app_id = $app1->id;
         $node30->save();
 
         $htmlForm30 = new HtmlForm();
@@ -300,8 +285,7 @@ class DatabaseSeeder extends Seeder
         $htmlForm30->node()->save($node30);
 
         $node31 = new Node();
-        $node31->name = "Option field";
-        $node31->app_id = $app1->id;
+        $node31->name = "Option field";;
         $node31->parent_id = $node30->id;
         $node31->save();
 
@@ -317,7 +301,6 @@ class DatabaseSeeder extends Seeder
 
         $node20 = new Node();
         $node20->name = "Select field";
-        $node20->app_id = $app1->id;
         $node20->parent_id = $node1->id;
         $node20->save();
 
@@ -344,7 +327,6 @@ class DatabaseSeeder extends Seeder
 
         $node40 = new Node();
         $node40->name = "List2";
-        $node40->app_id = $app1->id;
         $node40->save();
 
         $htmlList40 = new HtmlList();
@@ -367,7 +349,6 @@ class DatabaseSeeder extends Seeder
 
         $node60 = new Node();
         $node60->name = "VoceMenu2";
-        $node60->app_id = $app1->id;
         $node60->parent_id = $node5->id;
         $node60->save();
 
