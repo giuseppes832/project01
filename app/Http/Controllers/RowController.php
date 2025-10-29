@@ -9,6 +9,7 @@ use App\Models\Node;
 use App\Models\OwnerApp;
 use App\Models\Row;
 use App\Models\Value;
+use App\Utilities\CommonService;
 use App\Utilities\FieldTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class RowController extends Controller
 
 
 
-    public function store(Node $node) {
+    public function store(Node $node, CommonService $commonService) {
 
         if (Auth::user()->canCreate($node)) {
 
@@ -35,17 +36,7 @@ class RowController extends Controller
 
             if (Auth::user()->isInvitedUser() ) {
 
-                $sharing_id = Cookie::get("sharing_id");
-
-                $sharing = Sharing::whereHasMorph(
-                    'sharingType',
-                    [Invite::class],
-                    function($query) {
-
-                        $query->where('email', Auth::user()->email);
-                    }
-                )->where("id", $sharing_id)->first();
-
+                $sharing = $commonService->getSharing();
                 $app = $sharing->app;
 
             } elseif ( Auth::user()->isOwner() )  {

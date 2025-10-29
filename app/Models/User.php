@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Utilities\CommonService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -49,6 +50,13 @@ class User extends Authenticatable
         ];
     }
 
+    private $commonService;
+
+    public function __construct()
+    {
+        $this->commonService = app()->make(\App\Utilities\CommonService::class);
+    }
+
     public function loggable(): MorphTo
     {
         return $this->morphTo();
@@ -79,16 +87,9 @@ class User extends Authenticatable
 
         $shareNode = null;
 
-        if (Cookie::get("sharing_id")) {
+        $sharing = $this->commonService->getSharing();
 
-            $sharing = Sharing::whereHasMorph(
-                'sharingType',
-                [Invite::class],
-                function ($query) {
-
-                    $query->where('email', $this->email);
-                }
-            )->where("id", Cookie::get("sharing_id"))->first();;
+        if ($sharing) {
 
             $shareNode = $sharing->role->sharedNode($node);
 

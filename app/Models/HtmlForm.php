@@ -26,17 +26,38 @@ class HtmlForm extends Model
         return $this->hasOne(Row::class, "form_id", "id")->where("rows.id", $id);
     }
 
-    public function filteredRows($value) {
+    public function filteredRows($value, $filters) {
+
+        $rel = $this->hasMany(Row::class, "form_id", "id");
 
         if ($value) {
-            return $this->hasMany(Row::class, "form_id", "id")->whereHas("values", function($query) use ($value) {
-                $query->whereHasMorph("withValue", [FKValue::class], function($query) use ($value) {
+            $rel->whereHas("values", function($query) use ($value) {
+                $query->whereHasMorph("withValue", [FKValue::class], function ($query) use ($value) {
                     $query->where("value", $value);
                 });
-            })->get();
-        } else {
-            return $this->rows()->get();
+            });
         }
+
+        if ($filters) {
+            $rel->whereHas("values", function($query) use ($filters) {
+
+                $index = 0;
+                foreach ($filters as $filterClass => $filterValue) {
+                    if ($index) {
+                        $query->orWhereHasMorph("withValue", [$filterClass], function($query) use ($filterValue) {
+                            $query->where("value", $filterValue);
+                        });
+                    } else {
+                        $query->whereHasMorph("withValue", [$filterClass], function($query) use ($filterValue) {
+                            $query->where("value", $filterValue);
+                        });
+                    }
+
+                    $index++;
+                }
+            });
+        }
+        return $rel->get();
 
     }
 

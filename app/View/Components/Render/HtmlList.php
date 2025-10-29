@@ -29,31 +29,32 @@ class HtmlList extends Component
         )
     {
 
-        $filteringNode = $this->selectedNode->html->defaultFilterBinding;
 
+        $node = $this->selectedNode;
+
+        $rows = null;
+
+        $filteringNode = $node->html->defaultFilterBinding;
+        $defalutFilterValue = null;
         if ($filteringNode) {
-
             if ($filteringNode->html_type === HtmlSharingSelect::class) {
-
-                $filterValue = Cookie::get("sharing_id");
-                $this->rows = $this->selectedNode->html->binding->filteredRows($filterValue);
+                $defalutFilterValue = Cookie::get("sharing_id");
             } else if ($filteringNode->html_type === HtmlSelect::class) {
-
-                $filterValue = Request::query("parent_row_id");
-                $this->rows = $this->selectedNode->html->binding->filteredRows($filterValue);
-            } else {
-                $this->rows = $this->selectedNode->html->binding->rows;
+                $defalutFilterValue = Request::query("parent_row_id");
             }
-
-        } else {
-
-
-            $this->rows = $this->selectedNode->html->binding->rows;
-
         }
 
+        $filteringString = Request::query("filter");
+        $filters = [];
+        if ($filteringString) {
+            $filters[$node->html->node1->html->binding->withType->getValueClass()] = $filteringString;
+            $filters[$node->html->node2->html->binding->withType->getValueClass()] = $filteringString;
+        }
+
+        $rows = $node->html->binding->filteredRows($defalutFilterValue, $filters);
 
 
+        $this->rows = $rows;
 
 
     }

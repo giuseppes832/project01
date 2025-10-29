@@ -1,7 +1,7 @@
 <form action="/nodes4/{{ $selectedNode->id }}" method="post">
 	@csrf
 	@method('put')
-	
+
 	<div class="mb-3 form-floating">
         <select class="form-select" name="binding" aria-label="Campo">
             <option selected>Seleziona uno ...</option>
@@ -11,7 +11,7 @@
             </select>
 		<label>Campo</label>
     </div>
-    
+
 	<div class="mb-3 form-floating">
         <select class="form-select" name="default_filter_binding" aria-label="Tipo di nodo">
             <option value="" selected>Seleziona uno ...</option>
@@ -21,10 +21,10 @@
             </select>
 		<label>Tipo di nodo</label>
     </div>
-    
+
     @if($selectedNode->html->binding_id)
 	<div class="mb-3 form-floating">
-	
+
         <select class="form-select" name="node1" aria-label="Tipo di nodo">
             <option value="" selected>Seleziona uno ...</option>
             @foreach($nodes as $node)
@@ -33,8 +33,8 @@
             </select>
 		<label>Tipo di nodo</label>
     </div>
-    
-    
+
+
 	<div class="mb-3 form-floating">
         <select class="form-select" name="node2" aria-label="Tipo di nodo">
             <option value="" selected>Seleziona uno ...</option>
@@ -45,7 +45,7 @@
 		<label>Tipo di nodo</label>
     </div>
     @endif
-    
+
     <button type="submit" class="btn btn-primary btn-sm mb-3">Salva</button>
-   		
+
 </form>

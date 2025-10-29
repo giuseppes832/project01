@@ -1,30 +1,6 @@
-<div class="container">
 
-    <h5>{{  $selectedNode->name }}</h5>
-    @if($selectedNode->html->binding)
-        <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#globalModal" data-method="post" data-node-id="{{ $selectedNode->html->binding->node->id }}" @if(Request::filled("parent_row_id")) data-parent-row-id="{{ Request::query('parent_row_id') }}" @endif>
-            <i class="bi bi-plus-square"></i>
-        </button>
-    @endif
-
-    @php
-    $qs = "";
-    if (Request::filled("parent_row_id")) {
-        $qs .= "parent_row_id=" . Request::query("parent_row_id") . "&";
-    }
-    @endphp
-
-    <form action="/render/{{  $selectedNode->id }}/ajax" method="get" >
-        <div class="mb-2">
-            <input type="text" name="filter-field" class="form-control form-control" onkeyup="createRefreshHtmlListBody({{ $selectedNode->id }}, '{{ $qs }}filter=' + this.value, 'ajaxBody')" placeholder="Cerca"/>
-        </div>
-    </form>
-
-
-
-    <div id="ajaxBody" class="d-flex flex-column">
-        @foreach($rows as $row)
-        @if(Auth::user()->canRead($row->form->node))
+@foreach($rows as $row)
+    @if(Auth::user()->canRead($row->form->node))
         <div class="border-bottom d-flex align-items-center">
             <div class="w-50">
                 @if(Auth::user()->canRead($selectedNode->html->node1))
@@ -48,10 +24,6 @@
 
 
         </div>
-        @endif
-        @endforeach
-    </div>
-
-</div>
-
+    @endif
+@endforeach
 

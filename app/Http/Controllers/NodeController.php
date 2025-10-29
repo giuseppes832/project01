@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\App;
+use App\Models\HtmlSelect;
+use App\Models\HtmlSharingSelect;
 use App\Models\Node;
+use App\Utilities\CommonService;
 use App\Utilities\HtmlNodeTypes;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Request;
 
 class NodeController extends Controller
 {
@@ -217,6 +222,8 @@ class NodeController extends Controller
     }
 
 
+
+
     public function subrows(Node $node) {
 
         $component = $node->html->listBinding->getSelectedNodeRenderComponent();
@@ -224,6 +231,40 @@ class NodeController extends Controller
         return view("components.ajax-component", [
             "component" => $component,
             "selectedNode" => $node
+        ]);
+
+    }
+
+    public function renderHtmlListBody(Node $node, CommonService $commonService) {
+
+        $rows = null;
+
+        $filteringNode = $node->html->defaultFilterBinding;
+        $defalutFilterValue = null;
+        if ($filteringNode) {
+            if ($filteringNode->html_type === HtmlSharingSelect::class) {
+                $sharing = $commonService->getSharing();
+                $defalutFilterValue = $sharing->id;
+            } else if ($filteringNode->html_type === HtmlSelect::class) {
+                // TODO
+                // Get authorized row
+                $row = null;
+                $defalutFilterValue = Request::query("parent_row_id");
+            }
+        }
+
+        $filteringString = Request::query("filter");
+        $filters = [];
+        if ($filteringString) {
+            $filters[$node->html->node1->html->binding->withType->getValueClass()] = $filteringString;
+            $filters[$node->html->node2->html->binding->withType->getValueClass()] = $filteringString;
+        }
+
+        $rows = $node->html->binding->filteredRows($defalutFilterValue, $filters);
+
+        return view("components.render.html-list-body", [
+            "selectedNode" => $node,
+            "rows" => $rows
         ]);
 
     }

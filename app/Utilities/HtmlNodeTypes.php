@@ -13,6 +13,7 @@ use App\Models\HtmlSelect;
 use App\Models\Nodes\HtmlCheckbox;
 use App\Models\Nodes\HtmlDate;
 use App\Models\Nodes\HtmlDateTime;
+use App\Models\Nodes\HtmlListBody;
 use App\Models\Nodes\HtmlStaticSelect;
 use App\Models\Nodes\HtmlTime;
 use App\Models\Nodes\SublistButton;
@@ -150,6 +151,14 @@ class HtmlNodeTypes
             "render-component" => "render.html-date-time",
             "label" => "Html Date Time",
             "form-component" => "nodes.html-date-time"
+        ],
+        "HTML_LIST_BODY" => [
+            "class" => HtmlListBody::class,
+            "preview-component" => null,
+            "start-component" => null,
+            "render-component" => "render.html-list-body",
+            "label" => "Html List Body",
+            "form-component" => null
         ]
 
     ];

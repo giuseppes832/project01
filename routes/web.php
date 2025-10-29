@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/rows/{row}/delete', [RowController::class, 'delete']);
 
     Route::get('/render/{node}/subrows', [NodeController::class, 'subrows']);
+    Route::get('/render/{node}/ajax', [NodeController::class, 'renderHtmlListBody']);
 
 });
 
