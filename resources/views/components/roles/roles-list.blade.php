@@ -1,5 +1,7 @@
 <ul>
 
+    <li><a href="/apps/app">App</a></li>
+
 	<li><a href="/roles">Ruoli</a></li>
 
 	<ul>

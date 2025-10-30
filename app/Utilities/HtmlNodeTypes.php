@@ -46,7 +46,7 @@ class HtmlNodeTypes
             "start-component" => "start.form",
             "render-component" => "render.form",
             "label" => "Form",
-            "form-component" => "nodes.form"
+            "form-component" => null
         ],
         "FIELDSET" => [
             "class" => HtmlFieldset::class,

@@ -8,15 +8,14 @@ use App\Models\App as AppModel;
 
 class App extends Component
 {
-    
+
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public AppModel $selectedApp
     )
     {
-       
+
     }
 
     /**

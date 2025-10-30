@@ -1,6 +1,8 @@
 <ul>
 
-	<li><a href="/resources">Radice</a></li>
+    <li><a href="/apps/app">App</a></li>
+
+	<li><a href="/resources">Risorse</a></li>
 
 	<ul>
 

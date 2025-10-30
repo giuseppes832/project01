@@ -10,6 +10,7 @@
 
 			<x-sharings.sharings-list :sharings="$sharings"/>
 
+            @empty($selectedSharing)
             <form action="/sharings" method="post">
             	@csrf
             	<div class="row g-1">
@@ -27,6 +28,7 @@
 
 
             </form>
+            @endempty
 
             @isset($selectedSharing)
             <a class="btn btn-primary btn-danger btn-sm mt-3" href="/sharings/{{ $selectedSharing->id }}/delete" role="button">Elimina condivisione</a>

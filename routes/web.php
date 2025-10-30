@@ -2,25 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppController;
-use App\Http\Controllers\FormController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NodeController;
-use App\Http\Controllers\OwnerAppController;
-use App\Http\Controllers\RegisteredUserAppController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SectionController;
 use App\Http\Controllers\RowController;
-use App\Http\Controllers\ColController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\SharedNodeController;
 use App\Http\Controllers\SharingController;
 use App\Http\Controllers\InviteController;
-use App\Http\Controllers\OwnerController;
 use App\Http\Middleware\UserIsAdmin;
 use App\Http\Middleware\UserIsOwner;
 use App\Http\Middleware\UserIsInvitedUser;
-use App\Models\Owner;
 
 Route::get('/', function () {
     return view('components.dashboard');
@@ -29,8 +22,8 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::middleware(UserIsOwner::class)->group(function () {
 
-        // CUSTOMER ROUTES
-        Route::get('/invites', [InviteController::class, 'start']);
+        // OWNER ROUTES
+        Route::get('/apps/owner-app', [AppController::class, 'ownerApp']);
 
         Route::get('/sharings', [SharingController::class, 'index']);
         Route::post('/sharings', [SharingController::class, 'store']);
@@ -46,15 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(UserIsAdmin::class)->group(function () {
 
         // ADMIN ROUTES
-        /*
-        Route::get('/apps', [AppController::class, 'index']);
-        Route::post('/apps', [AppController::class, 'store']);
-        Route::get('/apps/{app}', [AppController::class, 'edit']);
-        Route::put('/apps/{app}', [AppController::class, 'update']);
-        Route::get('/apps/{app}/delete', [AppController::class, 'delete']);
-        */
-
-        Route::get('/panel', [AppController::class, 'panel']);
+        Route::get('/apps/app', [AppController::class, 'adminApp']);
 
         Route::get('/resources', [ResourceController::class, 'index']);
         Route::post('/resources', [ResourceController::class, 'store']);
@@ -94,14 +79,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/roles/{role}/nodes/{node}/shared-nodes', [SharedNodeController::class, 'store']);
         Route::put('/shared-nodes/{sharedNode}', [SharedNodeController::class, 'update']);
 
-
-
-
     });
 
 });
 
-// Controllare policy
 Route::middleware('auth')->group(function () {
     Route::get('/render/{node}', [NodeController::class, 'render']);
 
@@ -110,7 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/rows/{row}', [RowController::class, 'update']);
     Route::get('/rows/{row}/delete', [RowController::class, 'delete']);
 
-    Route::get('/render/{node}/subrows', [NodeController::class, 'subrows']);
+    //Route::get('/render/{node}/subrows', [NodeController::class, 'subrows']);
     Route::get('/render/{node}/ajax', [NodeController::class, 'renderHtmlListBody']);
 
 });
@@ -121,7 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(UserIsInvitedUser::class)->group(function () {
 
         Route::get("/my-invites", [InviteController::class, 'index'])->name("invites");
-        Route::get("/select-sharing/{sharing}", [InviteController::class, 'select']);
+        Route::get("/select-sharing/{sharing}", [InviteController::class, 'select'])->middleware("can:select,sharing");
 
     });
 

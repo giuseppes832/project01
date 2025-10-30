@@ -28,9 +28,9 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             if (Auth::user()->isAdmin()) {
-                return redirect()->intended('panel');
+                return redirect()->intended('apps/app');
             } else if (Auth::user()->isOwner()) {
-                return redirect()->intended('invites');
+                return redirect()->intended('apps/owner-app');
             } else if (Auth::user()->isInvitedUser()) {
                 return redirect()->intended('my-invites');
             } else {

@@ -12,7 +12,9 @@
 
 			<ul>
 
-            	<li><a href="/nodes">Radice</a></li>
+                <li><a href="/apps/app">App</a></li>
+
+            	<li><a href="/nodes">Nodi</a></li>
 
             	<ul>
 

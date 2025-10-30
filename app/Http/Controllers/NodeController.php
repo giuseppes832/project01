@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\App;
+
 use App\Models\HtmlSelect;
 use App\Models\HtmlSharingSelect;
 use App\Models\Node;
 use App\Utilities\CommonService;
 use App\Utilities\HtmlNodeTypes;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
 
 class NodeController extends Controller
 {
 
 
-    public function index(App $app) {
+    public function index() {
 
         $nodes = Node::query()->whereNull("parent_id")->get();
 
@@ -25,7 +24,7 @@ class NodeController extends Controller
 
     }
 
-    public function store(App $app) {
+    public function store() {
 
         $node = new Node;
         $node->name = request()->name;
@@ -173,7 +172,6 @@ class NodeController extends Controller
         $child = new Node;
         $child->name = request()->name;
         $child->parent_id = $node->id;
-        $child->app_id = $node->app->id;
         $child->save();
 
         return redirect("/nodes/$node->id");
@@ -197,8 +195,7 @@ class NodeController extends Controller
 
         $this->rec($node);
 
-        $app = $node->app;
-        return redirect("/apps/$app->id/nodes");
+        return redirect("/nodes");
 
     }
 

@@ -7,7 +7,7 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/custom.css', 'resources/js/custom.js', 'resources/js/list.js'])
 
-        <title>Mio Saas</title>
+        <title>{{ env("APP_NAME") }}</title>
 	</head>
   <body>
 

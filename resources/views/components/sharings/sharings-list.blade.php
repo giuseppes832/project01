@@ -1,5 +1,7 @@
 <ul>
 
+    <li><a href="/apps/owner-app">App</a></li>
+
 	<li><a href="/sharings">Condivisioni</a></li>
 
 	<ul>

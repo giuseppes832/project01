@@ -83,21 +83,6 @@ class RowController extends Controller
 
             $row->form_id = $node->html->id;
 
-            $app = null;
-
-            if (Auth::user()->isInvitedUser() ) {
-
-                $sharing = $commonService->getSharing();
-                $app = $sharing->app;
-
-            } elseif ( Auth::user()->isOwner() )  {
-                $app = $node->app;
-            }
-
-            $row->app_id = $app->id;
-
-
-
             $row->save();
 
 

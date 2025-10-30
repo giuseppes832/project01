@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\App;
 use App\Models\Node;
-use Illuminate\Http\Request;
 use App\Models\Role;
 
 class RoleController extends Controller
 {
 
 
-    public function index(App $app) {
+    public function index() {
 
         $roles = Role::all();
         $rootNodes = Node::query()->whereNull("parent_id")->get();
@@ -24,7 +22,7 @@ class RoleController extends Controller
     }
 
 
-    public function store(App $app) {
+    public function store() {
 
         $role = new Role();
         $role->name = request()->name;

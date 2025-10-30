@@ -26,7 +26,7 @@ class SharingController extends Controller
         $sharing->name = request()->name;
         $sharing->save();
 
-        return redirect("/sharings/$sharing->id");
+        return redirect("/sharings");
 
     }
 

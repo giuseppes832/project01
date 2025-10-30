@@ -18,10 +18,6 @@ class Row extends Model
         return $this->belongsTo(HtmlForm::class, "form_id", "id");
     }
 
-    public function app() : BelongsTo {
-        return $this->belongsTo(App::class, "app_id", "id");
-    }
-
     public function getValue($node, $row) {
 
         $genericValue = $node->html->binding->values($row)->first();

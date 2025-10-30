@@ -5,7 +5,14 @@
 
 		<div class="border-end w-25 h-100 p-4">
 
-            <a href="/sharings">Condivisioni</a> <a href="/render/{{ $node->id }}" target="_blank">START</a>
+            <ul>
+
+                <li>App <a href="/render/{{ $node->id }}" target="_blank">START</a></li>
+                <ul>
+                    <li><a href="/sharings">Condivisioni</a></li>
+                </ul>
+
+            </ul>
 
 		</div>
 

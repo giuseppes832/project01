@@ -7,14 +7,14 @@
 
    	@vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/custom.css', 'resources/js/custom.js'])
 
-    <title>Mio Saas</title>
+    <title>Applicazione di Test</title>
   </head>
   <body>
   	<div class="d-flex flex-column h-100">
   	  <div>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
-            <a class="navbar-brand" href="#">Mio Saas</a>
+            <a class="navbar-brand" href="#">{{ env("APP_NAME") }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,13 +28,13 @@
                 @endif
                 @if(Auth::user()->isAdmin())
                 <li class="nav-item">
-                  <a class="nav-link" href="/panel">App</a>
+                  <a class="nav-link" href="/apps/app">App</a>
                 </li>
 
                 @endif
 				@if(Auth::user()->isOwner())
                 <li class="nav-item">
-                  <a class="nav-link" href="/invites">Inviti</a>
+                  <a class="nav-link" href="/apps/owner-app">App</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

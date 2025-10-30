@@ -4,6 +4,7 @@ namespace App\View\Components\Render;
 
 use App\Models\HtmlSharingSelect;
 use App\Models\HtmlSelect;
+use App\Utilities\CommonService;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Request;
@@ -29,7 +30,7 @@ class HtmlList extends Component
         )
     {
 
-
+        $commonService = app()->make(CommonService::class);
         $node = $this->selectedNode;
 
         $rows = null;
@@ -38,7 +39,8 @@ class HtmlList extends Component
         $defalutFilterValue = null;
         if ($filteringNode) {
             if ($filteringNode->html_type === HtmlSharingSelect::class) {
-                $defalutFilterValue = Cookie::get("sharing_id");
+                $sharing = $commonService->getSharing();
+                $defalutFilterValue = $sharing->id;
             } else if ($filteringNode->html_type === HtmlSelect::class) {
                 $defalutFilterValue = Request::query("parent_row_id");
             }

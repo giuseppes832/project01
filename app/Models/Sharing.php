@@ -11,40 +11,35 @@ class Sharing extends Model
 {
 
     protected $table = "sharings";
-    
+
     public function sharingType(): MorphTo
     {
         return $this->morphTo();
     }
-    
-    public function app() : BelongsTo {
-        return $this->belongsTo(App::class, "app_id", "id");
-    }
-    
-    
-    
+
+
     public function changeSharingType($newSharingTypeClass) {
-        
-        
+
+
         if ($this->sharing_type_type !== $newSharingTypeClass) {
-            
+
             if ($this->sharing_type_type) {
                 $this->sharingType->delete();
             }
-            
+
             $newField = new $newSharingTypeClass;
             $newField->save();
-            
+
             $newField->sharing()->save($this);
-            
+
         }
-        
+
     }
-    
+
 
     public function role() : BelongsTo {
         return $this->belongsTo(Role::class, "role_id", "id");
     }
 
-    
+
 }
