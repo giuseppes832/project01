@@ -23,8 +23,11 @@
                 @auth
                 @if(Auth::user()->isInvitedUser())
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/my-invites">Inviti</a>
+                  <a class="nav-link" href="/my-invites">Inviti</a>
                 </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/invited-user-account">Account</a>
+                  </li>
                 @endif
                 @if(Auth::user()->isAdmin())
                 <li class="nav-item">
@@ -38,6 +41,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/users">Utenti</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/owner-account">Account</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

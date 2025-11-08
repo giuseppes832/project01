@@ -11,7 +11,7 @@
 
     <div class="mb-3 form-floating">
         <select class="form-select" name="binding" aria-label="Campo">
-            <option selected>Seleziona uno ...</option>
+            <option value="" selected>Seleziona uno ...</option>
             @foreach($fields as $field)
                 <option value="{{ $field->id }}" @if ($field->id == old('binding', $selectedNode->html->binding_id)) selected @endif>{{ $field->resource->name }}\{{ $field->name }}</option>
             @endforeach

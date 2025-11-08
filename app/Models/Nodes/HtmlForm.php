@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Nodes;
 
+use App\Models\Node;
+use App\Models\NodeTrait;
+use App\Models\Row;
 use App\Models\ValueTypes\FKValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -10,12 +13,9 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 class HtmlForm extends Model
 {
 
-    protected $table = "html_forms";
 
-    public function node(): MorphOne
-    {
-        return $this->morphOne(Node::class, 'html');
-    }
+    use NodeTrait;
+    protected $table = "html_forms";
 
 
     public function rows() {

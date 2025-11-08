@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/users/{user}', [UserController::class, 'edit']);
         Route::put('/users/{user}', [UserController::class, 'update']);
         Route::get('/users/{user}/delete', [UserController::class, 'delete']);
+
+        Route::get("/owner-account", [UserController::class, "ownerAccount"]);
+        Route::put("/owner-account", [UserController::class, "updateOwnerAccount"]);
     });
 });
 
@@ -86,6 +89,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/roles/{role}/nodes/{node}/shared-nodes', [SharedNodeController::class, 'store']);
         Route::put('/shared-nodes/{sharedNode}', [SharedNodeController::class, 'update']);
 
+
+        Route::post('/apps/owner-invite', [AppController::class, 'sendOwnerInvite']);
+
     });
 
 });
@@ -109,7 +115,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware(UserIsInvitedUser::class)->group(function () {
 
         Route::get("/my-invites", [InviteController::class, 'index'])->name("invites");
-        Route::get("/select-sharing/{sharing}", [InviteController::class, 'select'])->middleware("can:select,sharing");
+        Route::get("/select-sharing/{sharing}", [InviteController::class, "select"])->middleware("can:select,sharing");
+
+        Route::get("/invited-user-account", [UserController::class, "invitedUserAccount"]);
+        Route::put("/invited-user-account", [UserController::class, "updateInvitedUserAccount"]);
 
     });
 

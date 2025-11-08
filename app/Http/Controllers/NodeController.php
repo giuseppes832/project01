@@ -3,16 +3,10 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\HtmlList;
-use App\Models\HtmlSelect;
-use App\Models\HtmlSharingSelect;
 use App\Models\Node;
-use App\Models\Nodes\SublistButton;
 use App\Utilities\CommonService;
 use App\Utilities\HtmlNodeTypes;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Session;
 
 class NodeController extends Controller
 {
@@ -29,6 +23,10 @@ class NodeController extends Controller
     }
 
     public function store() {
+
+        request()->validate([
+            "name" => "required|string|max:250|unique:nodes,name"
+        ]);
 
         $node = new Node;
         $node->name = request()->name;
@@ -55,6 +53,10 @@ class NodeController extends Controller
     }
 
     public  function update(Node $node) {
+
+        request()->validate([
+            "name" => "required|string|max:250|unique:nodes,name,$node->id"
+        ]);
 
         $node->name = request()->name;
         $node->save();
@@ -173,6 +175,10 @@ class NodeController extends Controller
 
 
     public  function storeChild(Node $node) {
+
+        request()->validate([
+            "name" => "required|string|max:250|unique:nodes,name"
+        ]);
 
         $child = new Node;
         $child->name = request()->name;

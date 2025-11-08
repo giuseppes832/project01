@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Nodes;
 
+use App\Models\Node;
+use App\Models\NodeTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class HtmlList extends Model
 {
+    use NodeTrait;
     protected $table = "html_lists";
-
-    public function node(): MorphOne
-    {
-        return $this->morphOne(Node::class, 'html');
-    }
+    
 
     public function node1() : BelongsTo {
         return $this->belongsTo(Node::class, "node_id1", "id");

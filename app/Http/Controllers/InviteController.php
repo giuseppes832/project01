@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BootstrapNavbar;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Sharing;
 use App\Models\Invite;
+use App\Models\Nodes\BootstrapNavbar;
+use App\Models\Sharing;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
 class InviteController extends Controller

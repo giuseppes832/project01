@@ -18,6 +18,11 @@
             			<div class="form-floating">
             				<input type="text" class="form-control form-control-sm" name="name"/>
             				<label>Nome nuova condivisione</label>
+                            @error("name")
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
             			</div>
 
             		</div>

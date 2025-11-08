@@ -18,7 +18,7 @@
 
     <div class="mb-3 form-floating">
         <select class="form-select" name="binding" aria-label="Campo">
-            <option selected>Seleziona uno ...</option>
+            <option value="" selected>Seleziona uno ...</option>
             @foreach($fields as $field)
                 <option value="{{ $field->id }}" @if ($field->id == old('binding', $selectedNode->html->binding_id)) selected @endif>{{ $field->resource->name }}\{{ $field->name }}</option>
             @endforeach
@@ -29,7 +29,7 @@
     @if($selectedNode->html->binding_id)
     <div class="mb-3 form-floating">
         <select class="form-select" name="form_binding" aria-label="Risorsa collegata">
-            <option selected>Seleziona uno ...</option>
+            <option value="" selected>Seleziona uno ...</option>
             @foreach($forms as $form)
                 <option value="{{ $form->id }}" @if ($form->id == old('form_binding', $selectedNode->html->form_binding_id)) selected @endif>{{ $form->node->name }}</option>
             @endforeach
@@ -40,7 +40,7 @@
     @if($selectedNode->html->form_binding_id)
     <div class="mb-3 form-floating">
         <select class="form-select" name="form_field_binding" aria-label="Campo risorsa collegato">
-            <option selected>Seleziona uno ...</option>
+            <option value="" selected>Seleziona uno ...</option>
             @foreach($formFields as $formField)
                 <option value="{{ $formField->id }}" @if ($formField->id == old('form_field_binding', $selectedNode->html->form_field_binding_id)) selected @endif>{{ $formField->name }}</option>
             @endforeach

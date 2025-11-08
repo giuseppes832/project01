@@ -15,9 +15,9 @@
 
 			<x-resources.resources-list :resources="$resources"/>
 
-        	@empty($selectedResource)
+        	@if(!isset($selectedResource) && !isset($selectedField))
             <x-resources.resources-list-action-create-resource/>
-            @endempty
+            @endif
 
         	@isset($selectedResource)
             <x-resources.resources-list-action-create-field :selectedResource="$selectedResource" />

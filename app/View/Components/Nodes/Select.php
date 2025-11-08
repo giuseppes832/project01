@@ -4,10 +4,9 @@ namespace App\View\Components\Nodes;
 
 use App\Models\Field as FieldModel;
 use App\Models\FieldTypes\FKField;
-use App\Models\FieldTypes\IntegerField;
 use App\Models\FieldTypes\MvIntegerField;
-use App\Models\HtmlForm;
 use App\Models\Node as NodeModel;
+use App\Models\Nodes\HtmlForm;
 use App\Models\SvIntegerField;
 use Closure;
 use Illuminate\Contracts\View\View;

@@ -22,6 +22,10 @@ class SharingController extends Controller
 
     public function store() {
 
+        request()->validate([
+            "name" => "required|string|max:250|unique:sharings,name"
+        ]);
+
         $sharing = new Sharing;
         $sharing->name = request()->name;
         $sharing->save();
@@ -42,6 +46,9 @@ class SharingController extends Controller
 
     public  function update(Sharing $sharing) {
 
+        request()->validate([
+            "name" => "required|string|max:250|unique:sharings,name,$sharing->id"
+        ]);
 
         $sharing->name = request()->name;
         $sharing->role_id = request()->role_id;

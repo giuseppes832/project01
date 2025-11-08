@@ -4,27 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\App;
-use App\Models\BootstrapNavbar;
-use App\Models\BootstrapNavLink;
-use App\Models\Field;
-use App\Models\FieldTypes\FKField;
-use App\Models\FieldTypes\FloatField;
-use App\Models\FieldTypes\IntegerField;
-use App\Models\FieldTypes\StringField;
 use App\Models\FieldTypes\SvStringField;
-use App\Models\HtmlForm;
-use App\Models\HtmlInputText;
-use App\Models\HtmlList;
-use App\Models\HtmlSharingSelect;
 use App\Models\InvitedUser;
-use App\Models\Node;
 use App\Models\Owner;
-use App\Models\Resource;
-use App\Models\Role;
 use App\Models\SvFloatField;
 use App\Models\SvIntegerField;
 use App\Models\User;
-use App\Models\HtmlSelect;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 

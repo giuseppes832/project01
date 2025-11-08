@@ -2,12 +2,11 @@
 
 namespace App\View\Components\Nodes;
 
+use App\Models\Node as NodeModel;
+use App\Models\Nodes\HtmlForm;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use App\Models\Node as NodeModel;
-use App\Models\HtmlForm;
-
 
 
 class HtmlList extends Component

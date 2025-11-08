@@ -3,7 +3,7 @@
 namespace App\View\Components\Nodes;
 
 use App\Models\Node;
-use App\Models\HtmlList;
+use App\Models\Nodes\HtmlList;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;

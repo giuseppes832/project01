@@ -9,6 +9,11 @@
 		<div class="mb-3 form-floating">
 			<input type="text" class="form-control form-control-sm" name="name" value="{{ old('name', $selectedField->name) }}"/>
 			<label>Nome campo</label>
+            @error("name")
+            <div class="text-danger">
+                {{ $message }}
+            </div>
+            @enderror
 		</div>
 
         <div class="mb-3 form-check">
@@ -27,7 +32,7 @@
 
 		<div class="mb-3 form-floating">
             <select class="form-select" name="field_type" aria-label="Tipo di campo">
-                <option selected>Seleziona uno ...</option>
+                <option value ="" selected>Seleziona uno ...</option>
                 @foreach($Utility::getValues() as $value => $field)
                 <option value="{{ $value }}" @if ($value == old('field_type', $Utility::getSectedFieldType($selectedField))) selected @endif>{{ $field["label"] }}</option>
                 @endforeach

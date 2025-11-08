@@ -2,17 +2,16 @@
 
 namespace App\Models\Nodes;
 
-use App\Models\Field;
 use App\Models\Node;
 use App\Models\NodeTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class HtmlListBody extends Model
+class BootstrapNavbar extends Model
 {
-    use NodeTrait;
-    protected $table = "html_list_bodies";
 
+    use NodeTrait;
+
+    protected $table = "bootstrap_navbars";
 
 }

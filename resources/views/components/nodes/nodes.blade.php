@@ -42,6 +42,11 @@
             			<div class="form-floating">
             				<input type="text" class="form-control form-control-sm" name="name"/>
             				<label>Nome nuovo nodo</label>
+                            @error("name")
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
             			</div>
 
             		</div>
@@ -60,6 +65,11 @@
            				<div class="form-floating">
            					<input type="text" class="form-control form-control-sm" name="name"/>
            					<label>Nome nuovo nodo figlio</label>
+                            @error("name")
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
            				</div>
 
            			</div>

@@ -21,6 +21,10 @@ class ResourceController extends Controller
 
     public function store() {
 
+        request()->validate([
+            "name" => "required|string|max:250|unique:resources,name"
+        ]);
+
         $resource = new Resource;
         $resource->name = request()->name;
         $resource->save();
@@ -43,6 +47,9 @@ class ResourceController extends Controller
 
     public  function update(Resource $resource) {
 
+        request()->validate([
+            "name" => "required|string|max:250|unique:resources,name,$resource->id"
+        ]);
 
         $resource->name = request()->name;
         $resource->save();

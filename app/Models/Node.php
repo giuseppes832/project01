@@ -54,7 +54,7 @@ class Node extends Model
 
         if ($this->html_type !== $newFieldTypeClass) {
 
-            if ($this->html) {
+            if ($this->html_type) {
                 $this->html->delete();
             }
 

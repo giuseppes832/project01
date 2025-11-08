@@ -28,7 +28,9 @@ class Field extends Model
 
         if ($this->with_type_type !== $newFieldTypeClass) {
 
-            $this->withType->delete();
+            if ($this->with_type_type) {
+                $this->withType->delete();
+            }
 
             $newField = new $newFieldTypeClass;
             $newField->save();

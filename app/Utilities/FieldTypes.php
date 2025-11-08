@@ -1,7 +1,6 @@
 <?php
 namespace App\Utilities;
 
-use App\Models\Field;
 use App\Models\FieldTypes\BooleanField;
 use App\Models\FieldTypes\DateField;
 use App\Models\FieldTypes\DateTimeField;

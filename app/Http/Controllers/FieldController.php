@@ -17,17 +17,14 @@ class FieldController extends Controller
 
     public function store(Resource $resource) {
 
+        request()->validate([
+            "name" => "required|string|max:250"
+        ]);
+
         $field = new Field;
         $field->name = request()->name;
-        $field->required = (request()->required==="on")?true:false;
-        $field->unique = (request()->unique==="on")?true:false;
         $field->resource_id = $resource->id;
         $field->save();
-
-        $newField = new (FieldTypes::getValues()[request()->field_type]["class"]);
-        $newField->save();
-
-        $newField->field()->save($field);
 
         return redirect("/resources/$resource->id");
 
@@ -47,12 +44,18 @@ class FieldController extends Controller
 
     public  function update(Field $field) {
 
+        request()->validate([
+            "name" => "required|string|max:250"
+        ]);
+
         $field->name = request()->name;
         $field->required = (request()->required==="on")?true:false;
         $field->unique = (request()->unique==="on")?true:false;
         $field->save();
 
-        $field->changeWithType(FieldTypes::getValues()[request()->field_type]["class"]);
+        if (request()->has("field_type") && request()->field_type) {
+            $field->changeWithType(FieldTypes::getValues()[request()->field_type]["class"]);
+        }
 
         return redirect("/fields/$field->id");
 
@@ -69,7 +72,9 @@ class FieldController extends Controller
 
     public function delete(Field $field) {
 
-        $field->withType->delete();
+        if ($field->with_type_type) {
+            $field->withType->delete();
+        }
 
         $field->delete();
 

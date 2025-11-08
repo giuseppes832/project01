@@ -19,6 +19,11 @@
            				<div class="form-floating">
            					<input type="text" class="form-control form-control-sm" name="name"/>
            					<label>Nome nuovo ruolo</label>
+                            @error("name")
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
            				</div>
 
            			</div>
