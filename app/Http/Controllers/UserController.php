@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OwnerInvite;
+use App\Mail\UserInvite;
 use App\Models\InvitedUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -25,16 +28,25 @@ class UserController extends Controller
 
     public function store() {
 
+        request()->validate([
+            "name" => "required|string|max:250",
+            "email" => "required|string|max:250|unique:users,email"
+        ]);
+
+        $passsword = "temporanea" . 1000000 - random_int(1, 100000);
+
         $user = new User();
         $user->name = request()->name;
         $user->email = request()->email;
-        $user->password = Hash::make(request()->password);
+        $user->password = Hash::make($passsword);
         $user->save();
 
         $invitedUser = new InvitedUser();
         $invitedUser->save();
 
         $invitedUser->user()->save($user);
+
+        Mail::to(request()->email)->send(new OwnerInvite($passsword));
 
         return redirect("/users");
 
@@ -57,10 +69,19 @@ class UserController extends Controller
 
     public function update(User $user) {
 
+        request()->validate([
+            "name" => "required|string|max:250",
+            "email" => "required|string|max:250|unique:users,email"
+        ]);
+
+        $passsword = "temporanea" . 1000000 - random_int(1, 100000);
+
         $user->name = request()->name;
         $user->email = request()->email;
-        $user->password = Hash::make(request()->password);
+        $user->password = Hash::make($passsword);
         $user->save();
+
+        Mail::to(request()->email)->send(new UserInvite($passsword));
 
         return redirect("/users/$user->id");
 

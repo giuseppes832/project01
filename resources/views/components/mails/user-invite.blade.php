@@ -3,4 +3,3 @@ Questa è la password per effettuare il primo accesso.
 {{ $password }}
 <br>
 Cambiala il prima possibile
-

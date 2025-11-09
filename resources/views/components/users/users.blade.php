@@ -17,20 +17,24 @@
                     <div class="mb-3 form-floating">
                         <input type="text" class="form-control form-control-sm" name="name" value="{{ old('name', $selectedUser->name) }}"/>
                         <label>Nome</label>
+                        @error("name")
+                        <div class="text-danger">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
 
                     <div class="mb-3 form-floating">
                         <input type="text" class="form-control form-control-sm" name="email" value="{{ old('email', $selectedUser->email) }}"/>
                         <label>Email</label>
+                        @error("email")
+                        <div class="text-danger">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
 
-                    <div class="mb-3 form-floating">
-                        <input type="text" class="form-control form-control-sm" name="password" value="{{ old('name', $selectedUser->password) }}"/>
-                        <label>Password</label>
-                    </div>
-
-
-                    <button type="submit" class="btn btn-primary btn-sm mb-3">Salva</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm mb-3">Send User Invite</button>
 
                 </form>
 
@@ -65,19 +69,25 @@
                 <div class="mb-3 form-floating">
                     <input type="text" class="form-control form-control-sm" name="name"/>
                     <label>Nome</label>
+                    @error("name")
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
 
                 <div class="mb-3 form-floating">
                     <input type="text" class="form-control form-control-sm" name="email"/>
                     <label>Email</label>
+                    @error("email")
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
 
-                <div class="mb-3 form-floating">
-                    <input type="text" class="form-control form-control-sm" name="password"/>
-                    <label>Password</label>
-                </div>
 
-                <button type="submit" class="btn btn-primary btn-sm mb-3">Salva</button>
+                <button type="submit" class="btn btn-outline-danger btn-sm mb-3">Send User Invite</button>
 
             </form>
             @endif
