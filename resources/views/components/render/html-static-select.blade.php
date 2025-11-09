@@ -9,5 +9,5 @@
             @endif
         @endforeach
     </select>
-    <label>{{ $selectedNode->name }}</label>
+    <label>{{ $selectedNode->label }}</label>
 </div>

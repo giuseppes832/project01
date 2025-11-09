@@ -16,6 +16,16 @@
             @enderror
 		</div>
 
+        <div class="mb-3 form-floating">
+            <input type="text" class="form-control form-control-sm" name="label" value="{{ old('label', $selectedNode->label) }}"/>
+            <label>Label</label>
+            @error("label")
+            <div class="text-danger">
+                {{ $message }}
+            </div>
+            @enderror
+        </div>
+
 		<div class="mb-3 form-floating">
             <select class="form-select" name="html_type" aria-label="Tipo di nodo">
                 <option value="" selected>Seleziona uno ...</option>

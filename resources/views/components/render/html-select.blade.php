@@ -10,7 +10,7 @@
             @endif
         @endforeach
     </select>
-    <label>{{ $selectedNode->name }}</label>
+    <label>{{ $selectedNode->label }}</label>
     @error("nodes.$selectedNode->id")
     <div class="text-danger">
         {{ $message }}

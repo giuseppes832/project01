@@ -6,5 +6,5 @@
         <option value="{{ $sharing->id }}" @if ($sharing->id == old('ddd', $value)) selected @endif>{{ $sharing->name }}</option>
         @endforeach
         </select>
-	<label>{{ $selectedNode->name }}</label>
+	<label>{{ $selectedNode->label }}</label>
 </div>

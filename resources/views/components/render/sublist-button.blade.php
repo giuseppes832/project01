@@ -27,7 +27,7 @@
 
 <div class="container">
 
-    <h5>{{  $selectedNode->name }}</h5>
+    <h5>{{  $selectedNode->label }}</h5>
     @if($selectedNode->html->binding)
         <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#globalModal"
                 data-method="post" data-node-id="{{ $selectedNode->html->binding->node->id }}"
@@ -56,8 +56,9 @@
     <div id="ajaxBody" class="d-flex flex-column">
         @foreach($rows as $row)
             @if(Auth::user()->canRead($row->form->node))
-                <div class="border-bottom d-flex align-items-center">
-                    <div class="w-50">
+            <div class="border-bottom mb-2">
+                <div class="d-flex align-items-center">
+                    <div class="w-75">
                         @if(Auth::user()->canRead($selectedNode->html->node1))
                             <div class="fw-normal">{{ $row->getValue($selectedNode->html->node1, $row)}}</div>
                         @endif
@@ -67,20 +68,22 @@
 
 
                     </div>
-                    <div class="w-50 d-flex justify-content-end">
+                    <div class="w-25 d-flex justify-content-end">
                         <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal"
                                 data-bs-target="#globalModal" data-method="put" data-row-id="{{ $row->id }}?{{ $qs }}">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        @foreach($old->children as $sublist)
-                            <a class="btn btn-primary me-1" href="javascript:void(0)"
-                               onclick="createRefresh({{ $sublist->id }}, 'parent_row_id={{ $row->id }}', 'targetMenuContainer')"><i
-                                        class="bi bi-chevron-right"></i> {{ $sublist->name }}</a>
-                        @endforeach
+
                     </div>
 
 
                 </div>
+                @foreach($old->children as $sublist)
+                    <a class="me-1" href="javascript:void(0)"
+                       onclick="createRefresh({{ $sublist->id }}, 'parent_row_id={{ $row->id }}', 'targetMenuContainer')">
+                        {{ $sublist->name }} <i class="bi bi-chevron-right"></i></a>
+                @endforeach
+            </div>
             @endif
         @endforeach
     </div>

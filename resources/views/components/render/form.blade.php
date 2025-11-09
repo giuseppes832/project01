@@ -17,7 +17,7 @@ if (Request::filled("parent_row_id")) {
 @endphp
 
 
-
+<h5>{{ $selectedNode->label }}</h5>
 <form action="{{ $action }}" method="post" onsubmit="submitRow(this, 'globalModalBody')">
 	@csrf
 	@method($method)

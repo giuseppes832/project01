@@ -55,10 +55,12 @@ class NodeController extends Controller
     public  function update(Node $node) {
 
         request()->validate([
-            "name" => "required|string|max:250|unique:nodes,name,$node->id"
+            "name" => "required|string|max:250|unique:nodes,name,$node->id",
+            "label" => "nullable|string|max:250"
         ]);
 
         $node->name = request()->name;
+        $node->label = request()->label;
         $node->save();
 
         if (request()->has("html_type") && request()->html_type) {
