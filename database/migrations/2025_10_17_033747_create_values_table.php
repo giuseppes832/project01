@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('values', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('row_id')->nullable();
-            $table->foreign('row_id')->references('id')->on('rows')->cascadeOnDelete();
+            $table->foreign('row_id')->references('id')->on('rows');
             $table->unsignedBigInteger('field_id')->nullable();
             $table->foreign('field_id')->references('id')->on('fields');
             $table->integer('with_value_id')->nullable();

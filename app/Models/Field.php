@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Nodes\HtmlCheckbox;
+use App\Models\Nodes\HtmlDate;
+use App\Models\Nodes\HtmlTextarea;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Schema;
 
 class Field extends Model
 {
@@ -28,7 +32,7 @@ class Field extends Model
 
         if ($this->with_type_type !== $newFieldTypeClass) {
 
-            if ($this->with_type_type) {
+            if ($this->withType) {
                 $this->withType->delete();
             }
 
@@ -53,6 +57,19 @@ class Field extends Model
     public function allValues() : HasMany {
         return $this->hasMany(Value::class, "field_id");
     }
+
+    public function bindedNodes($class) {
+        $model = new $class;
+
+        $column_names = Schema::getColumnListing($model->getTable());
+        if (in_array('binding_id', $column_names)) {
+            return $this->hasMany($class, "binding_id");
+        } else {
+            return null;
+        }
+
+    }
+
 
 
 

@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\App;
 use App\Models\Field;
+use App\Models\FieldTypes\TextField;
+use App\Models\Nodes\HtmlTextarea;
 use App\Models\Resource;
 use App\Utilities\FieldTypes;
 use App\Utilities\BooleanFieldTypes;
 use App\Utilities\FloatFieldTypes;
+use App\Utilities\HtmlNodeTypes;
 use App\Utilities\IntegerFieldTypes;
 use App\Utilities\StringFieldTypes;
 use App\Utilities\EnumFieldTypes;
+use Illuminate\Support\Facades\DB;
 
 class FieldController extends Controller
 {
@@ -70,13 +74,79 @@ class FieldController extends Controller
 
     }
 
-    public function delete(Field $field) {
 
-        if ($field->with_type_type) {
-            $field->withType->delete();
+    private function deleteRelatedRow($relatedRow) {
+
+        foreach ($relatedRow->values as $value) {
+
+            if ($value->fkValues) {
+                foreach ($value->fkValues as $fkValue) {
+
+                    $this->deleteRelatedRow($fkValue->relatedRow);
+
+                }
+            }
+
+            $value->withValue->delete();
+
+            $value->delete();
+
         }
 
-        $field->delete();
+        $relatedRow->delete();
+
+    }
+
+    public function delete(Field $field) {
+
+        DB::transaction(function () use ($field) {
+
+            foreach ($field->allValues as $value) {
+
+                if ($value->fkValues) {
+                    foreach ($value->fkValues as $fkValue) {
+
+                        $this->deleteRelatedRow($fkValue->relatedRow);
+
+                    }
+                }
+
+                $value->relatedRow->delete();
+
+                $value->withValue->delete();
+
+                $value->delete();
+
+            }
+
+            foreach (HtmlNodeTypes::getValues() as $valueClass) {
+
+                $bindedNodesRel = $field->bindedNodes($valueClass["class"]);
+                if ($bindedNodesRel) {
+
+                    $bindedNodes = $field->bindedNodes($valueClass["class"])->get();
+                    foreach ($bindedNodes as $bindedNode) {
+
+
+                        $bindedNode->node->delete();
+
+                        $bindedNode->delete();
+
+                    }
+                }
+            }
+
+            if ($field->withType) {
+
+                $field->withType->delete();
+
+            }
+
+
+
+            $field->delete();
+
+        });
 
         $resource = $field->resource;
 

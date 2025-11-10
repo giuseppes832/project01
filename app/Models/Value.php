@@ -20,4 +20,8 @@ class Value extends Model
         return $this->belongsTo(Field::class, "field_id", "id");
     }
 
+    public function relatedRow(): BelongsTo {
+        return $this->belongsTo(Row::class, "row_id");
+    }
+
 }

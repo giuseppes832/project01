@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Resource;
 use App\Models\App;
+use App\Utilities\HtmlNodeTypes;
+use Illuminate\Support\Facades\DB;
 
 class ResourceController extends Controller
 {
@@ -58,17 +60,85 @@ class ResourceController extends Controller
 
     }
 
-    public function delete(Resource $resource) {
+    private function deleteRelatedRow($relatedRow) {
 
-        foreach ($resource->fields as $field) {
+        foreach ($relatedRow->values as $value) {
 
-            $field->withType->delete();
 
-            $field->delete();
+            if ($value->fkValues) {
+                foreach ($value->fkValues as $fkValue) {
+
+                    $this->deleteRelatedRow($fkValue->relatedRow);
+
+                }
+            }
+
+            $value->withValue->delete();
+
+            $value->delete();
 
         }
 
-        $resource->delete();
+        $relatedRow->delete();
+
+    }
+
+    public function delete(Resource $resource) {
+
+        DB::transaction(function () use ($resource) {
+
+            foreach ($resource->fields as $field) {
+
+                foreach ($field->allValues as $value) {
+
+                    if ($value->fkValues) {
+                        foreach ($value->fkValues as $fkValue) {
+
+                            $this->deleteRelatedRow($fkValue->relatedRow);
+
+                        }
+                    }
+
+                    $value->relatedRow->delete();
+
+                    $value->withValue->delete();
+
+                    $value->delete();
+
+                }
+
+                foreach (HtmlNodeTypes::getValues() as $valueClass) {
+
+                    $bindedNodesRel = $field->bindedNodes($valueClass["class"]);
+                    if ($bindedNodesRel) {
+
+                        $bindedNodes = $field->bindedNodes($valueClass["class"])->get();
+                        foreach ($bindedNodes as $bindedNode) {
+
+
+                            $bindedNode->node->delete();
+
+                            $bindedNode->delete();
+
+                        }
+                    }
+                }
+
+                if ($field->withType) {
+
+                    $field->withType->delete();
+
+                }
+
+
+                $field->delete();
+
+            }
+
+            $resource->delete();
+
+
+        });
 
         return redirect("/resources");
 
