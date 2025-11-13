@@ -38,10 +38,14 @@ class HtmlSelect extends Component
 
             $authParentRows = $this->selectedNode->html->formBinding->filteredRows($sharing->id, null);
 
+            $options = [];
+
             foreach ($authParentRows as $authParentRow) {
 
-                $this->options[] = $this->selectedNode->html->formFieldBinding->html->binding->values($authParentRow)->first();
+                $options[] = $this->selectedNode->html->formFieldBinding->html->binding->values($authParentRow)->first();
             }
+
+            $this->options = collect($options);
 
         } else {
 
@@ -112,7 +116,15 @@ class HtmlSelect extends Component
 
         }
 
+        // Security Check 1
         if (Auth::user()->isInvitedUser() && $this->selectedNode->html->subselect && !Request::filled("parent_row_id")) {
+            abort(403);
+        }
+
+        // Security Check 2
+        $commonService = app()->make(CommonService::class);
+        if (Auth::user()->isInvitedUser() && $this->selectedNode->html->subselect && !$commonService->getFilteringValue($this->selectedNode)) {
+            // Unused
             abort(403);
         }
 
