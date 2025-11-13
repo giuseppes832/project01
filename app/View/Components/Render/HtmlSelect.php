@@ -4,6 +4,7 @@ namespace App\View\Components\Render;
 
 use App\Models\Node;
 use App\Models\SvIntegerValue;
+use App\Utilities\CommonService;
 use App\Utilities\FieldTypes;
 use App\Utilities\Menu;
 use Closure;
@@ -30,8 +31,26 @@ class HtmlSelect extends Component
     )
     {
 
-        // Get all values of HtmlInputText
-        $this->options = $this->selectedNode->html->formFieldBinding->html->binding->allValues;
+        if (Auth::user()->isInvitedUser()) {
+
+            $commonService = app()->make(CommonService::class);
+            $sharing = $commonService->getSharing();
+
+            $authParentRows = $this->selectedNode->html->formBinding->filteredRows($sharing->id, null);
+
+            foreach ($authParentRows as $authParentRow) {
+
+                $this->options[] = $this->selectedNode->html->formFieldBinding->html->binding->values($authParentRow)->first();
+            }
+
+        } else {
+
+            // Get all values of HtmlInputText
+            $this->options = $this->selectedNode->html->formFieldBinding->html->binding->allValues;
+
+        }
+
+
 
         $formRow = Menu::getRow();
 
