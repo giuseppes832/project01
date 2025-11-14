@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 use App\Models\Sharing;
 use App\Models\Node as NodeModel;
-use App\Utilities\Permission;
 
 class SharingSelect extends Component
 {

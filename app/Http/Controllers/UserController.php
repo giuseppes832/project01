@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
@@ -51,6 +52,8 @@ class UserController extends Controller
 
             Mail::to(request()->email)->send(new OwnerInvite($passsword));
 
+            Log::info('Owner send invite to User with a temporary password.', ['name' => request()->name, 'email' => request()->email]);
+
         });
 
         return redirect("/users");
@@ -89,6 +92,8 @@ class UserController extends Controller
             $user->save();
 
             Mail::to(request()->email)->send(new UserInvite($passsword));
+
+            Log::info('Owner send again invite to User with a temporary password.', ['name' => request()->name, 'email' => request()->email]);
 
         });
 
@@ -141,6 +146,7 @@ class UserController extends Controller
     public function updateInvitedUserAccount() {
 
         $this->updateAccount();
+        Log::info('User changes password.', ['email' => Auth::user()->email]);
         return redirect("invited-user-account");
 
     }
@@ -148,6 +154,7 @@ class UserController extends Controller
     public function updateOwnerAccount() {
 
         $this->updateAccount();
+        Log::info('Owner changes password.', ['email' => Auth::user()->email]);
         return redirect("owner-account");
 
     }

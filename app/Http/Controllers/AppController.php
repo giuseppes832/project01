@@ -10,6 +10,7 @@ use App\Models\User;
 use Brick\Math\Exception\MathException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class AppController extends Controller
@@ -70,6 +71,8 @@ class AppController extends Controller
             }
 
             Mail::to(request()->email)->send(new OwnerInvite($passsword));
+
+            Log::info('Admin send invite to Owner with a temporary password.', ['email' => request()->email]);
 
         });
 
