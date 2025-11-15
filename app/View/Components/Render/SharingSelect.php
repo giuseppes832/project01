@@ -58,7 +58,7 @@ class SharingSelect extends Component
 
         // Security Check
         $commonService = app()->make(CommonService::class);
-        if (Auth::user()->isInvitedUser() && $this->value !== $commonService->getFilteringValue($this->selectedNode)) {
+        if (Auth::user()->isInvitedUser() && ($this->value && $this->value !== $commonService->getFilteringValue($this->selectedNode))) {
             // Unused
             abort(403);
         }

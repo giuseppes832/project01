@@ -127,6 +127,7 @@ class NodeController extends Controller
 
     public  function updateHtmlSelect(Node $node) {
 
+        $node->html->auth_filtered = (request()->auth_filtered==="on")?true:false;
         $node->html->subselect = (request()->subselect==="on")?true:false;
         $node->html->multiple = (request()->multiple==="on")?true:false;
         $node->html->binding_id = request()->binding;

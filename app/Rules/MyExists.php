@@ -24,7 +24,7 @@ class MyExists implements ValidationRule
 
         $defaultFilterValue = $commonService->getFilteringValue($node);
 
-        if ($defaultFilterValue !== $value) {
+        if ($defaultFilterValue !== intval($value)) {
             $fail('Il valore non è ammesso');
         }
 

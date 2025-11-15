@@ -74,6 +74,15 @@ class FieldController extends Controller
 
     }
 
+    public  function updateFkField(Field $field) {
+
+        $field->withType->for_sharing = (request()->for_sharing==="on")?true:false;
+        $field->withType->save();
+
+        return redirect("/fields/$field->id");
+
+    }
+
     public function delete(Field $field) {
 
         DB::transaction(function () use ($field) {

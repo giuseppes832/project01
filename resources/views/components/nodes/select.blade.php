@@ -3,6 +3,13 @@
     @method('put')
 
     <div class="mb-3 form-check">
+        <input class="form-check-input" type="checkbox" id="auth_filtered" name="auth_filtered" @if (true == old('auth_filtered', $selectedNode->html->auth_filtered)) checked @endif>
+        <label class="form-check-label" for="auth_filtered">
+            Auth Select (Verifica Importante)
+        </label>
+    </div>
+
+    <div class="mb-3 form-check">
         <input class="form-check-input" type="checkbox" id="subselect" name="subselect" @if (true == old('subselect', $selectedNode->html->subselect)) checked @endif>
         <label class="form-check-label" for="subselect">
             Subselect (Verifica Importante)

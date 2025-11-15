@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/fields/{field}', [FieldController::class, 'edit']);
         Route::put('/fields/{field}', [FieldController::class, 'update']);
         Route::put('/fields2/{field}', [FieldController::class, 'updateEnumField']);
+        Route::put('/fields3/{field}', [FieldController::class, 'updateFkField']);
         Route::get('/fields/{field}/delete', [FieldController::class, 'delete']);
 
         Route::get('/nodes', [NodeController::class, 'index']);

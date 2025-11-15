@@ -15,6 +15,7 @@ use App\Models\ValueTypes\FloatValue;
 use App\Models\ValueTypes\IntegerValue;
 use App\Models\ValueTypes\StringValue;
 use App\Rules\MyExists;
+use App\Rules\MyExists2;
 use App\Rules\MyUnique;
 use App\Utilities\CommonService;
 use App\Utilities\Permission;
@@ -72,6 +73,14 @@ class RowController extends Controller
                 ) {
                     //$rules["nodes.$nodeId"][] = "required";
                     $rules["nodes.$nodeId"][] = new MyExists();
+                }
+            }
+
+
+            if (Auth::user()->isInvitedUser()) {
+                if (HtmlSelect::class === $node->html_type && $node->html->auth_filtered) {
+                    //$rules["nodes.$nodeId"][] = "required";
+                    $rules["nodes.$nodeId"][] = new MyExists2();
                 }
             }
 
