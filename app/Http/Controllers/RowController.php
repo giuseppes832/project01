@@ -65,6 +65,16 @@ class RowController extends Controller
                 $rules["nodes.$nodeId"][] = new MyExists();
             }
 
+            if (Auth::user()->isInvitedUser()) {
+                if (
+                    (HtmlSelect::class === $node->html_type && $node->html->subselect) ||
+                    (HtmlSharingSelect::class === $node->html_type)
+                ) {
+                    //$rules["nodes.$nodeId"][] = "required";
+                    $rules["nodes.$nodeId"][] = new MyExists();
+                }
+            }
+
 
 
         }
