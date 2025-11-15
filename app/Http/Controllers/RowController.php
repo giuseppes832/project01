@@ -225,6 +225,7 @@ class RowController extends Controller
 
                 $node0 = Node::find($nodeId);
 
+
                 if (is_array($fieldValue)) {
 
                     if (Auth::user()->canUpdate($node0)) {
@@ -268,6 +269,23 @@ class RowController extends Controller
                     }
 
                 } else {
+
+
+                    // Security check
+                    if (Auth::user()->isInvitedUser()) {
+                        if (
+                            (HtmlSelect::class === $node0->html_type && $node0->html->subselect) ||
+                            (HtmlSharingSelect::class === $node0->html_type)
+                        ) {
+
+                            $rows = $row->form->filteredRows($fieldValue, null);
+                            if (!in_array($fieldValue, $rows->pluck("id")->toArray())) {
+                                abort(403);
+                            }
+                        }
+                    }
+                    //
+
 
                     $value = $node0->html->binding->values($row)->first();
 
