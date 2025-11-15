@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\App;
 use App\Models\Node;
 use App\Models\Nodes\HtmlSelect;
+use App\Models\Nodes\HtmlSharingSelect;
 use App\Models\OwnerApp;
 use App\Models\RegisteredUserApp;
 use App\Models\Row;
@@ -56,7 +57,10 @@ class RowController extends Controller
                 $rules["nodes.$nodeId"][] = "decimal:2";
             }
 
-            if (HtmlSelect::class === $node->html_type && $node->html->subselect) {
+            if (
+                (HtmlSelect::class === $node->html_type && $node->html->subselect) ||
+                (HtmlSharingSelect::class === $node->html_type)
+            ) {
                 //$rules["nodes.$nodeId"][] = "required";
                 $rules["nodes.$nodeId"][] = new MyExists();
             }
