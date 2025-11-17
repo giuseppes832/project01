@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('nodes');
-            $table->integer('html_id')->nullable();
+            $table->unsignedBigInteger('html_id')->nullable();
             $table->string('html_type')->nullable();
             $table->timestamps();
         });

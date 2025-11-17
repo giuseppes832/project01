@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('role_id')->nullable();
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->integer('sharing_type_id')->nullable();
+            $table->unsignedBigInteger('sharing_type_id')->nullable();
             $table->string('sharing_type_type')->nullable();
             $table->timestamps();
         });

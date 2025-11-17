@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('resource_id');
             $table->foreign('resource_id')->references('id')->on('resources');
-            $table->integer('with_type_id')->nullable();
+            $table->unsignedBigInteger('with_type_id')->nullable();
             $table->string('with_type_type')->nullable();
             $table->timestamps();
         });

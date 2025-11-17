@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('row_id')->references('id')->on('rows');
             $table->unsignedBigInteger('field_id')->nullable();
             $table->foreign('field_id')->references('id')->on('fields');
-            $table->integer('with_value_id')->nullable();
+            $table->unsignedBigInteger('with_value_id')->nullable();
             $table->string('with_value_type')->nullable();
             $table->timestamps();
         });
