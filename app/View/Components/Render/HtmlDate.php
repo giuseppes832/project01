@@ -22,14 +22,7 @@ class HtmlDate extends Component
         $row = Menu::getRow();
 
         if ($row) {
-            $genericValue = $this->selectedNode->html->binding->values($row)->first();
-            if ($genericValue) {
-                $value = $genericValue->withValue;
-
-                if ($value) {
-                    $this->value = $value->value;
-                }
-            }
+            $this->value = $row->getValue($this->selectedNode);
         }
     }
 

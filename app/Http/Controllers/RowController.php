@@ -35,53 +35,52 @@ class RowController extends Controller
         foreach (request()->nodes as $nodeId => $fieldValue) {
 
             $node = Node::find($nodeId);
-            $genericType = $node->html->binding;
-            $type = $node->html->binding->withType;
 
-            if ($genericType->required) {
-                $rules["nodes.$nodeId"][] = "required";
-            } else {
-                $rules["nodes.$nodeId"][] = "nullable";
-            }
+            if ($node->html && $node->html->binding && $node->html->binding->withType) {
 
-            if ($genericType->unique) {
-                $rules["nodes.$nodeId"][] = new MyUnique();
-            }
+                $genericType = $node->html->binding;
+                $type = $node->html->binding->withType;
 
-            if (StringValue::class === $type->getValueClass()) {
-                $rules["nodes.$nodeId"][] = "string";
-                $rules["nodes.$nodeId"][] = "max:250";
-            } elseif (IntegerValue::class === $type->getValueClass()) {
-                $rules["nodes.$nodeId"][] = "integer";
-                $rules["nodes.$nodeId"][] = "digits_between:0,999999999";
-            } elseif (FloatValue::class === $type->getValueClass()) {
-                $rules["nodes.$nodeId"][] = "decimal:2";
-            }
-
-            if (
-                (HtmlSelect::class === $node->html_type && $node->html->subselect) ||
-                (HtmlSharingSelect::class === $node->html_type)
-            ) {
-                //$rules["nodes.$nodeId"][] = "required";
-                $rules["nodes.$nodeId"][] = new MyExists();
-            }
-
-            if (Auth::user()->isInvitedUser()) {
-                if (
-                    (HtmlSelect::class === $node->html_type && $node->html->subselect) ||
-                    (HtmlSharingSelect::class === $node->html_type)
-                ) {
-                    //$rules["nodes.$nodeId"][] = "required";
-                    $rules["nodes.$nodeId"][] = new MyExists();
+                if ($genericType->required) {
+                    $rules["nodes.$nodeId"][] = "required";
+                } else {
+                    $rules["nodes.$nodeId"][] = "nullable";
                 }
-            }
 
-
-            if (Auth::user()->isInvitedUser()) {
-                if (HtmlSelect::class === $node->html_type && $node->html->auth_filtered) {
-                    //$rules["nodes.$nodeId"][] = "required";
-                    $rules["nodes.$nodeId"][] = new MyExists2();
+                if ($genericType->unique) {
+                    $rules["nodes.$nodeId"][] = new MyUnique();
                 }
+
+                if (StringValue::class === $type->getValueClass()) {
+                    $rules["nodes.$nodeId"][] = "string";
+                    $rules["nodes.$nodeId"][] = "max:250";
+                } elseif (IntegerValue::class === $type->getValueClass()) {
+                    $rules["nodes.$nodeId"][] = "integer";
+                    $rules["nodes.$nodeId"][] = "digits_between:0,999999999";
+                } elseif (FloatValue::class === $type->getValueClass()) {
+                    $rules["nodes.$nodeId"][] = "decimal:2";
+                }
+
+
+                if (Auth::user()->isInvitedUser()) {
+                    if (
+                        (HtmlSelect::class === $node->html_type && $node->html->subselect) ||
+                        (HtmlSharingSelect::class === $node->html_type)
+                    ) {
+                        // Integrity Constraint
+                        $rules["nodes.$nodeId"][] = "required";
+
+                        $rules["nodes.$nodeId"][] = new MyExists();
+                    }
+                }
+
+
+                if (Auth::user()->isInvitedUser()) {
+                    if (HtmlSelect::class === $node->html_type && $node->html->auth_filtered) {
+                        $rules["nodes.$nodeId"][] = new MyExists2();
+                    }
+                }
+
             }
 
 
@@ -94,13 +93,153 @@ class RowController extends Controller
 
     }
 
-    public function store(Node $node, CommonService $commonService) {
+    private function storeMultipleValue(bool $auth, array $fieldValue, Row $row, Node $node0) {
+
+        if ($auth && $node0->html && $node0->html->binding && $node0->html->binding->withType) {
+
+            foreach ($fieldValue as $fv) {
+
+                $value = new Value();
+                $value->row_id = $row->id;
+                $value->field_id = $node0->html->binding->id;
+                $value->save();
+
+                $valueWithValue = new ($node0->html->binding->withType->getValueClass());
+                if (method_exists($node0->html, "transformInput")) {
+                    $valueWithValue->value = $node0->html->transformInput($fv);
+                } else {
+                    $valueWithValue->value = $fv;
+                }
+                $valueWithValue->save();
+
+                $valueWithValue->value()->save($value);
+
+            }
+        }
+
+    }
+
+    private function storeSingleValue(bool $auth, mixed $fieldValue, Row $row , Node $node0) {
+
+        if ($node0->html && $node0->html->binding && $node0->html->binding->withType) {
+
+            $value = new Value();
+            $value->row_id = $row->id;
+            $value->field_id = $node0->html->binding->id;
+            $value->save();
+
+            $valueWithValue = new ($node0->html->binding->withType->getValueClass());
+            if ($auth) {
+                if (method_exists($node0->html, "transformInput")) {
+                    $valueWithValue->value = $node0->html->transformInput($fieldValue);
+                } else {
+
+                    $valueWithValue->value = $fieldValue;
+                }
+            }
+            $valueWithValue->save();
+
+            $valueWithValue->value()->save($value);
+
+        }
+
+    }
+
+
+    private function updateMultipleValue(bool $auth, array $fieldValue, Row $row , Node $node0) {
+
+        if ($auth && $node0->html && $node0->html->binding && $node0->html->binding->withType) {
+
+            $values = $node0->html->binding->values($row)->get();
+
+            foreach ($values as $value) {
+                if (!in_array($value->withValue->value, $fieldValue)) {
+                    $value->delete();
+                }
+            }
+
+
+            $valuesWithValue = [];
+            foreach ($values as $v) {
+                $valuesWithValue[] = $v->withValue->value;
+            }
+
+
+            foreach ($fieldValue as $fv) {
+
+                if (!in_array($fv, $valuesWithValue)) {
+                    $value = new Value();
+                    $value->row_id = $row->id;
+                    $value->field_id = $node0->html->binding->id;
+                    $value->save();
+
+                    $valueWithValue = new ($node0->html->binding->withType->getValueClass());
+                    if (method_exists($node0->html, "transformInput")) {
+                        $valueWithValue->value = $node0->html->transformInput($fv);
+                    } else {
+                        $valueWithValue->value = $fv;
+                    }
+                    $valueWithValue->save();
+
+                    $valueWithValue->value()->save($value);
+                }
+
+            }
+
+        }
+
+    }
+
+
+    private function updateSingleValue(bool $authUpdate, bool $authStore, array $fieldValue, Row $row , Node $node0) {
+
+        if ($node0->html && $node0->html->binding && $node0->html->binding->withType) {
+
+            $value = $node0->html->binding->values($row)->first();
+
+            if ($value) {
+
+                if ($authUpdate) {
+                    if (method_exists($node0->html, "transformInput")) {
+                        $value->withValue->value = $node0->html->transformInput($fieldValue);
+                    } else {
+                        $value->withValue->value = $fieldValue;
+                    }
+                }
+                $value->withValue->save();
+            } else {
+
+                $value = new Value();
+                $value->row_id = $row->id;
+                $value->field_id = $node0->html->binding->id;
+                $value->save();
+
+                $valueWithValue = new ($node0->html->binding->withType->getValueClass());
+                if ($authStore) {
+                    if (method_exists($node0->html, "transformInput")) {
+                        $valueWithValue->value = $node0->html->transformInput($fieldValue);
+                    } else {
+
+                        $valueWithValue->value = $fieldValue;
+                    }
+                }
+                $valueWithValue->save();
+
+                $valueWithValue->value()->save($value);
+            }
+
+        }
+
+    }
+
+
+
+    public function store(Node $node) {
 
         if (Auth::user()->canCreate($node)) {
 
             if ($this->validator()->fails()) {
 
-                // TODO security check
                 $qs = \request()->getQueryString();
                 $append = $qs?"?$qs":"";
 
@@ -118,65 +257,23 @@ class RowController extends Controller
 
                 $row->save();
 
-
-
                 foreach (request()->nodes as $nodeId => $fieldValue) {
 
                     $node0 = Node::find($nodeId);
+                    $auth = Auth::user()->canCreate($node0);
 
                     if (is_array($fieldValue)) {
-
-                        if (Auth::user()->canCreate($node0)) {
-
-                            foreach ($fieldValue as $fv) {
-
-                                $value = new Value();
-                                $value->row_id = $row->id;
-                                $value->field_id = $node0->html->binding->id;
-                                $value->save();
-
-                                $valueWithValue = new ($node0->html->binding->withType->getValueClass());
-                                if (method_exists($node0->html, "transformInput")) {
-                                    $valueWithValue->value = $node0->html->transformInput($fv);
-                                } else {
-                                    $valueWithValue->value = $fv;
-                                }
-                                $valueWithValue->save();
-
-                                $valueWithValue->value()->save($value);
-
-                            }
-                        }
-
+                        $this->storeMultipleValue($auth, $fieldValue, $row, $node0);
                     } else {
-                        $node0 = Node::find($nodeId);
-
-                        $value = new Value();
-                        $value->row_id = $row->id;
-                        $value->field_id = $node0->html->binding->id;
-                        $value->save();
-
-                        $valueWithValue = new ($node0->html->binding->withType->getValueClass());
-                        if (Auth::user()->canCreate($node0)) {
-                            if (method_exists($node0->html, "transformInput")) {
-                                $valueWithValue->value = $node0->html->transformInput($fieldValue);
-                            } else {
-
-                                $valueWithValue->value = $fieldValue;
-                            }
-                        }
-                        $valueWithValue->save();
-
-                        $valueWithValue->value()->save($value);
+                        $this->storeSingleValue($auth, $fieldValue, $row, $node0);
                     }
+
                 }
 
                 return $row;
 
             });
 
-
-            // TODO security check
             $qs = \request()->getQueryString();
             $append = $qs?"?$qs":"";
 
@@ -210,7 +307,6 @@ class RowController extends Controller
 
             if ($this->validator()->fails()) {
 
-                // TODO security check
                 $qs = \request()->getQueryString();
                 $append = $qs?"?$qs":"";
 
@@ -223,110 +319,38 @@ class RowController extends Controller
 
                 foreach (request()->nodes as $nodeId => $fieldValue) {
 
-                $node0 = Node::find($nodeId);
+                    $node0 = Node::find($nodeId);
+                    $auth = Auth::user()->canUpdate($node0);
+                    $authStore = Auth::user()->canStore($node0);
 
+                    if (is_array($fieldValue)) {
 
-                if (is_array($fieldValue)) {
+                        $this->updateMultipleValue($auth, $fieldValue, $row, $node0);
 
-                    if (Auth::user()->canUpdate($node0)) {
-
-                        $values = $node0->html->binding->values($row)->get();
-
-                        foreach ($values as $value) {
-                            if (!in_array($value->withValue->value, $fieldValue)) {
-                                $value->delete();
-                            }
-                        }
-
-
-                        $valuesWithValue = [];
-                        foreach ($values as $v) {
-                            $valuesWithValue[] = $v->withValue->value;
-                        }
-
-
-                        foreach ($fieldValue as $fv) {
-
-                            if (!in_array($fv, $valuesWithValue)) {
-                                $value = new Value();
-                                $value->row_id = $row->id;
-                                $value->field_id = $node0->html->binding->id;
-                                $value->save();
-
-                                $valueWithValue = new ($node0->html->binding->withType->getValueClass());
-                                if (method_exists($node0->html, "transformInput")) {
-                                    $valueWithValue->value = $node0->html->transformInput($fv);
-                                } else {
-                                    $valueWithValue->value = $fv;
-                                }
-                                $valueWithValue->save();
-
-                                $valueWithValue->value()->save($value);
-                            }
-
-                        }
-
-                    }
-
-                } else {
-
-
-                    // Security check
-                    if (Auth::user()->isInvitedUser()) {
-                        if (
-                            (HtmlSelect::class === $node0->html_type && $node0->html->subselect) ||
-                            (HtmlSharingSelect::class === $node0->html_type)
-                        ) {
-
-                            $rows = $row->form->filteredRows($fieldValue, null);
-                            if (!in_array($fieldValue, $rows->pluck("id")->toArray())) {
-                                abort(403);
-                            }
-                        }
-                    }
-                    //
-
-
-                    $value = $node0->html->binding->values($row)->first();
-
-                    if ($value) {
-
-                        if (Auth::user()->canUpdate($node0)) {
-                            if (method_exists($node0->html, "transformInput")) {
-                                $value->withValue->value = $node0->html->transformInput($fieldValue);
-                            } else {
-                                $value->withValue->value = $fieldValue;
-                            }
-                        }
-                        $value->withValue->save();
                     } else {
 
-                        $value = new Value();
-                        $value->row_id = $row->id;
-                        $value->field_id = $node0->html->binding->id;
-                        $value->save();
+                        // Authorization Check
+                        if (Auth::user()->isInvitedUser()) {
+                            if (
+                                (HtmlSelect::class === $node0->html_type && $node0->html->subselect) ||
+                                (HtmlSharingSelect::class === $node0->html_type)
+                            ) {
 
-                        $valueWithValue = new ($node0->html->binding->withType->getValueClass());
-                        if (Auth::user()->canCreate($node0)) {
-                            if (method_exists($node0->html, "transformInput")) {
-                                $valueWithValue->value = $node0->html->transformInput($fieldValue);
-                            } else {
-
-                                $valueWithValue->value = $fieldValue;
+                                $rows = $row->form->filteredRows($fieldValue, null);
+                                if (!in_array($fieldValue, $rows->pluck("id")->toArray())) {
+                                    abort(403);
+                                }
                             }
                         }
-                        $valueWithValue->save();
 
-                        $valueWithValue->value()->save($value);
+                        $this->updateSingleValue($auth, $authStore, $fieldValue, $row, $node0);
+
                     }
 
                 }
 
-            }
-
             });
 
-            // TODO security check
             $qs = \request()->getQueryString();
             $append = $qs?"?$qs":"";
 

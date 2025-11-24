@@ -22,28 +22,9 @@ class HtmlList extends Component
         )
     {
 
+
         $commonService = app()->make(CommonService::class);
-        $node = $this->selectedNode;
-
-        $rows = null;
-
-        $filteringNode = $node->html->defaultFilterBinding;
-        $defaultFilterValue = null;
-        if ($filteringNode) {
-            $defaultFilterValue = $commonService->getFilteringValue($filteringNode);
-        }
-
-        $filteringString = Request::query("filter");
-        $filters = [];
-        if ($filteringString) {
-            $filters[$node->html->node1->html->binding->withType->getValueClass()] = $filteringString;
-            $filters[$node->html->node2->html->binding->withType->getValueClass()] = $filteringString;
-        }
-
-        $rows = $node->html->binding->filteredRows($defaultFilterValue, $filters);
-
-
-        $this->rows = $rows;
+        $this->rows = $commonService->getHtmlListFilteredRows($this->selectedNode);
 
 
     }

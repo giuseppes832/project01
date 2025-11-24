@@ -61,11 +61,15 @@ class HtmlSelect extends Component
         if ($formRow) {
             if (!$this->selectedNode->html->multiple) {
 
+                // Get FK
                 $fkValue = $this->selectedNode->html->binding->values($formRow)->first();
 
+                // Get FK Row from related form
                 $row = $this->selectedNode->html->formBinding->row($fkValue->withValue->value)->first();
 
                 if ($row) {
+
+                    // Get Text Value of Related form Fk row
                     $genericValue = $this->selectedNode->html->formFieldBinding->html->binding->values($row)->first();
 
                     if ($genericValue) {
@@ -116,16 +120,22 @@ class HtmlSelect extends Component
 
         }
 
-        // Security Check 1
-        if (Auth::user()->isInvitedUser() && $this->selectedNode->html->subselect && !Request::filled("parent_row_id")) {
-            abort(403);
-        }
 
-        // Security Check 2
-        $commonService = app()->make(CommonService::class);
-        if (Auth::user()->isInvitedUser() && $this->selectedNode->html->subselect && !$commonService->getFilteringValue($this->selectedNode)) {
-            // Unused
-            abort(403);
+        // Authorization Check
+        if (Auth::user()->isInvitedUser() && $this->selectedNode->html->subselect) {
+
+            if (!Request::filled("parent_row_id")) {
+                abort(403);
+            }
+
+            $commonService = app()->make(CommonService::class);
+            $sharing = $commonService->getSharing();
+            $verified = $commonService->isFilteringRowVerified(Request::query("parent_row_id"), $sharing->id);
+
+            if (!$verified) {
+                abort(403);
+            }
+
         }
 
     }

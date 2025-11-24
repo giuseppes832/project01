@@ -322,28 +322,10 @@ class NodeController extends Controller
     }
 
 
-    public function renderHtmlListBody(Node $node, CommonService $commonService) {
+    public function renderHtmlListBody(Node $node) {
 
-        $rows = null;
-
-        $filteringNode = $node->html->defaultFilterBinding;
-        $defaultFilterValue = null;
-        if ($filteringNode) {
-
-            if ($filteringNode) {
-                $defaultFilterValue = $commonService->getFilteringValue($filteringNode);
-            }
-
-        }
-
-        $filteringString = Request::query("filter");
-        $filters = [];
-        if ($filteringString) {
-            $filters[$node->html->node1->html->binding->withType->getValueClass()] = $filteringString;
-            $filters[$node->html->node2->html->binding->withType->getValueClass()] = $filteringString;
-        }
-
-        $rows = $node->html->binding->filteredRows($defaultFilterValue, $filters);
+        $commonService = app()->make(CommonService::class);
+        $rows = $commonService->getHtmlListFilteredRows($node);
 
         return view("components.render.html-list-body", [
             "selectedNode" => $node,

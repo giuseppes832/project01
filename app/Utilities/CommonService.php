@@ -77,7 +77,8 @@ class CommonService
             }
 
         } else {
-            return "ERROR_404";
+            //return "ERROR_404";
+            return "ERROR_403";
         }
 
     }
@@ -125,6 +126,27 @@ class CommonService
         }
 
         return $defaultFilterValue;
+
+    }
+
+    public function getHtmlListFilteredRows($node) {
+
+        $rows = null;
+
+        $filteringNode = $node->html->defaultFilterBinding;
+        $defaultFilterValue = null;
+        if ($filteringNode) {
+            $defaultFilterValue = $this->getFilteringValue($filteringNode);
+        }
+
+        $filteringString = Request::query("filter");
+        $filters = [];
+        if ($filteringString) {
+            $filters[$node->html->node1->html->binding->withType->getValueClass()] = $filteringString;
+            $filters[$node->html->node2->html->binding->withType->getValueClass()] = $filteringString;
+        }
+
+        $rows = $node->html->binding->filteredRows($defaultFilterValue, $filters);
 
     }
 

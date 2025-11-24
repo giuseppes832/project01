@@ -5,10 +5,10 @@
         <div class="d-flex align-items-center">
             <div class="w-75">
                 @if($selectedNode->html->node1 && Auth::user()->canRead($selectedNode->html->node1))
-                    <div class="fw-normal">{{ $row->getValue($selectedNode->html->node1, $row)}}</div>
+                    <div class="fw-normal">{{ $row->getValue($selectedNode->html->node1)}}</div>
                 @endif
                 @if($selectedNode->html->node2 && Auth::user()->canRead($selectedNode->html->node2))
-                    <div class="fw-light">{{ $row->getValue($selectedNode->html->node2, $row)}}</div>
+                    <div class="fw-light">{{ $row->getValue($selectedNode->html->node2)}}</div>
                 @endif
 
 

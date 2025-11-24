@@ -17,10 +17,10 @@ class Row extends Model
         return $this->belongsTo(HtmlForm::class, "form_id", "id");
     }
 
-    public function getValue($node, $row) {
+    public function getValue($node) {
 
         if ($node->html && $node->html->binding) {
-            $genericValue = $node->html->binding->values($row)->first();
+            $genericValue = $node->html->binding->values($this)->first();
             if ($genericValue) {
 
 

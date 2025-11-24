@@ -7,6 +7,7 @@ use App\Utilities\Menu;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\View\Component;
 use App\Models\Sharing;
 use App\Models\Node as NodeModel;
@@ -45,23 +46,21 @@ class SharingSelect extends Component
         $row = Menu::getRow();
 
         if ($row) {
-            $genericValue = $this->selectedNode->html->binding->values($row)->first();
-            if ($genericValue) {
-                $value = $genericValue->withValue;
+            $this->value = $row->getValue($this->selectedNode);
+        }
 
-                if ($value) {
-                    $this->value =  $value->value;
-                }
+
+        // Authorization Check
+        if ($row && Auth::user()->isInvitedUser()) {
+
+            $commonService = app()->make(CommonService::class);
+            $filteringValue =  $commonService->getFilteringValue($this->selectedNode);
+            if ($this->value !== $filteringValue) {
+                abort(403);
             }
+
         }
 
-
-        // Security Check
-        $commonService = app()->make(CommonService::class);
-        if (Auth::user()->isInvitedUser() && ($this->value && $this->value !== $commonService->getFilteringValue($this->selectedNode))) {
-            // Unused
-            abort(403);
-        }
     }
 
     /**

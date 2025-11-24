@@ -22,7 +22,10 @@ class HtmlStaticSelect extends Component
     {
 
 
-        $csvOptions = explode("\n", $this->selectedNode->html->binding->withType->options);
+        $csvOptions = [];
+        if ($this->selectedNode->html->binding && $this->selectedNode->html->binding->withType) {
+            $csvOptions = explode("\n", $this->selectedNode->html->binding->withType->options);
+        }
 
         $this->options = [];
 
