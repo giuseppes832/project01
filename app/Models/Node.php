@@ -23,7 +23,7 @@ class Node extends Model
 
     public function children() : HasMany {
 
-        return $this->hasMany(Node::class, "parent_id", "id");
+        return $this->hasMany(Node::class, "parent_id", "id")->orderBy("order")->orderBy("id");
 
     }
 

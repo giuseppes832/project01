@@ -52,7 +52,7 @@
 
 		<div class="flex-grow-1">
 
-			@if(null !== $selectedRole && null !== $rootNodes)
+			@if(isset($selectedRole) && isset($rootNodes))
 			<div class="p-4">
 
 

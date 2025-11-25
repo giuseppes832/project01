@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('nodes', function (Blueprint $table) {
             $table->string('label')->nullable();
+            $table->string('order')->nullable();
         });
     }
 

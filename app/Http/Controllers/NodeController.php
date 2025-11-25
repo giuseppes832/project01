@@ -19,7 +19,7 @@ class NodeController extends Controller
 
         $resources = Resource::all();
 
-        $nodes = Node::query()->whereNull("parent_id")->get();
+        $nodes = Node::query()->whereNull("parent_id")->orderBy("order")->orderBy("id")->get();
 
         return view("components.nodes.nodes", [
             "nodes" => $nodes,
@@ -51,7 +51,7 @@ class NodeController extends Controller
 
         $resources = Resource::all();
 
-        $nodes = Node::query()->whereNull("parent_id")->get();
+        $nodes = Node::query()->whereNull("parent_id")->orderBy("order")->orderBy("id")->get();
 
         return view("components.nodes.nodes", [
             "nodes" => $nodes,
@@ -85,6 +85,21 @@ class NodeController extends Controller
         });
 
         return redirect("/nodes/$node->id");
+
+    }
+
+    public function updateOrder(Node $node) {
+
+        request()->validate([
+            "order.*" => "required|integer",
+        ]);
+
+        $keys = array_keys(request()->order);
+
+        $node->order = request()->order[$keys[0]];
+        $node->save();
+
+        return redirect("/nodes");
 
     }
 

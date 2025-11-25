@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/nodes/{node}', [NodeController::class, 'update']);
         Route::get('/nodes/{node}/delete', [NodeController::class, 'delete']);
         Route::post('/nodes/{node}', [NodeController::class, 'storeChild']);
+        Route::put('/nodes-order/{node}', [NodeController::class, 'updateOrder']);
         Route::put('/nodes2/{node}', [NodeController::class, 'updateInputText']);
         Route::put('/nodes3/{node}', [NodeController::class, 'updateNavLink']);
         Route::put('/nodes4/{node}', [NodeController::class, 'updateHtmlList']);
