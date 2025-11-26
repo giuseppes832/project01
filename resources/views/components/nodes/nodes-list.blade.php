@@ -7,13 +7,13 @@
 
             	<li>
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <a href="/nodes/{{ $node->id }}">{{ $node->name }}</a>
+                        <a class="btn btn-sm btn" href="/nodes/{{ $node->id }}">{{ $node->name }}</a>
                         <form class="d-flex" action="/nodes-order/{{ $node->id }}" method="post">
                             @csrf
                             @method("put")
                             <input type="text" class="form-control form-control-sm me-1" style="width: 40px;" name="order[{{ $node->id }}]" value="{{ old("order.$node->id", $node->order) }}"/>
 
-                            <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-circle"></i></button>
+                            <button type="submit" class="btn btn-outline-primary btn-sm"><i class="bi bi-save"></i></button>
                         </form>
                     </div>
                     @error("order.$node->id")

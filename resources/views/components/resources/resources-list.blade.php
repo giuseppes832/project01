@@ -1,20 +1,20 @@
 <ul>
 
-    <li><a href="/apps/app">App</a></li>
+    <li><a class="btn btn-sm btn" href="/apps/app">App</a></li>
 
-	<li><a href="/resources">Risorse</a></li>
+	<li><a class="btn btn-sm btn" href="/resources">Risorse</a></li>
 
 	<ul>
 
     	@foreach($resources as $resource)
 
-    	<li><a href="/resources/{{ $resource->id }}">{{ $resource->name }}</a></li>
+    	<li><a class="btn btn-sm btn" href="/resources/{{ $resource->id }}">{{ $resource->name }}</a></li>
 
 		<ul>
 
         	@foreach($resource->fields as $field)
 
-        	<li><a href="/fields/{{ $field->id }}">{{ $field->name }}</a></li>
+        	<li class="btn btn-sm btn"><a href="/fields/{{ $field->id }}">{{ $field->name }}</a></li>
 
         	@endforeach
 

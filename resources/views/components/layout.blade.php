@@ -43,6 +43,9 @@
                     <a class="nav-link" href="/users">Utenti</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/sharings">Condivisioni</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/owner-account">Account</a>
                 </li>
                 @endif

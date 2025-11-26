@@ -44,15 +44,15 @@
 
             <ul>
 
-                <li><a href="/apps/owner-app">App</a></li>
+                <li><a class="btn btn-sm btn" href="/apps/owner-app">App</a></li>
 
-                <li><a href="/users">Utenti Invitati</a></li>
+                <li><a class="btn btn-sm btn" href="/users">Utenti Invitati</a></li>
 
                 <ul>
 
                     @foreach($users as $user)
 
-                        <li><a href="/users/{{ $user->id }}">{{ $user->name }}</a></li>
+                        <li><a class="btn btn-sm btn" href="/users/{{ $user->id }}">{{ $user->name }}</a></li>
 
                     @endforeach
 
