@@ -8,7 +8,7 @@ Accessing as administrator you can define which data the application owner can c
 
 ### What the applications you create can do at first
 
-Accessing as owner you can create, read, update and delete Data. You should invite also users and share data with them enabling them to create, read, update and delete data too.
+Accessing as owner you can create, read, update and delete data. You should invite also users and share data with them enabling them to create, read, update and delete data too.
 
 ### Extending applications 
 
