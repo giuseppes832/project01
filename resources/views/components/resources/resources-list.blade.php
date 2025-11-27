@@ -14,7 +14,7 @@
 
         	@foreach($resource->fields as $field)
 
-        	<li class="btn btn-sm btn"><a href="/fields/{{ $field->id }}">{{ $field->name }}</a></li>
+        	<li><a class="btn btn-sm btn" href="/fields/{{ $field->id }}">{{ $field->name }}</a></li>
 
         	@endforeach
 
