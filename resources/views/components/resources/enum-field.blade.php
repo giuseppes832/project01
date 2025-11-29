@@ -7,6 +7,8 @@
         <label>Opzioni</label>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-sm mb-3">Salva</button>
+    <button type="submit" class="btn btn-primary btn-sm mb-3">
+        <i class="bi bi-save"></i> Save
+    </button>
 
 </form>

@@ -9,7 +9,9 @@ $sharedNode = $selectedRole->sharedNode($node);
 @if(!$sharedNode)
 <form action="/roles/{{ $selectedRole->id }}/nodes/{{ $node->id }}/shared-nodes" method="post">
 	@csrf
-	<button type="submit" class="btn btn-success btn-sm">Crea permessi</button>
+	<button type="submit" class="btn btn-success btn-sm">
+        <i class="bi bi-plus-circle"></i> Create Permissions
+    </button>
 </form>
 
 @else
@@ -45,8 +47,12 @@ $sharedNode = $selectedRole->sharedNode($node);
         </label>
     </div>
 
-    <button type="submit" class="btn btn-success btn-sm">Salva</button>
-    <a class="btn btn-danger btn-sm" href="/shared-nodes/{{ $sharedNode->id }}/delete">Elimina</a>
+    <button type="submit" class="btn btn-primary btn-sm">
+        <i class="bi bi-save"></i> Save
+    </button>
+    <a class="btn btn-danger btn-sm" href="/shared-nodes/{{ $sharedNode->id }}/delete">
+        <i class="bi bi-trash"></i> Delete
+    </a>
 </form>
 @endif
 

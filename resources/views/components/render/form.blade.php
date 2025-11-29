@@ -11,9 +11,11 @@ if($row ) {
 	$method = "post";
 }
 
+$qs = "";
 if (Request::filled("parent_row_id")) {
-    $action .= "?parent_row_id=" . Request::query("parent_row_id");
+    $qs = "parent_row_id=" . Request::query("parent_row_id");
 }
+$action .= "?$qs";
 @endphp
 
 
@@ -35,13 +37,22 @@ if (Request::filled("parent_row_id")) {
 	@endforeach
 
     <div class="text-end">
-        <button type="submit" class="btn btn-primary">
-            <i class="bi bi-save"></i> Salva
+
+        <script>
+
+        </script>
+
+        <button type="button" class="btn btn-primary" onclick="window.loadNode({{ $selectedNode->id }}, '{{ $qs }}', 'globalModalBody')">
+            <i class="bi bi-plus-square"></i> New
+        </button>
+
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-save"></i> Save
         </button>
 
         @if($row)
         <a href="javascript:void(0)" class="btn btn-danger" data-bs-dismiss="modal" onclick="window.deleteRow({{ $row->id }})">
-            <i class="bi bi-trash"></i> Elimina
+            <i class="bi bi-trash"></i> Delete
         </a>
         @endif
     </div>

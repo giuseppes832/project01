@@ -142,8 +142,12 @@ class CommonService
         $filteringString = Request::query("filter");
         $filters = [];
         if ($filteringString) {
-            $filters[$node->html->node1->html->binding->withType->getValueClass()] = $filteringString;
-            $filters[$node->html->node2->html->binding->withType->getValueClass()] = $filteringString;
+            if ($node->html->node1 && $node->html->node1->html->binding) {
+                $filters[$node->html->node1->html->binding->withType->getValueClass()] = $filteringString;
+            }
+            if ($node->html->node2 && $node->html->node2->html->binding) {
+                $filters[$node->html->node2->html->binding->withType->getValueClass()] = $filteringString;
+            }
         }
 
         $rows = $node->html->binding->filteredRows($defaultFilterValue, $filters);

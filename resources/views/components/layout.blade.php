@@ -23,7 +23,7 @@
                 @auth
                 @if(Auth::user()->isInvitedUser())
                 <li class="nav-item">
-                  <a class="nav-link" href="/my-invites">Inviti</a>
+                  <a class="nav-link" href="/my-invites">Invites</a>
                 </li>
                   <li class="nav-item">
                       <a class="nav-link" href="/invited-user-account">Account</a>
@@ -40,10 +40,10 @@
                   <a class="nav-link" href="/apps/owner-app">App</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/users">Utenti</a>
+                    <a class="nav-link" href="/users">Users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/sharings">Condivisioni</a>
+                    <a class="nav-link" href="/sharings">Sharings</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/owner-account">Account</a>

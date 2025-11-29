@@ -45,11 +45,11 @@ class HtmlForm extends Model
                 foreach ($filters as $filterClass => $filterValue) {
                     if ($index) {
                         $query->orWhereHasMorph("withValue", [$filterClass], function($query) use ($filterValue) {
-                            $query->where("value", $filterValue);
+                            $query->where("value", "like", "%$filterValue%");
                         });
                     } else {
                         $query->whereHasMorph("withValue", [$filterClass], function($query) use ($filterValue) {
-                            $query->where("value", $filterValue);
+                            $query->where("value", "like", "%$filterValue%");
                         });
                     }
 

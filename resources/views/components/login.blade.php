@@ -19,7 +19,9 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                 <label for="password">Password</label>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-person"></i> Login
+            </button>
         </form>
 
     </div>

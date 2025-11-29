@@ -50,11 +50,13 @@ class FieldController extends Controller
 
         request()->validate([
             "name" => "required|string|max:250",
-            "required" => "nullable|boolean",
-            "unique" => "nullable|boolean"
+            "required" => "nullable",
+            "unique" => "nullable"
         ]);
-
+        
         DB::transaction(function () use ($field) {
+
+
 
             $field->name = request()->name;
             $field->required = (request()->required === "on") ? true : false;

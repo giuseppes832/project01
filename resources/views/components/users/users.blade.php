@@ -34,7 +34,9 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-outline-danger btn-sm mb-3">Send User Invite</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm mb-3">
+                        <i class="bi bi-send"></i> Send User Invite
+                    </button>
 
                 </form>
 
@@ -68,7 +70,7 @@
 
                 <div class="mb-3 form-floating">
                     <input type="text" class="form-control form-control-sm" name="name"/>
-                    <label>Nome</label>
+                    <label>Name</label>
                     @error("name")
                     <div class="text-danger">
                         {{ $message }}
@@ -87,7 +89,9 @@
                 </div>
 
 
-                <button type="submit" class="btn btn-outline-danger btn-sm mb-3">Send User Invite</button>
+                <button type="submit" class="btn btn-outline-danger btn-sm mb-3">
+                    <i class="bi bi-send"></i> Send User Invite
+                </button>
 
             </form>
             @endif
@@ -95,12 +99,14 @@
             @isset($selectedUser)
             <script>
                 function confirmDelete() {
-                    if(confirm("Confermi di voler cancellare l'utente selezionato ?")) {
+                    if(confirm("Do you want to delete selected user ?")) {
                         window.location.href = "/users/{{ $selectedUser->id }}/delete";
                     }
                 }
             </script>
-            <a class="btn btn-primary btn-danger btn-sm mt-3" href="javascript:void(0)" onclick="confirmDelete()" role="button">Elimina utente</a>
+            <a class="btn btn-primary btn-danger btn-sm mt-3" href="javascript:void(0)" onclick="confirmDelete()" role="button">
+                <i class="bi bi-trash"></i> Delete User
+            </a>
             @endisset
 
         </div>

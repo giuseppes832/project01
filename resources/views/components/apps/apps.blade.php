@@ -35,7 +35,9 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-danger">Send Owner Invite</button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-send"></i> Send Owner Invite
+                    </button>
                 </form>
 
             </div>

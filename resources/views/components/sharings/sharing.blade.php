@@ -8,7 +8,7 @@
 
 		<div class="mb-3 form-floating">
 			<input type="text" class="form-control form-control-sm" name="name" value="{{ old('name', $selectedSharing->name) }}"/>
-			<label>Nome condvisione</label>
+			<label>Sharing name</label>
             @error("name")
             <div class="text-danger">
                 {{ $message }}
@@ -18,12 +18,12 @@
 
 		<div class="mb-3 form-floating">
             <select class="form-select" name="role_id" aria-label="Ruolo">
-                <option value="" selected>Seleziona uno ...</option>
+                <option value="" selected>Select ...</option>
                 @foreach($roles as $value => $role)
                 <option value="{{ $role->id }}" @if ($role->id == old('role_id', $selectedSharing->role_id)) selected @endif>{{ $role->name }}</option>
                 @endforeach
             </select>
-			<label>Ruolo</label>
+			<label>Role</label>
         </div>
 
 		<div class="mb-3 form-floating">
@@ -33,12 +33,14 @@
                 <option value="{{ $value }}" @if ($value == old('n', $Utility::getSectedSharingType($selectedSharing))) selected @endif>{{ $sharing["label"] }}</option>
                 @endforeach
             </select>
-			<label>Tipo di condivisione</label>
+			<label>Sharing type</label>
         </div>
 
 
 
-        <button type="submit" class="btn btn-primary btn-sm mb-3">Salva</button>
+        <button type="submit" class="btn btn-primary btn-sm mb-3">
+            <i class="bi bi-save"></i> Save
+        </button>
 
 	</form>
 

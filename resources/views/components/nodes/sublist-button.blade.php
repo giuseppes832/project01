@@ -4,14 +4,16 @@
 
     <div class="mb-3 form-floating">
         <select class="form-select" name="list_binding" aria-label="Campo">
-            <option value="" selected>Seleziona uno ...</option>
+            <option value="" selected>Select ...</option>
             @foreach($nodes as $node)
                 <option value="{{ $node->html->id }}" @if ($node->html->id == old('list_binding', $selectedNode->html->list_binding_id)) selected @endif>{{ $node->name }}</option>
             @endforeach
         </select>
-        <label>Campo</label>
+        <label>Binding Field</label>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-sm mb-3">Salva</button>
+    <button type="submit" class="btn btn-primary btn-sm mb-3">
+        <i class="bi bi-save"></i> Save
+    </button>
 
 </form>

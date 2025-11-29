@@ -9,7 +9,7 @@
 
         @foreach($sharings as $sharing)
 
-        <li><a href="/select-sharing/{{ $sharing->id }}">Seleziona utente: {{ $sharing->name }}</a></li>
+        <li><a href="/select-sharing/{{ $sharing->id }}">Select sharing: {{ $sharing->name }}</a></li>
 
         @endforeach
 

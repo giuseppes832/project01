@@ -2,7 +2,7 @@
 
     <div class="container mt-4">
 
-        <h5>Cambio Password</h5>
+        <h5>Password change</h5>
 
         <form action="/{{ $action }}" method="post">
             @csrf
@@ -10,7 +10,7 @@
 
             <div class="mb-3 form-floating">
                 <input type="password" class="form-control form-control-sm" name="current_password" value="{{ old("current_password") }}"/>
-                <label>Password Corrente</label>
+                <label>Current password</label>
                 @error("current_password")
                 <div class="text-danger">
                     {{ $message }}
@@ -20,7 +20,7 @@
 
             <div class="mb-3 form-floating">
                 <input type="password" class="form-control form-control-sm" name="password" value="{{ old("password") }}"/>
-                <label>Nuova Password</label>
+                <label>New password</label>
                 @error("password")
                 <div class="text-danger">
                     {{ $message }}
@@ -30,7 +30,7 @@
 
             <div class="mb-3 form-floating">
                 <input type="password" class="form-control form-control-sm" name="password2" value="{{ old("password2") }}"/>
-                <label>Conferma Password</label>
+                <label>Confirm password</label>
                 @error("password2")
                 <div class="text-danger">
                     {{ $message }}
@@ -38,7 +38,9 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary btn-sm mb-3">Salva</button>
+            <button type="submit" class="btn btn-primary btn-sm mb-3">
+                <i class="bi bi-save"></i> Save
+            </button>
 
         </form>
 
