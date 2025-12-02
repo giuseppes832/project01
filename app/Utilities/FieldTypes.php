@@ -15,6 +15,7 @@ use App\Models\FieldTypes\TimestampField;
 use App\Models\Nodes\HtmlCheckbox;
 use App\Models\Nodes\HtmlDate;
 use App\Models\Nodes\HtmlDateTime;
+use App\Models\Nodes\HtmlInputFile;
 use App\Models\Nodes\HtmlInputText;
 use App\Models\Nodes\HtmlSelect;
 use App\Models\Nodes\HtmlStaticSelect;
@@ -89,7 +90,7 @@ class FieldTypes
             "class" => TimestampField::class,
             "form-component" => null,
             "label" => "Timestamp",
-            "default-html-component" => null
+            "default-html-component" => HtmlInputFile::class
         ]
     ];
 

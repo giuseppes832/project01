@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Node;
 use App\Models\Resource;
+use App\Models\Row;
 use App\Utilities\CommonService;
 use App\Utilities\HtmlNodeTypes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class NodeController extends Controller
 {
@@ -360,6 +363,20 @@ class NodeController extends Controller
             "selectedNode" => $node,
             "rows" => $rows
         ]);
+
+    }
+
+    public function download(Row $row, Node $node, int $file) {
+
+        if (Auth::user()->canRead($node)) {
+
+            $value = $node->html->binding->values($row)->first();
+
+            $files = Storage::allFiles($value->withValue->value);
+
+            return Storage::download($files[$file]);
+
+        }
 
     }
 

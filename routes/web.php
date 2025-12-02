@@ -121,6 +121,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/render/{node}/ajax', [NodeController::class, 'renderHtmlListBody']);
 
+    Route::get('/rows/{row}/nodes/{node}/file/{index}', [NodeController::class, 'download']);
+
 });
 
 

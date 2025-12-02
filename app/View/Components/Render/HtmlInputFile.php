@@ -6,11 +6,14 @@ use App\Models\Node as NodeModel;
 use app\Utilities\Menu;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Component;
 
 class HtmlInputFile extends Component
 {
     public $value;
+
+    public $row;
 
     /**
      * Create a new component instance.
@@ -23,7 +26,9 @@ class HtmlInputFile extends Component
         $row = Menu::getRow();
 
         if ($row) {
-            //$this->value = $row->getValue($this->selectedNode);
+            $this->row = $row;
+            $timestamp = $row->getValue($this->selectedNode);
+            $this->value = Storage::allFiles($timestamp);
         }
 
 

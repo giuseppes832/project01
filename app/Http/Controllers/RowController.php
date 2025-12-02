@@ -22,6 +22,7 @@ use App\Utilities\Permission;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use function Illuminate\Foundation\Console\redirectPath;
 
@@ -168,7 +169,6 @@ class RowController extends Controller
                 $valuesWithValue[] = $v->withValue->value;
             }
 
-
             foreach ($fieldValue as $fv) {
 
                 if (!in_array($fv, $valuesWithValue)) {
@@ -204,10 +204,16 @@ class RowController extends Controller
             if ($value) {
 
                 if ($authUpdate) {
+                    if (request()->hasFile("nodes.$node0->id")) {
+                        Storage::deleteDirectory($value->withValue->value);
+                    }
                     if (method_exists($node0->html, "transformInput")) {
                         $value->withValue->value = $node0->html->transformInput($fieldValue);
                     } else {
                         $value->withValue->value = $fieldValue;
+                    }
+                    if (request()->hasFile("nodes.$node0->id")) {
+                        $fieldValue->storeAs($value->withValue->value, $fieldValue->getClientOriginalName());
                     }
                 }
                 $value->withValue->save();
@@ -225,6 +231,9 @@ class RowController extends Controller
                     } else {
 
                         $valueWithValue->value = $fieldValue;
+                    }
+                    if (request()->hasFile("nodes.$node0->id")) {
+                        $fieldValue->storeAs($valueWithValue->value, $fieldValue->getClientOriginalName());
                     }
                 }
                 $valueWithValue->save();
@@ -382,6 +391,9 @@ class RowController extends Controller
 
                 DB::transaction(function () use($row) {
                     foreach ($row->values as $value) {
+                        if (Storage::directoryExists($value->withValue->value)) {
+                            Storage::deleteDirectory($value->withValue->value);
+                        }
                         $value->withValue->delete();
                         $value->delete();
                     }
