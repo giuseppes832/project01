@@ -28,7 +28,10 @@ class HtmlInputFile extends Component
         if ($row) {
             $this->row = $row;
             $timestamp = $row->getValue($this->selectedNode);
-            $this->value = Storage::allFiles($timestamp);
+            if ($timestamp) {
+                $this->value = Storage::allFiles($timestamp);
+            }
+
         }
 
 
