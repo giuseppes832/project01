@@ -8,6 +8,7 @@ use App\Models\Nodes\HtmlSelect;
 use App\Models\Nodes\HtmlSharingSelect;
 use App\Models\OwnerApp;
 use App\Models\RegisteredUserApp;
+use App\Models\Role;
 use App\Models\Row;
 use App\Models\Value;
 use App\Models\ValueTypes\FKValue;
@@ -250,6 +251,19 @@ class RowController extends Controller
     public function store(Node $node) {
 
         if (Auth::user()->canCreate($node)) {
+
+            if (request()->filled("new_node_id")) {
+                $newNode = Node::find(request()->new_node_id);
+                if (Auth::user()->canCreate($newNode)) {
+                    if (HtmlSharingSelect::class === $newNode->html_type) {
+                        return view("components.new-sharing", [
+                            "roles" => Role::all(),
+                            "redirect_node_id" => $node->id,
+                            "redirect_inputs" => request()->except(["_token"])
+                        ]);
+                    }
+                }
+            }
 
             if ($this->validator()->fails()) {
 

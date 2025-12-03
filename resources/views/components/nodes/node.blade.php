@@ -8,7 +8,7 @@
 
 		<div class="mb-3 form-floating">
 			<input type="text" class="form-control form-control-sm" name="name" value="{{ old('name', $selectedNode->name) }}"/>
-			<label>{{ __("main.nodes.Resource name") }}</label>
+			<label>{{ __("main.nodes.Node name") }}</label>
             @error("name")
             <div class="text-danger">
                 {{ $message }}

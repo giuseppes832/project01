@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\App;
+use App\Models\Node;
+use App\Models\Nodes\HtmlSharingSelect;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\Sharing;
 use App\Utilities\SharingTypes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\Console\Input\Input;
 
 class SharingController extends Controller
 {
@@ -32,6 +39,62 @@ class SharingController extends Controller
         $sharing->save();
 
         return redirect("/sharings");
+
+    }
+
+    public function store2() {
+
+
+        if (!\request()->back) {
+
+            $rules = [
+                "name" => "required|string|max:250",
+                "email" => "required|string|max:250",
+                "role_id" => "required"
+            ];
+
+            $validator = Validator::make(request()->all(), $rules);
+
+            if ($validator->fails()) {
+
+                return view("components.new-sharing", [
+                    "roles" => Role::all(),
+                    "redirect_node_id" => request()->redirect_node_id,
+                    "redirect_inputs" => request()->except(["redirect_node_id", "new_node_id", "email", "role_id", "_token"])
+                ])
+                ->withErrors($validator);
+
+            }
+
+            DB::transaction(function () {
+
+                $sharing = new Sharing;
+                $sharing->name = request()->name;
+                $sharing->role_id = request()->role_id;
+                $sharing->save();
+
+                $newSharingTypeClass = SharingTypes::getValues()["INVITED_USER"]["class"];
+                if ($newSharingTypeClass) {
+                    $sharing->changeSharingType($newSharingTypeClass);
+                    $sharing->sharingType->email = request()->email;
+                    $sharing->sharingType->save();
+                }
+
+            });
+
+        }
+
+        $redirectNodeid = \request()->redirect_node_id;
+        if ($redirectNodeid) {
+            \request()->flash();
+            return redirect("/render/$redirectNodeid");
+        } else {
+
+            // Fallback redirect
+            return redirect("/sharings");
+        }
+
+
 
     }
 

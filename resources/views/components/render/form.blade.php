@@ -20,7 +20,7 @@ $action .= "?$qs";
 
 
 <h5>{{ $selectedNode->label }}</h5>
-<form action="{{ $action }}" method="post" onsubmit="submitRow(this, 'globalModalBody')">
+<form id="{{ $selectedNode->id }}" action="{{ $action }}" method="post" onsubmit="submitRow(this, 'globalModalBody')">
 	@csrf
 	@method($method)
 

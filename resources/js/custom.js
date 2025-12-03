@@ -24,7 +24,7 @@ window.loadRow = function (rowId, targetId) {
   xhttp.send();
 }
 
-window.submitRow = function (form, targetId) {
+window.submitRow = function (form, targetId, others) {
   event.preventDefault();
   document.getElementById('globalModalBody').innerHTML = '<div class="w-100 text-center"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="visually-hidden">Loading...</span></div></div>';
   const xhttp = new XMLHttpRequest();
@@ -34,7 +34,14 @@ window.submitRow = function (form, targetId) {
   }
   xhttp.open(form.method, form.action);
   xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-  xhttp.send(new FormData(form));
+
+  let formData = new FormData(form);
+  if (others) {
+      others.forEach((input) => {
+          formData.set(input.name, input.value);
+      })
+  }
+  xhttp.send(formData);
 }
 
 window.deleteRow = function (rowId) {
@@ -69,3 +76,25 @@ window.refresh = function() {
 window.addEventListener('refresh', function (event) {
 	loadNode(event.detail.formId, event.detail.parentRowId, event.detail.targetId);
 })
+
+window.yes = function(selectedNodeId) {
+    event.preventDefault();
+
+    let others = [{
+        name: "new_node_id",
+        value: selectedNodeId
+    }]
+
+    submitRow(event.target.form, 'globalModalBody', others);
+}
+
+window.back = function () {
+    event.preventDefault();
+
+    let others = [{
+        name: "back",
+        value: true
+    }]
+
+    submitRow(event.target.form, 'globalModalBody', others);
+}

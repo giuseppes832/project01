@@ -19,7 +19,7 @@
 
     <form action="/render/{{  $selectedNode->id }}/ajax" method="get" >
         <div class="mb-2">
-            <input type="text" name="filter-field" class="form-control form-control" onkeyup="createRefreshHtmlListBody({{ $selectedNode->id }}, '{{ $qs }}filter=' + this.value, 'ajaxBody')" placeholder="Cerca"/>
+            <input type="text" name="filter-field" class="form-control form-control" onkeyup="createRefreshHtmlListBody({{ $selectedNode->id }}, '{{ $qs }}filter=' + this.value, 'ajaxBody')" placeholder="{{ __("main.render.Find") }}"/>
         </div>
     </form>
 

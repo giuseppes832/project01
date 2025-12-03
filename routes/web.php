@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/sharings', [SharingController::class, 'index']);
         Route::post('/sharings', [SharingController::class, 'store']);
+        Route::post('/sharings2', [SharingController::class, 'store2']);
         Route::get('/sharings/{sharing}', [SharingController::class, 'edit']);
         Route::put('/sharings/{sharing}', [SharingController::class, 'update']);
         Route::get('/sharings/{sharing}/delete', [SharingController::class, 'delete']);

@@ -57,7 +57,10 @@ return [
         "Select" => "Select",
         "New" => "New",
         "Save" => "Save",
-        "Delete" => "Delete"
+        "Delete" => "Delete",
+        "Find" => "Find",
+        "Do you want to create a new sharing ?" => "Do you want to create a new sharing ?",
+        "Yes" => "Yes"
     ],
     "resources" => [
         "Options" => "Options",
@@ -97,7 +100,7 @@ return [
         "Save" => "Save",
         "Sharing name" => "Sharing name",
         "Role" => "Role",
-        "Type" => "Sharing type",
+        "Sharing type" => "Sharing type",
         "Select" => "Select",
         "Do you want to delete the selected sharing ?" => "Do you want to delete the selected sharing ?",
         "Delete sharing" => "Delete sharing",
@@ -123,5 +126,9 @@ return [
     ],
     "start" => [
         "Loading" => "Loading"
+    ],
+    "new-sharing" => [
+        "New sharing" => "New sharing",
+
     ]
 ];
