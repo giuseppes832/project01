@@ -38,7 +38,6 @@
 
 @php
     $old = $selectedNode;
-    $selectedNode = null;
     if ($selectedNode->html->listBinding) {
         $selectedNode = $selectedNode->html->listBinding->node;
     }

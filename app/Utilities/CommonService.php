@@ -6,6 +6,7 @@ use App\Models\Invite;
 use App\Models\Nodes\HtmlList;
 use App\Models\Nodes\HtmlSelect;
 use App\Models\Nodes\HtmlSharingSelect;
+use App\Models\Nodes\SublistButton;
 use App\Models\Row;
 use App\Models\Sharing;
 use Illuminate\Support\Facades\Auth;
@@ -130,6 +131,11 @@ class CommonService
     }
 
     public function getHtmlListFilteredRows($node) {
+
+        if (SublistButton::class === $node->html_type) {
+            $node = $node->html->listBinding->node;
+        }
+
 
         $rows = null;
 
