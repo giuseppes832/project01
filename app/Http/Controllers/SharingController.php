@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\App;
-use App\Models\Node;
-use App\Models\Nodes\HtmlSharingSelect;
+use App\Mail\OwnerInvite;
+use App\Models\InvitedUser;
 use App\Models\Role;
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Sharing;
 use App\Utilities\SharingTypes;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\Console\Input\Input;
 
 class SharingController extends Controller
 {
@@ -75,6 +74,7 @@ class SharingController extends Controller
 
             if ($validator->fails()) {
 
+                request()->flash();
                 return view("components.new-sharing", [
                     "roles" => Role::all(),
                     "redirect_row_id" => request()->redirect_row_id,
@@ -98,6 +98,31 @@ class SharingController extends Controller
                     $sharing->sharingType->email = request()->email;
                     $sharing->sharingType->save();
                 }
+
+                $invite = User::query()->where("email", request()->email)->first();
+
+                if (!$invite) {
+
+                    $passsword = "temporanea" . 1000000 - random_int(1, 100000);
+
+                    $user = new User();
+                    $user->name = request()->name;
+                    $user->email = request()->email;
+                    $user->password = Hash::make($passsword);
+                    $user->save();
+
+                    $invitedUser = new InvitedUser();
+                    $invitedUser->save();
+
+                    $invitedUser->user()->save($user);
+
+                    Mail::to(request()->email)->send(new OwnerInvite($passsword));
+
+                    Log::info('Owner send invite to User with a temporary password.', ['name' => request()->name, 'email' => request()->email]);
+
+
+                }
+
 
             });
 

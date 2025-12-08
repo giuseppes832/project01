@@ -131,7 +131,7 @@ class CommonService
     }
 
     public function getHtmlListFilteredRows($node) {
-        
+
         $rows = null;
 
         $filteringNode = $node->html->defaultFilterBinding;

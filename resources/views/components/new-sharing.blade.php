@@ -36,7 +36,7 @@
     <div class="mb-2 form-floating">
         <input type="text" name="name" value="{{ old("name") }}" class="form-control form-control-sm"/>
         <label>{{ __("main.new-sharing.Sharing name") }}</label>
-        @error("email")
+        @error("name")
         <div class="text-danger">
             {{ $message }}
         </div>
@@ -58,7 +58,7 @@
         @enderror
     </div>
 
-    <div class="mb-2 form-floating">
+    <div class="mb-3 form-floating">
         <input type="text" name="email" value="{{ old("email") }}" class="form-control form-control-sm"/>
         <label>{{ __("main.new-sharing.Use email") }}</label>
         @error("email")
@@ -66,6 +66,13 @@
             {{ $message }}
         </div>
         @enderror
+    </div>
+
+    <div class="mb-3 form-check">
+        <input class="form-check-input" type="checkbox" name="send_invite">
+        <label class="form-check-label">
+            {{ __("main.new-sharing.Send invite if not already done.") }}
+        </label>
     </div>
 
 
