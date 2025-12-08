@@ -22,7 +22,7 @@ class SublistButton extends Component
     {
 
         $commonService = app()->make(CommonService::class);
-        $this->rows = $commonService->getHtmlListFilteredRows($this->selectedNode);
+        $this->rows = $commonService->getHtmlListFilteredRows($this->selectedNode->html->listBinding->node);
 
 
     }

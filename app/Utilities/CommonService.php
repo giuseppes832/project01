@@ -131,12 +131,7 @@ class CommonService
     }
 
     public function getHtmlListFilteredRows($node) {
-
-        if (SublistButton::class === $node->html_type) {
-            $node = $node->html->listBinding->node;
-        }
-
-
+        
         $rows = null;
 
         $filteringNode = $node->html->defaultFilterBinding;
