@@ -31,7 +31,7 @@
 @isset($fkValue)
 <div class="container mb-2">
     <a class="btn btn-primary" href="javascript:void(0)"
-       onclick="createRefresh({{ $selectedNode->parent->id  }}, 'parent_row_id={{ $fkValue->withValue->value }}', 'targetMenuContainer')"><i
+       onclick="createRefresh({{ $selectedNode->parent->id  }}, '{{ $fkValue->withValue->value }}', 'targetMenuContainer')"><i
                 class="bi bi-chevron-left"></i> {{ $selectedNode->parent->name }}</a>
 </div>
 @endisset
@@ -102,7 +102,7 @@
                 </div>
                 @foreach($old->children as $sublist)
                     <a class="me-1" href="javascript:void(0)"
-                       onclick="createRefresh({{ $sublist->id }}, 'parent_row_id={{ $row->id }}', 'targetMenuContainer')">
+                       onclick="createRefresh({{ $sublist->id }}, '{{ $row->id }}', 'targetMenuContainer')">
                         {{ $sublist->name }} <i class="bi bi-chevron-right"></i></a>
                 @endforeach
             </div>

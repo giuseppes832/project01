@@ -129,7 +129,8 @@ return [
         "Login" => "Login"
     ],
     "start" => [
-        "Loading" => "Loading"
+        "Loading" => "Loading",
+        "Do you want to delete the selected record ?" => "Do you want to delete the selected record ?"
     ],
     "new-sharing" => [
         "New sharing" => "New sharing",

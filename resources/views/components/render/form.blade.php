@@ -12,15 +12,18 @@ if($row ) {
 }
 
 $qs = "";
-if (Request::filled("parent_row_id")) {
+$parentRowId = "";
+if ("undefined" !== Request::query("parent_row_id")) {
+    $parentRowId = Request::query("parent_row_id");
     $qs = "parent_row_id=" . Request::query("parent_row_id");
+    $action .= "?$qs";
 }
-$action .= "?$qs";
+
 @endphp
 
 
 <h5>{{ $selectedNode->label }}</h5>
-<form id="{{ $selectedNode->id }}" action="{{ $action }}" method="post" onsubmit="submitRow(this, 'globalModalBody')">
+<form id="{{ $selectedNode->id }}" action="{{ $action }}" method="post" onsubmit="submitRow(this)">
 	@csrf
 	@method($method)
 
@@ -78,7 +81,7 @@ $action .= "?$qs";
     @empty($redirect_node_id)
     <div class="text-end">
 
-        <button type="button" class="btn btn-primary" onclick="window.loadNode({{ $selectedNode->id }}, '{{ $qs }}', 'globalModalBody')">
+        <button type="button" class="btn btn-primary" onclick="ajaxGET('/render/{{ $selectedNode->id }}?parent_row_id={{ $parentRowId }}', 'globalModalBody')">
             <i class="bi bi-plus-square"></i> {{ __("main.render.New") }}
         </button>
 

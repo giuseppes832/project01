@@ -48,7 +48,7 @@
                 </div>
             </div>
             @foreach($selectedNode->children as $sublist)
-                <a class="me-1" href="javascript:void(0)" onclick="createRefresh({{ $sublist->id }}, 'parent_row_id={{ $row->id }}', 'targetMenuContainer')">{{ $sublist->name }} <i class="bi bi-chevron-right"></i></a>
+                <a class="me-1" href="javascript:void(0)" onclick="createRefresh({{ $sublist->id }}, '{{ $row->id }}', 'targetMenuContainer')">{{ $sublist->name }} <i class="bi bi-chevron-right"></i></a>
             @endforeach
         </div>
         @endif

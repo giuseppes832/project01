@@ -48,13 +48,16 @@
         globalModal.addEventListener('shown.bs.modal', function (event) {
 
         	if (event.relatedTarget.dataset.method === 'post') {
-                var qs = "";
-                if (event.relatedTarget.dataset.parentRowId) {
-                    qs = "parent_row_id=" + event.relatedTarget.dataset.parentRowId;
-                }
-        		loadNode(event.relatedTarget.dataset.nodeId, qs, 'globalModalBody');
+
+                let nodeId = event.relatedTarget.dataset.nodeId;
+                let parentRowId = event.relatedTarget.dataset.parentRowId;
+                ajaxGET('/render/' + nodeId + '?parent_row_id=' + parentRowId, 'globalModalBody');
+
         	} else if (event.relatedTarget.dataset.method === 'put') {
-        		loadRow(event.relatedTarget.dataset.rowId, 'globalModalBody');
+
+                let rowId = event.relatedTarget.dataset.rowId;
+                ajaxGET('/rows/' + rowId, 'globalModalBody');
+
         	}
 
 
@@ -65,6 +68,45 @@
         	//window.refresh();
         })
 
+
+
+        window.submitRow = function(form) {
+            event.preventDefault();
+            document.getElementById('globalModalBody').innerHTML = '<div class="w-100 text-center"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="visually-hidden">{{ __("main.start.Loading") }} ...</span></div></div>';
+
+            let formData = new FormData(form);
+
+            ajaxPOST(form.action, formData, 'globalModalBody', window.refresh);
+        }
+
+
+        window.deleteRow = function (rowId) {
+            if(confirm('{{ __("main.start.Do you want to delete the selected record ?") }}')) {
+                ajaxGET('/rows/' + rowId + "/delete", null, window.refresh);
+            }
+        }
+
+        window.yes = function(selectedNodeId) {
+            event.preventDefault();
+            document.getElementById('globalModalBody').innerHTML = '<div class="w-100 text-center"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="visually-hidden">{{ __("main.start.Loading") }} ...</span></div></div>';
+
+            let form = event.target.form;
+            let formData = new FormData(form);
+            formData.set('new_node_id', selectedNodeId);
+
+            ajaxPOST(form.action, formData, 'globalModalBody', window.refresh);
+        }
+
+        window.back = function () {
+            event.preventDefault();
+            document.getElementById('globalModalBody').innerHTML = '<div class="w-100 text-center"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="visually-hidden">{{ __("main.start.Loading") }} ...</span></div></div>';
+
+            let form = event.target.form;
+            let formData = new FormData(form);
+            formData.set('back', true);
+
+            ajaxPOST(form.action, formData, 'globalModalBody', window.refresh);
+        }
 
 
         </script>
