@@ -52,7 +52,9 @@ return [
         "Create nodes" => "Create nodes",
         "Resource name" => "Resource name",
         "Type" => "Type",
-        "Sharings" => "Sharings"
+        "Sharings" => "Sharings",
+        "Invited" => "Invited",
+        "Not invited" => "Not invited"
     ],
     "render" => [
         "Select" => "Select",

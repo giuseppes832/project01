@@ -122,17 +122,15 @@
                 <ul>
                     @foreach($sharings as $sharing)
                     @if($sharing->sharingType && $sharing->sharingType->email)
-                    <li class="d-flex align-items-center">
-                        <span>
-                        {{ $sharing->name }},
-                        role: {{ $sharing->role->name }},
-                        email: {{ $sharing->sharingType->email }},
+                    <li class="d-flex align-items-center border-bottom mb-3">
+                        <span style="width: 400px">
+                        {{ $sharing->name }}<br>role: {{ $sharing->role->name }}<br>email: {{ $sharing->sharingType->email }}
                         </span>
                         @if("INVITED" === $sharing->getInvitationStatus())
-                            <h3 class="d-inline m-1"><span class="badge text-bg-success">{{ __("main.nodes.Invited") }}</span></h3>
+                            <span class="text-success fw-bold">{{ __("main.nodes.Invited") }}</span>
                         @elseif("NOT_INVITED" === $sharing->getInvitationStatus())
-                            <h3 class="d-inline m-1"><span class="badge text-bg-warning">{{ __("main.nodes.Not invited") }}</span></h3>
-                            <form class="d-inline" action="/users" method="post">
+                            <span class="flex-grow-1 text-warning fw-bold">{{ __("main.nodes.Not invited") }}</span>
+                            <form class="m-3" action="/users" method="post">
                                 @csrf
                                 <input type="hidden" name="name" value="{{ $sharing->name }}">
                                 <input type="hidden" name="email" value="{{ $sharing->sharingType->email }}">
