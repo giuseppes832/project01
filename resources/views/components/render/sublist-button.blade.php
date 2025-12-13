@@ -28,13 +28,18 @@
 
 @endphp
 
-@isset($fkValue)
+@php
+$parenRowId = "";
+if ($fkValue) {
+    $parenRowId = $fkValue->withValue->value;
+}
+@endphp
+
 <div class="container mb-2">
     <a class="btn btn-primary" href="javascript:void(0)"
-       onclick="createRefresh({{ $selectedNode->parent->id  }}, '{{ $fkValue->withValue->value }}', 'targetMenuContainer')"><i
+       onclick="createRefresh({{ $selectedNode->parent->id  }}, '{{ $parenRowId }}', 'targetMenuContainer')"><i
                 class="bi bi-chevron-left"></i> {{ $selectedNode->parent->name }}</a>
 </div>
-@endisset
 
 @php
     $old = $selectedNode;

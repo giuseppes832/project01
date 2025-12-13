@@ -18,6 +18,7 @@ use App\Models\Nodes\HtmlInputText;
 use App\Models\Nodes\HtmlList;
 use App\Models\Nodes\HtmlSelect;
 use App\Models\Nodes\HtmlTextarea;
+use App\Models\Nodes\SublistButton;
 use App\Models\Owner;
 use App\Models\Resource;
 use App\Models\SvFloatField;
@@ -424,6 +425,44 @@ class DatabaseSeeder extends Seeder
         $menuItemItemProperty->ref_id = $nodeListItemProperty->id;
         $menuItemItemProperty->save();
         $menuItemItemProperty->node()->save($nodeMenuItemItemProperty);
+
+
+
+
+
+
+
+
+
+
+        $nodeSublistProperty = new Node();
+        $nodeSublistProperty->name = "NodeSublistProperty";
+        $nodeSublistProperty->label = "List of property";
+        $nodeSublistProperty->parent_id = $nodeListPropertyName->id;
+        $nodeSublistProperty->save();
+        $sublistProperty = new SublistButton();
+        $sublistProperty->list_binding_id = $listProperty->id;
+        $sublistProperty->save();
+        $sublistProperty->node()->save($nodeSublistProperty);
+
+        $listProperty->default_filter_binding_id = $nodePropertyNameS->id;
+        $listProperty->save();
+
+
+        $nodeSublistItemProperty = new Node();
+        $nodeSublistItemProperty->name = "NodeSublistItemProperty";
+        $nodeSublistItemProperty->label = "List of item property";
+        $nodeSublistItemProperty->parent_id = $nodeListItem->id;
+        $nodeSublistItemProperty->save();
+        $sublistItemProperty = new SublistButton();
+        $sublistItemProperty->list_binding_id = $listItemProperty->id;
+        $sublistItemProperty->save();
+        $sublistItemProperty->node()->save($nodeSublistItemProperty);
+
+        $listItemProperty->default_filter_binding_id = $nodeItemS->id;
+        $listItemProperty->save();
+
+
 
     }
 }
