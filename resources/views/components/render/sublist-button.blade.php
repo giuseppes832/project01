@@ -38,7 +38,7 @@ if ($fkValue) {
 <div class="container mb-2">
     <a class="btn btn-primary" href="javascript:void(0)"
        onclick="createRefresh({{ $selectedNode->parent->id  }}, '{{ $parenRowId }}', 'targetMenuContainer')"><i
-                class="bi bi-chevron-left"></i> {{ $selectedNode->parent->name }}</a>
+                class="bi bi-chevron-left"></i> {{ $selectedNode->parent->label }}</a>
 </div>
 
 @php
@@ -107,7 +107,7 @@ if ($fkValue) {
                 @foreach($old->children as $sublist)
                     <a class="me-1" href="javascript:void(0)"
                        onclick="createRefresh('{{ $sublist->id }}', '{{ $row->id }}', 'targetMenuContainer')">
-                        {{ $sublist->name }} <i class="bi bi-chevron-right"></i></a>
+                        {{ $sublist->label }} <i class="bi bi-chevron-right"></i></a>
                 @endforeach
             </div>
             @endif
