@@ -15,11 +15,7 @@ class FKValue extends Model
 
     protected $table = "f_k_values";
 
-    public function row($type) {
-        if (HtmlSelect::class === $type) {
-            return $this->belongsTo(Row::class, "value", "id")->first();
-        } else if (HtmlSharingSelect::class === $type) {
-            return $this->belongsTo(Row::class, "value", "id")->first();
-        }
+    public function row(): BelongsTo {
+        return $this->belongsTo(Row::class, "value", "id");
     }
 }

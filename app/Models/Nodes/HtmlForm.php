@@ -44,12 +44,32 @@ class HtmlForm extends Model
                 $index = 0;
                 foreach ($filters as $filterClass => $filterValue) {
                     if ($index) {
-                        $query->orWhereHasMorph("withValue", [$filterClass], function($query) use ($filterValue) {
-                            $query->where("value", "like", "%$filterValue%");
+                        $query->orWhereHasMorph("withValue", [$filterClass], function($query) use ($filterValue, $filterClass) {
+                            if ((HtmlSelect::class === $filterClass) || (HtmlSharingSelect::class === $filterClass)) {
+                                $query->whereHas("row", function ($query) use ($filterValue) {
+                                    $query->whereHas("values", function($query) use ($filterValue) {
+                                        $query->whereHas("withValue", function ($query) use ($filterValue) {
+                                            $query->where("value", "like", "%$filterValue%");
+                                        });
+                                    });
+                                });
+                            } else {
+                                $query->where("value", "like", "%$filterValue%");
+                            }
                         });
                     } else {
-                        $query->whereHasMorph("withValue", [$filterClass], function($query) use ($filterValue) {
-                            $query->where("value", "like", "%$filterValue%");
+                        $query->whereHasMorph("withValue", [$filterClass], function($query) use ($filterValue, $filterClass) {
+                            if (FKValue::class === $filterClass) {
+                                $query->whereHas("row", function ($query) use ($filterValue) {
+                                    $query->whereHas("values", function($query) use ($filterValue) {
+                                        $query->whereHas("withValue", function ($query) use ($filterValue) {
+                                            $query->where("value", "like", "%$filterValue%");
+                                        });
+                                    });
+                                });
+                            } else {
+                                $query->where("value", "like", "%$filterValue%");
+                            }
                         });
                     }
 

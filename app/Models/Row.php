@@ -28,7 +28,7 @@ class Row extends Model
                 if (HtmlSelect::class === $node->html_type || HtmlSharingSelect::class === $node->html_type) {
 
                     if ($genericValue->withValue) {
-                        $row = $genericValue->withValue->row($node->html_type);
+                        $row = $genericValue->withValue->row;
                         $refValue = $node->html->formFieldBinding->html->binding->values($row)->first();
 
                         if ($refValue) {
