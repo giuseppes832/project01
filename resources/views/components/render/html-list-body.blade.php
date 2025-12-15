@@ -1,3 +1,9 @@
+@php
+    $parentRowId = "";
+    if (Request::filled("parent_row_id")) {
+        $parentRowId = Request::query("parent_row_id");
+    }
+@endphp
 
 @foreach($rows as $row)
     @if(Auth::user()->canRead($row->form->node))
@@ -14,7 +20,7 @@
 
             </div>
             <div class="w-25 d-flex justify-content-end">
-                <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal" data-bs-target="#globalModal" data-method="put" data-row-id="{{ $row->id }}">
+                <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal" data-bs-target="#globalModal" data-method="put" data-row-id="{{ $row->id }}" @if(Request::filled("parent_row_id")) data-parent-row-id="{{ Request::query('parent_row_id') }}" @endif>
                     <i class="bi bi-pencil-square"></i>
                 </button>
 

@@ -175,12 +175,14 @@
         }
 
         window.addEventListener('refreshHtmlListBody', function (event) {
-            document.getElementById(targetId).innerHTML = '<div class="w-100 mt-5 text-center"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="visually-hidden">Loading...</span></div></div>';
 
             let nodeId = event.detail.formId;
             let parentRowId = event.detail.parentRowId;
             let filter = event.detail.filter;
             let targetId = event.detail.targetId;
+
+            document.getElementById(targetId).innerHTML = '<div class="w-100 mt-5 text-center"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+
 
             let qs = [];
             if ('' !== parentRowId) {
@@ -189,7 +191,7 @@
             if ('' !== filter) {
                 qs.push('filter=' + filter);
             }
-            let url = '/render/' + nodeId;
+            let url = '/render/' + nodeId + '/ajax';
             if (qs.length > 0) {
                 url += '?' + qs.join('&');
             }
