@@ -9,7 +9,7 @@
                 @foreach($selectedNode->children as $item)
                 @if($item && $item->html && $item->html->ref && Auth::user()->canRead($item))
                 <li class="nav-item">
-                	<a class="nav-link" href="javascript:void(0)" onclick="createRefresh({{ $item->html->ref->id }}, null, 'targetMenuContainer')">{{ $item->html->label }}</a>
+                	<a class="nav-link" href="javascript:void(0)" onclick="createRefresh('{{ $item->html->ref->id }}', '', 'targetMenuContainer')">{{ $item->html->label }}</a>
                 </li>
                 @endif
                 @endforeach

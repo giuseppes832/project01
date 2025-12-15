@@ -13,7 +13,7 @@ if($row ) {
 
 $qs = "";
 $parentRowId = "";
-if ("undefined" !== Request::query("parent_row_id")) {
+if (Request::filled("parent_row_id")) {
     $parentRowId = Request::query("parent_row_id");
     $qs = "parent_row_id=" . Request::query("parent_row_id");
     $action .= "?$qs";

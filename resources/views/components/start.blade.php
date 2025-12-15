@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/custom.css', 'resources/js/custom.js', 'resources/js/list.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/custom.css', 'resources/js/custom.js'])
 
         <title>{{ env("APP_NAME") }}</title>
 	</head>
@@ -51,12 +51,29 @@
 
                 let nodeId = event.relatedTarget.dataset.nodeId;
                 let parentRowId = event.relatedTarget.dataset.parentRowId;
-                ajaxGET('/render/' + nodeId + '?parent_row_id=' + parentRowId, 'globalModalBody');
+
+                let url = '';
+                if (parentRowId) {
+                    url = '/render/' + nodeId + '?parent_row_id=' + parentRowId;
+                } else {
+                    url = '/render/' + nodeId;
+                }
+
+                ajaxGET(url, 'globalModalBody');
 
         	} else if (event.relatedTarget.dataset.method === 'put') {
 
                 let rowId = event.relatedTarget.dataset.rowId;
-                ajaxGET('/rows/' + rowId, 'globalModalBody');
+                let parentRowId = event.relatedTarget.dataset.parentRowId;
+
+                let url = '';
+                if (parentRowId) {
+                    url = '/rows/' + rowId + '?parent_row_id=' + parentRowId;
+                } else {
+                    url = '/rows/' + rowId;
+                }
+
+                ajaxGET(url, 'globalModalBody');
 
         	}
 
@@ -107,6 +124,78 @@
 
             ajaxPOST(form.action, formData, 'globalModalBody', window.refresh);
         }
+
+
+        window.createRefresh = function (formId, parentRowId, targetId) {
+            window.refreshEvt = new CustomEvent("refresh", {
+                detail: {
+                    formId: formId,
+                    parentRowId: parentRowId,
+                    targetId: targetId
+                }
+            });
+            window.dispatchEvent(window.refreshEvt);
+        }
+
+        window.refresh = function() {
+            window.dispatchEvent(window.refreshEvt);
+        }
+
+        window.addEventListener('refresh', function (event) {
+            document.getElementById('targetMenuContainer').innerHTML = '<div class="w-100 text-center"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="visually-hidden">{{ __("main.start.Loading") }} ...</span></div></div>';
+
+            let nodeId = event.detail.formId;
+            let parentRowId = event.detail.parentRowId;
+            let targetId = event.detail.targetId;
+
+            let url = '';
+            if ('' !== parentRowId) {
+                url = '/render/' + nodeId + '?parent_row_id=' + parentRowId;
+            } else {
+                url = '/render/' + nodeId;
+            }
+
+            ajaxGET(url, targetId);
+        })
+
+        window.createRefreshHtmlListBody = function (formId, parentRowId, filter, targetId) {
+            window.refreshEvtHtmlListBody = new CustomEvent("refreshHtmlListBody", {
+                detail: {
+                    formId: formId,
+                    parentRowId: parentRowId,
+                    filter: filter,
+                    targetId: targetId
+                }
+            });
+            window.dispatchEvent(window.refreshEvtHtmlListBody);
+        }
+
+        window.refreshHtmlListBody = function() {
+            window.dispatchEvent(window.refreshEvtHtmlListBody);
+        }
+
+        window.addEventListener('refreshHtmlListBody', function (event) {
+            document.getElementById(targetId).innerHTML = '<div class="w-100 mt-5 text-center"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+
+            let nodeId = event.detail.formId;
+            let parentRowId = event.detail.parentRowId;
+            let filter = event.detail.filter;
+            let targetId = event.detail.targetId;
+
+            let qs = [];
+            if ('' !== parentRowId) {
+                qs.push('parent_row_id=' + parentRowId);
+            }
+            if ('' !== filter) {
+                qs.push('filter=' + filter);
+            }
+            let url = '/render/' + nodeId;
+            if (qs.length > 0) {
+                url += '?' + qs.join('&');
+            }
+
+            ajaxGET(url, targetId);
+        })
 
 
         </script>

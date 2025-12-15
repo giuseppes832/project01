@@ -64,17 +64,16 @@ if ($fkValue) {
     @endif
 
     @php
-        $qs = "";
-        if (Request::filled("parent_row_id")) {
-            $qs .= "parent_row_id=" . Request::query("parent_row_id") . "&";
-        }
-
+    $parentRowId = "";
+    if (Request::filled("parent_row_id")) {
+        $parentRowId = Request::query("parent_row_id");
+    }
     @endphp
 
     <form action="/render/{{  $selectedNode->id }}/ajax" method="get">
         <div class="mb-2">
             <input type="text" name="filter-field" class="form-control form-control"
-                   onkeyup="createRefreshHtmlListBody({{ $selectedNode->id }}, '{{ $qs }}filter=' + this.value, 'ajaxBody')"
+                   onkeyup="createRefreshHtmlListBody('{{ $selectedNode->id }}', '{{ $parentRowId }}', this.value, 'ajaxBody')"
                    placeholder="Cerca"/>
         </div>
     </form>
@@ -97,7 +96,7 @@ if ($fkValue) {
                     </div>
                     <div class="w-25 d-flex justify-content-end">
                         <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal"
-                                data-bs-target="#globalModal" data-method="put" data-row-id="{{ $row->id }}?{{ $qs }}">
+                                data-bs-target="#globalModal" data-method="put" data-row-id="{{ $row->id }}" @if(Request::filled("parent_row_id")) data-parent-row-id="{{ Request::query('parent_row_id') }}" @endif>
                             <i class="bi bi-pencil-square"></i>
                         </button>
 
@@ -107,7 +106,7 @@ if ($fkValue) {
                 </div>
                 @foreach($old->children as $sublist)
                     <a class="me-1" href="javascript:void(0)"
-                       onclick="createRefresh({{ $sublist->id }}, '{{ $row->id }}', 'targetMenuContainer')">
+                       onclick="createRefresh('{{ $sublist->id }}', '{{ $row->id }}', 'targetMenuContainer')">
                         {{ $sublist->name }} <i class="bi bi-chevron-right"></i></a>
                 @endforeach
             </div>
