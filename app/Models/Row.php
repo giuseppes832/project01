@@ -29,13 +29,19 @@ class Row extends Model
 
                     if ($genericValue->withValue) {
                         $row = $genericValue->withValue->row;
-                        $refValue = $node->html->formFieldBinding->html->binding->values($row)->first();
 
-                        if ($refValue) {
+                        if ($row) {
+                            $refValue = $node->html->formFieldBinding->html->binding->values($row)->first();
 
-                            if ($refValue->withValue) {
-                                $value = $refValue->withValue;
-                                return $value->value;
+                            if ($refValue) {
+
+                                if ($refValue->withValue) {
+                                    $value = $refValue->withValue;
+                                    return $value->value;
+                                } else {
+                                    return null;
+                                }
+
                             } else {
                                 return null;
                             }

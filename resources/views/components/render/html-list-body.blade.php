@@ -9,7 +9,7 @@
     @if(Auth::user()->canRead($row->form->node))
     <div class="border-bottom mb-2">
         <div class="d-flex align-items-center">
-            <div class="w-75">
+            <div class="flex-grow-1">
                 @if($selectedNode->html->node1 && Auth::user()->canRead($selectedNode->html->node1))
                     <div class="fw-normal">{{ $row->getValue($selectedNode->html->node1)}}</div>
                 @endif
@@ -19,7 +19,7 @@
 
 
             </div>
-            <div class="w-25 d-flex justify-content-end">
+            <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal" data-bs-target="#globalModal" data-method="put" data-row-id="{{ $row->id }}" @if(Request::filled("parent_row_id")) data-parent-row-id="{{ Request::query('parent_row_id') }}" @endif>
                     <i class="bi bi-pencil-square"></i>
                 </button>
