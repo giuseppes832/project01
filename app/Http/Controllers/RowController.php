@@ -501,7 +501,7 @@ class RowController extends Controller
 
                 DB::transaction(function () use($row) {
                     foreach ($row->values as $value) {
-                        if (Storage::directoryExists($value->withValue->value)) {
+                        if ($value->withValue->value && Storage::directoryExists($value->withValue->value)) {
                             Storage::deleteDirectory($value->withValue->value);
                         }
                         $value->withValue->delete();
