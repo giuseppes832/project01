@@ -12,7 +12,7 @@
     <div class="mb-3 form-check">
         <input class="form-check-input" type="checkbox" id="subselect" name="subselect" @if (true == old('subselect', $selectedNode->html->subselect)) checked @endif>
         <label class="form-check-label" for="subselect">
-            {{ __("main.nodes.Subselect") }} ({{ __("main.nodes.Authorization checj") }})
+            {{ __("main.nodes.Subselect") }} ({{ __("main.nodes.Authorization check") }})
         </label>
     </div>
 

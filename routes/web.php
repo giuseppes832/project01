@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
 
         // ADMIN ROUTES
         Route::get('/apps/app', [AppController::class, 'adminApp']);
+        Route::post('/apps/app', [AppController::class, 'storeApp']);
 
         Route::get('/resources', [ResourceController::class, 'index']);
         Route::post('/resources', [ResourceController::class, 'store']);
