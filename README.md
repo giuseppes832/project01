@@ -14,15 +14,19 @@ Accessing as owner you can create, read, update and delete data. You should invi
 
 Applications created can be good starting point to evolve them with other domain specific code. 
 
-## Try the tool
+## The Smart creation tool
 
-The tool comes with a database seed. 
+Platform comes with a tool for smart design
 
-Try the tool with these credentials:
+<img src="attachment1.jpg">
 
-Admin - Email: admin@example.com - Password: 123
+## Login
 
-Owner - Email: owner@example.com - Password: 123
+You can log in with these credentials:
+
+Admin (Backend access) - Email: admin@example.com - Password: 123
+
+Owner (Frontend access) - Email: owner@example.com - Password: 123
 
 ## How you can support
 

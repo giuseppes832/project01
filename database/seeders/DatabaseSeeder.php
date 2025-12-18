@@ -91,6 +91,7 @@ class DatabaseSeeder extends Seeder
         $invitedUser2->save();
         $invitedUser2->user()->save($user4);
 
+        /*
 
         $nodeMenu = new Node();
         $nodeMenu->name = "Menu";
@@ -461,6 +462,9 @@ class DatabaseSeeder extends Seeder
 
         $listItemProperty->default_filter_binding_id = $nodeItemS->id;
         $listItemProperty->save();
+
+
+        */
 
 
 

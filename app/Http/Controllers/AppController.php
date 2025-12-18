@@ -111,9 +111,11 @@ class AppController extends Controller
 
         DB::transaction(function () {
 
+            $menuName = request()->menu_name . "-" . uniqid();
+
             $nodeMenu = new Node();
-            $nodeMenu->name = "Menu";
-            $nodeMenu->label = "Menu";
+            $nodeMenu->name = "Menu$menuName";
+            $nodeMenu->label = "$menuName";
             $nodeMenu->save();
             $navbarMenu = new BootstrapNavbar();
             $navbarMenu->save();
@@ -131,12 +133,12 @@ class AppController extends Controller
                 if (count($inputNameTags) === 3) {
 
                     $resource = new Resource();
-                    $resource->name = $input;
+                    $resource->name = "Resource$menuName$input";
                     $resource->save();
                     $resources[$inputName] = $resource;
 
                     $nodeForm = new Node();
-                    $nodeForm->name = "Node$input";
+                    $nodeForm->name = "Form$menuName$input";
                     $nodeForm->label = "$input form";
                     $nodeForm->save();
                     $form = new HtmlForm();
@@ -145,7 +147,7 @@ class AppController extends Controller
                     $forms[$inputName] = $nodeForm;
 
                     $nodeList = new Node();
-                    $nodeList->name = "NodeList$input";
+                    $nodeList->name = "List$menuName$input";
                     $nodeList->label = "List of $input";
                     $nodeList->save();
                     $list = new HtmlList();
@@ -155,7 +157,7 @@ class AppController extends Controller
                     $lists[$inputName] = $list;
 
                     $nodeMenuItem = new Node();
-                    $nodeMenuItem->name = "NodeMenuItem$input";
+                    $nodeMenuItem->name = "MenuItem$menuName$input";
                     $nodeMenuItem->label = "List of $input";
                     $nodeMenuItem->parent_id = $nodeMenu->id;
                     $nodeMenuItem->save();
@@ -172,7 +174,7 @@ class AppController extends Controller
 
                     $field = new Field();
                     $field->resource_id = $resources[$resourceName]->id;
-                    $field->name = $input;
+                    $field->name = "Field$input";
                     $field->required = (request()->get($fieldName . "-required") === "on")?true:false;
                     $field->unique = (request()->get($fieldName . "-unique") === "on")?true:false;
                     $field->save();

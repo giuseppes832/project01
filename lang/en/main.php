@@ -18,7 +18,20 @@ return [
         "Roles" => "Roles",
         "START" => "START",
         "Sharings" => "Sharings",
-        "Export all data" => "Export all data"
+        "Export all data" => "Export all data",
+        "Smart creation tool" => "Smart creation tool",
+        "Menu name" => "Menu name",
+        "New menu item" => "New menu item",
+        "Save" => "Save",
+        "Menu item name" => "Menu item name",
+        "Form fields" => "Form fields",
+        "Delete" => "Delete",
+        "New field" => "New field",
+        "Field name" => "Field name",
+        "Required" => "Required",
+        "Unique" => "Unique",
+        "Input type" => "Input type",
+        "Select" => "Select"
     ],
     "mails" => [
         "This is the first access password" => "This is the first access password",
