@@ -4,7 +4,7 @@
 $row = Request::route('row');
 
 if($row ) {
-	$action = "/rows/" . $row->id;
+	$action = "/nodes/$selectedNode->id/rows/" . $row->id;
 	$method = "put";
 } else {
 	$action = "/nodes/$selectedNode->id/rows";
@@ -90,7 +90,7 @@ if (Request::filled("parent_row_id")) {
         </button>
 
         @if($row)
-        <a href="javascript:void(0)" class="btn btn-danger" data-bs-dismiss="modal" onclick="window.deleteRow({{ $row->id }})">
+        <a href="javascript:void(0)" class="btn btn-danger" data-bs-dismiss="modal" onclick="window.deleteRow({{ $selectedNode->id }}, {{ $row->id }})">
             <i class="bi bi-trash"></i> {{ __("main.render.Delete") }}
         </a>
         @endif

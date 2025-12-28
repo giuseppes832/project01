@@ -106,6 +106,21 @@ class NodeController extends Controller
 
     }
 
+
+    public  function updateForm(Node $node) {
+
+        // TODO validate request()->binding
+
+        if ($node->html) {
+            $node->html->resource_id = request()->resource_id;
+            $node->html->save();
+        }
+
+        return redirect("/nodes/$node->id");
+
+    }
+
+
     public  function updateInputText(Node $node) {
 
         // TODO validate request()->binding

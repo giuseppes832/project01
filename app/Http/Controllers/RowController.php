@@ -295,7 +295,7 @@ class RowController extends Controller
                 } else {
                     $rowId = request()->redirect_row_id;
                     $this->flashOld();
-                    return redirect("/rows/$rowId");
+                    return redirect("/nodes/$node->id/rows/$rowId");
                 }
             }
 
@@ -335,7 +335,7 @@ class RowController extends Controller
 
                 $row = new Row;
 
-                $row->form_id = $node->html->id;
+                $row->resource_id = $node->html->id;
 
                 $row->save();
 
@@ -365,7 +365,7 @@ class RowController extends Controller
                 } else {
                     $rowId = request()->redirect_row_id;
                     $this->flashOld();
-                    return redirect("/rows/$rowId");
+                    return redirect("/nodes/$node->id/rows/$rowId");
                 }
             }
             //
@@ -375,17 +375,15 @@ class RowController extends Controller
             $qs = \request()->getQueryString();
             $append = $qs?"?$qs":"";
 
-            return redirect("/rows/$row->id$append");
+            return redirect("/nodes/$node->id/rows/$row->id$append");
 
         }
 
     }
 
-    public function edit(Row $row) {
+    public function edit(Node $node, Row $row) {
 
-        $component = $row->form->node->getSelectedNodeRenderComponent();
-
-        $node = $row->form->node;
+        $component = $node->getSelectedNodeRenderComponent();
 
         if (request()->ajax()) {
 
@@ -399,9 +397,9 @@ class RowController extends Controller
     }
 
 
-    public function update(Row $row) {
+    public function update(Node $node, Row $row) {
 
-        if (Auth::user()->canUpdate($row->form->node)) {
+        if (Auth::user()->canUpdate($node)) {
 
 
 
@@ -412,14 +410,14 @@ class RowController extends Controller
                     return view("components.new-sharing", [
                         "roles" => Role::all(),
                         "redirect_row_id" => $row->id,
-                        "redirect_node_id" => $row->form->node->id,
+                        "redirect_node_id" => $node->id,
                         "redirect_inputs" => request()->except(["_method", "_token", "new_node_id"])
                     ]);
                 } elseif (HtmlSelect::class === $newNode->html_type) {
                     $formBinding = $newNode->html->formBinding->node;
                     return redirect("/render/$formBinding->id")->withInput([
                         "redirect_row_id" => $row->id,
-                        "redirect_node_id" => $row->form->node->id,
+                        "redirect_node_id" => $node->id,
                         "redirect_inputs" => request()->except(["_method", "_token", "new_node_id"])
                     ]);
                 }
@@ -433,12 +431,12 @@ class RowController extends Controller
                 $qs = \request()->getQueryString();
                 $append = $qs?"?$qs":"";
 
-                return redirect("/rows/$row->id$append")
+                return redirect("/nodes/$node->id/rows/$row->id$append")
                     ->withErrors($this->validator())
                     ->withInput();
             }
 
-            DB::transaction(function () use ($row) {
+            DB::transaction(function () use ($node, $row) {
 
                 foreach (request()->nodes as $nodeId => $fieldValue) {
 
@@ -459,7 +457,7 @@ class RowController extends Controller
                                 (HtmlSharingSelect::class === $node0->html_type)
                             ) {
 
-                                $rows = $row->form->filteredRows($fieldValue, null);
+                                $rows = $node->html->resource->filteredRows($fieldValue, null);
                                 if (!in_array($fieldValue, $rows->pluck("id")->toArray())) {
                                     abort(403);
                                 }
@@ -477,15 +475,15 @@ class RowController extends Controller
             $qs = \request()->getQueryString();
             $append = $qs?"?$qs":"";
 
-            return redirect("/rows/$row->id$append");
+            return redirect("/nodes/$node->id/rows/$row->id$append");
 
         }
 
     }
 
-    public function delete(Row $row) {
+    public function delete(Node $node, Row $row) {
 
-        if (Auth::user()->canDelete($row->form->node)) {
+        if (Auth::user()->canDelete($node)) {
 
             $subselectsCount = HtmlSelect::query()
                 ->where("subselect", true)

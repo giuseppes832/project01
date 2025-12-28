@@ -151,7 +151,7 @@ class CommonService
             }
         }
 
-        $rows = $node->html->binding->filteredRows($defaultFilterValue, $filters);
+        $rows = $node->html->binding->resource->filteredRows($defaultFilterValue, $filters);
 
         return $rows;
     }

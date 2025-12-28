@@ -36,7 +36,7 @@ class HtmlSelect extends Component
             $commonService = app()->make(CommonService::class);
             $sharing = $commonService->getSharing();
 
-            $authParentRows = $this->selectedNode->html->formBinding->filteredRows($sharing->id, null);
+            $authParentRows = $this->selectedNode->html->formBinding->resource->filteredRows($sharing->id, null);
 
             $options = [];
 
@@ -65,7 +65,7 @@ class HtmlSelect extends Component
                 $fkValue = $this->selectedNode->html->binding->values($formRow)->first();
 
                 // Get FK Row from related form
-                $row = $this->selectedNode->html->formBinding->row($fkValue->withValue->value)->first();
+                $row = $this->selectedNode->html->formBinding->resource->row($fkValue->withValue->value)->first();
 
                 if ($row) {
 
@@ -85,7 +85,7 @@ class HtmlSelect extends Component
 
                 foreach ($fkValues as $fkv) {
 
-                    $row = $this->selectedNode->html->formBinding->row($fkv->withValue->value)->first();
+                    $row = $this->selectedNode->html->formBinding->resource->row($fkv->withValue->value)->first();
 
                     if ($row) {
                         $genericValue = $this->selectedNode->html->formFieldBinding->html->binding->values($row)->first();

@@ -63,14 +63,15 @@
 
         	} else if (event.relatedTarget.dataset.method === 'put') {
 
+                let nodeId = event.relatedTarget.dataset.nodeId;
                 let rowId = event.relatedTarget.dataset.rowId;
                 let parentRowId = event.relatedTarget.dataset.parentRowId;
 
                 let url = '';
                 if (parentRowId) {
-                    url = '/rows/' + rowId + '?parent_row_id=' + parentRowId;
+                    url = '/nodes/' + nodeId + '/rows/' + rowId + '?parent_row_id=' + parentRowId;
                 } else {
-                    url = '/rows/' + rowId;
+                    url = '/nodes/' + nodeId + '/rows/' + rowId;
                 }
 
                 ajaxGET(url, 'globalModalBody');

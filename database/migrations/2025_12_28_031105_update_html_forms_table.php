@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rows', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('resource_id');
+        Schema::table('html_forms', function (Blueprint $table) {
+            $table->unsignedBigInteger('resource_id')->nullable();
             $table->foreign('resource_id')->references('id')->on('resources');
-            $table->timestamps();
         });
     }
 
@@ -24,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rows');
+        Schema::table('html_forms', function (Blueprint $table) {
+            $table->dropColumn('resource_id');
+        });
     }
 };

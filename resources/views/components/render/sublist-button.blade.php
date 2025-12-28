@@ -81,7 +81,6 @@ if ($fkValue) {
 
     <div id="ajaxBody" class="d-flex flex-column">
         @foreach($rows as $row)
-            @if(Auth::user()->canRead($row->form->node))
             <div class="border-bottom mb-2">
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
@@ -96,7 +95,7 @@ if ($fkValue) {
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal"
-                                data-bs-target="#globalModal" data-method="put" data-row-id="{{ $row->id }}" @if(Request::filled("parent_row_id")) data-parent-row-id="{{ Request::query('parent_row_id') }}" @endif>
+                                data-bs-target="#globalModal" data-method="put" data-node-id="{{ $selectedNode->html->binding->node->id }}" data-row-id="{{ $row->id }}" @if(Request::filled("parent_row_id")) data-parent-row-id="{{ Request::query('parent_row_id') }}" @endif>
                             <i class="bi bi-pencil-square"></i>
                         </button>
 
@@ -110,7 +109,6 @@ if ($fkValue) {
                         {{ $sublist->label }} <i class="bi bi-chevron-right"></i></a>
                 @endforeach
             </div>
-            @endif
         @endforeach
     </div>
 

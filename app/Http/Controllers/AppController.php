@@ -142,6 +142,7 @@ class AppController extends Controller
                     $nodeForm->label = "$input form";
                     $nodeForm->save();
                     $form = new HtmlForm();
+                    $form->resource_id = $resource->id;
                     $form->save();
                     $form->node()->save($nodeForm);
                     $forms[$inputName] = $nodeForm;

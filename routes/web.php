@@ -83,6 +83,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/nodes/{node}/delete', [NodeController::class, 'delete']);
         Route::post('/nodes/{node}', [NodeController::class, 'storeChild']);
         Route::put('/nodes-order/{node}', [NodeController::class, 'updateOrder']);
+        Route::put('/nodes1/{node}', [NodeController::class, 'updateForm']);
         Route::put('/nodes2/{node}', [NodeController::class, 'updateInputText']);
         Route::put('/nodes3/{node}', [NodeController::class, 'updateNavLink']);
         Route::put('/nodes4/{node}', [NodeController::class, 'updateHtmlList']);
@@ -117,9 +118,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/render/{node}', [NodeController::class, 'render']);
 
     Route::post('/nodes/{node}/rows', [RowController::class, 'store']);
-    Route::get('/rows/{row}', [RowController::class, 'edit']);
-    Route::put('/rows/{row}', [RowController::class, 'update']);
-    Route::get('/rows/{row}/delete', [RowController::class, 'delete']);
+    Route::get('/nodes/{node}/rows/{row}', [RowController::class, 'edit']);
+    Route::put('/nodes/{node}/rows/{row}', [RowController::class, 'update']);
+    Route::get('/nodes/{node}/rows/{row}/delete', [RowController::class, 'delete']);
 
     Route::get('/render/{node}/ajax', [NodeController::class, 'renderHtmlListBody']);
 
