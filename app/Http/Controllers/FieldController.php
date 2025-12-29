@@ -53,7 +53,7 @@ class FieldController extends Controller
             "required" => "nullable",
             "unique" => "nullable"
         ]);
-        
+
         DB::transaction(function () use ($field) {
 
 
@@ -82,19 +82,6 @@ class FieldController extends Controller
 
         if ($field->withType) {
             $field->withType->options = request()->options;
-            $field->withType->save();
-        }
-
-        return redirect("/fields/$field->id");
-
-    }
-
-    public  function updateFkField(Field $field) {
-
-        // TODO validate request()->for_sharing
-
-        if ($field->withType) {
-            $field->withType->for_sharing = (request()->for_sharing === "on") ? true : false;
             $field->withType->save();
         }
 

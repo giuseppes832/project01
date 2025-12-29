@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Nodes\HtmlSelect;
 use App\Models\Nodes\HtmlSharingSelect;
+use App\Models\ValueTypes\FK2Value;
 use App\Models\ValueTypes\FKValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -34,7 +35,7 @@ class Resource extends Model
 
         if ($value) {
             $rel->whereHas("values", function($query) use ($value) {
-                $query->whereHasMorph("withValue", [FKValue::class], function ($query) use ($value) {
+                $query->whereHasMorph("withValue", [FK2Value::class], function ($query) use ($value) {
                     $query->where("value", $value);
                 });
             });

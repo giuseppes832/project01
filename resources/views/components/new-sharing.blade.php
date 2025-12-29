@@ -69,6 +69,7 @@
     </div>
 
     <div class="mb-3 form-check">
+        <input type="hidden" name="send_invite">
         <input class="form-check-input" type="checkbox" name="send_invite">
         <label class="form-check-label">
             {{ __("main.new-sharing.Send invite if not already done.") }}

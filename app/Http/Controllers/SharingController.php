@@ -99,28 +99,31 @@ class SharingController extends Controller
                     $sharing->sharingType->save();
                 }
 
-                $invite = User::query()->where("email", request()->email)->first();
+                if ("on" === request()->send_invite) {
 
-                if (!$invite) {
+                    $invite = User::query()->where("email", request()->email)->first();
 
-                    $passsword = "temporanea" . 1000000 - random_int(1, 100000);
+                    if (!$invite) {
 
-                    $user = new User();
-                    $user->name = request()->name;
-                    $user->email = request()->email;
-                    $user->password = Hash::make($passsword);
-                    $user->save();
+                        $passsword = "temporanea" . 1000000 - random_int(1, 100000);
 
-                    $invitedUser = new InvitedUser();
-                    $invitedUser->save();
+                        $user = new User();
+                        $user->name = request()->name;
+                        $user->email = request()->email;
+                        $user->password = Hash::make($passsword);
+                        $user->save();
 
-                    $invitedUser->user()->save($user);
+                        $invitedUser = new InvitedUser();
+                        $invitedUser->save();
 
-                    Mail::to(request()->email)->send(new OwnerInvite($passsword));
+                        $invitedUser->user()->save($user);
 
-                    Log::info('Owner send invite to User with a temporary password.', ['name' => request()->name, 'email' => request()->email]);
+                        Mail::to(request()->email)->send(new OwnerInvite($passsword));
+
+                        Log::info('Owner send invite to User with a temporary password.', ['name' => request()->name, 'email' => request()->email]);
 
 
+                    }
                 }
 
 
@@ -136,7 +139,7 @@ class SharingController extends Controller
             } else {
                 $rowId = \request()->redirect_row_id;
                 $this->flashOld();
-                return redirect("/rows/$rowId");
+                return redirect("/nodes/$redirectNodeid/rows/$rowId");
             }
         } else {
 

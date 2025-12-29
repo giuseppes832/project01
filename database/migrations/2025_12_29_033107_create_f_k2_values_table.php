@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('f_k_fields', function (Blueprint $table) {
-            $table->boolean('for_sharing')->nullable();
+        Schema::create('f_k2_values', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('value')->nullable();
+            //$table->foreign('value')->references('id')->on('sharings')->cascadeOnDelete();;
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('f_k_fields', function (Blueprint $table) {
-            $table->dropColumn('for_sharing');
-        });
+        Schema::dropIfExists('f_k2_values');
     }
 };

@@ -92,7 +92,7 @@ class AppController extends Controller
 
     public function exportData() {
 
-        $allRows = HtmlForm::query()->with(["node", "rows", "rows.values", "rows.values.field", "rows.values.field.withType", "rows.values.withValue"])->orderBy("id")->get();
+        $allRows = HtmlForm::query()->with(["node", "resource.rows", "resource.rows.values", "resource.rows.values.field", "resource.rows.values.field.withType", "resource.rows.values.withValue"])->orderBy("id")->get();
 
         $allUsers = User::all();
 

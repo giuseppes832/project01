@@ -458,7 +458,7 @@ class RowController extends Controller
                             ) {
 
                                 $rows = $node->html->resource->filteredRows($fieldValue, null);
-                                if (!in_array($fieldValue, $rows->pluck("id")->toArray())) {
+                                if (!in_array($row->id, $rows->pluck("id")->toArray())) {
                                     abort(403);
                                 }
                             }

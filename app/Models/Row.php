@@ -25,7 +25,28 @@ class Row extends Model
             $genericValue = $node->html->binding->values($this)->first();
             if ($genericValue) {
 
-                if (HtmlSelect::class === $node->html_type || HtmlSharingSelect::class === $node->html_type) {
+                if ($genericValue->withValue) {
+                    $value = $genericValue->withValue;
+                    return $value->value;
+                } else {
+                    return null;
+                }
+
+            } else {
+                return null;
+            }
+
+        }
+
+    }
+
+    public function getLabel($node) {
+
+        if ($node->html && $node->html->binding) {
+            $genericValue = $node->html->binding->values($this)->first();
+            if ($genericValue) {
+
+                if (HtmlSelect::class === $node->html_type) {
 
                     if ($genericValue->withValue) {
                         $row = $genericValue->withValue->row;
@@ -45,6 +66,22 @@ class Row extends Model
                             } else {
                                 return null;
                             }
+
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        return null;
+                    }
+
+                } else if (HtmlSharingSelect::class === $node->html_type) {
+
+                    if ($genericValue->withValue) {
+                        $sharing = $genericValue->withValue->sharing;
+
+                        if ($sharing) {
+
+                            return $sharing->name;
 
                         } else {
                             return null;

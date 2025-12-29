@@ -5,6 +5,7 @@ use App\Models\FieldTypes\BooleanField;
 use App\Models\FieldTypes\DateField;
 use App\Models\FieldTypes\DateTimeField;
 use App\Models\FieldTypes\EnumField;
+use App\Models\FieldTypes\FK2Field;
 use App\Models\FieldTypes\FKField;
 use App\Models\FieldTypes\FloatField;
 use App\Models\FieldTypes\IntegerField;
@@ -18,6 +19,7 @@ use App\Models\Nodes\HtmlDateTime;
 use App\Models\Nodes\HtmlInputFile;
 use App\Models\Nodes\HtmlInputText;
 use App\Models\Nodes\HtmlSelect;
+use App\Models\Nodes\HtmlSharingSelect;
 use App\Models\Nodes\HtmlStaticSelect;
 use App\Models\Nodes\HtmlTextarea;
 use App\Models\Nodes\HtmlTime;
@@ -52,7 +54,7 @@ class FieldTypes
         ],
         "FK" => [
             "class" => FKField::class,
-            "form-component" => "resources.fk-field",
+            "form-component" => null,
             "label" => "Foreign Key",
             "default-html-component" => HtmlSelect::class
         ],
@@ -91,6 +93,12 @@ class FieldTypes
             "form-component" => null,
             "label" => "Timestamp",
             "default-html-component" => HtmlInputFile::class
+        ],
+        "FK2" => [
+            "class" => FK2Field::class,
+            "form-component" => null,
+            "label" => "Foreign Key 2",
+            "default-html-component" => HtmlSharingSelect::class
         ]
     ];
 

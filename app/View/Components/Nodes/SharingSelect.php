@@ -3,9 +3,7 @@
 namespace App\View\Components\Nodes;
 
 use App\Models\Field as FieldModel;
-use App\Models\FieldTypes\FKField;
-use App\Models\FieldTypes\IntegerField;
-use App\Models\SvIntegerField;
+use App\Models\FieldTypes\FK2Field;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -25,7 +23,7 @@ class SharingSelect extends Component
 
         $this->fields = FieldModel::whereHasMorph(
             'withType',
-            [FKField::class]
+            [FK2Field::class]
         )->get();
     }
 
