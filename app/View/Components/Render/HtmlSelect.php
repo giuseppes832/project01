@@ -64,38 +64,22 @@ class HtmlSelect extends Component
                 // Get FK
                 $fkValue = $this->selectedNode->html->binding->values($formRow)->first();
 
-                // Get FK Row from related form
-                $row = $this->selectedNode->html->formBinding->resource->row($fkValue->withValue->value)->first();
-
-                if ($row) {
-
-                    // Get Text Value of Related form Fk row
-                    $genericValue = $this->selectedNode->html->formFieldBinding->html->binding->values($row)->first();
-
-                    if ($genericValue) {
-                        $this->value = $genericValue->row_id;
-                    }
+                if ($fkValue) {
+                    $this->value = $fkValue->withValue->value;
                 }
 
             } else {
 
                 $fkValues = $this->selectedNode->html->binding->values($formRow)->get();
 
-                $this->value = [];
+                if ($fkValues) {
+                    $this->value = [];
 
-                foreach ($fkValues as $fkv) {
-
-                    $row = $this->selectedNode->html->formBinding->resource->row($fkv->withValue->value)->first();
-
-                    if ($row) {
-                        $genericValue = $this->selectedNode->html->formFieldBinding->html->binding->values($row)->first();
-
-                        if ($genericValue) {
-                            $this->value[] = $genericValue->row_id;
-                        }
+                    foreach ($fkValues as $fkv) {
+                        $this->value[] = $fkv->withValue->value;
                     }
-                }
 
+                }
 
             }
 
