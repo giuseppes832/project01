@@ -36,13 +36,13 @@ class HtmlSelect extends Component
             $commonService = app()->make(CommonService::class);
             $sharing = $commonService->getSharing();
 
-            $authParentRows = $this->selectedNode->html->formBinding->resource->filteredRows($sharing->id, null);
+            $authParentRows = $this->selectedNode->html->binding->fkResource->filteredRows($sharing->id, null);
 
             $options = [];
 
             foreach ($authParentRows as $authParentRow) {
 
-                $options[] = $this->selectedNode->html->formFieldBinding->html->binding->values($authParentRow)->first();
+                $options[] = $this->selectedNode->html->binding->withType->fkField->values($authParentRow)->first();
             }
 
             $this->options = collect($options);
@@ -50,7 +50,7 @@ class HtmlSelect extends Component
         } else {
 
             // Get all values of HtmlInputText
-            $this->options = $this->selectedNode->html->formFieldBinding->html->binding->allValues;
+            $this->options = $this->selectedNode->html->binding->withType->fkField->allValues;
 
         }
 

@@ -2,12 +2,20 @@
 
 namespace App\View\Components\Resources;
 
+use App\Models\Field as FieldModel;
+use App\Models\Node as NodeModel;
+use App\Models\Nodes\HtmlForm;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class FkField extends Component
 {
+
+    public $resources;
+
+    public $fields;
+
     /**
      * Create a new component instance.
      */
@@ -15,7 +23,17 @@ class FkField extends Component
         public \App\Models\Field $selectedField
     )
     {
-        //
+        $this->resources = \App\Models\Resource::all();
+
+        if ($this->selectedField->withType->fk_resource_id) {
+
+            $this->fields = \App\Models\Field::where("resource_id", $this->selectedField->withType->fk_resource_id)->get();
+
+        } else {
+
+            $this->fields = \App\Models\Field::all();
+
+        }
     }
 
     /**

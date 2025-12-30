@@ -18,9 +18,6 @@ class Select extends Component
 {
     public $fields;
 
-    public $forms;
-
-    public $formFields;
     /**
      * Create a new component instance.
      */
@@ -34,19 +31,6 @@ class Select extends Component
             'withType',
             [FKField::class]
         )->get();
-
-        $this->forms = HtmlForm::all();
-
-        if ($this->selectedNode->html->formBinding) {
-
-            $this->formFields = NodeModel::where("parent_id", $this->selectedNode->html->formBinding->node->id)->get();
-        } else {
-
-            $this->formFields = NodeModel::all();
-        }
-
-
-
 
     }
 

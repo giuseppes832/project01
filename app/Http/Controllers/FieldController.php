@@ -89,6 +89,20 @@ class FieldController extends Controller
 
     }
 
+    public function updateFkField(Field $field) {
+
+        // TODO validate request()->options
+
+        if ($field->withType) {
+            $field->withType->fk_resource_id = request()->fk_resource_id;
+            $field->withType->fk_field_id = request()->fk_field_id;
+            $field->withType->save();
+        }
+
+        return redirect("/fields/$field->id");
+
+    }
+
     public function delete(Field $field) {
 
         DB::transaction(function () use ($field) {

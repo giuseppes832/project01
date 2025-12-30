@@ -33,30 +33,6 @@
         <label>{{ __("main.nodes.Binding field") }}</label>
     </div>
 
-    @if($selectedNode->html->binding_id)
-    <div class="mb-3 form-floating">
-        <select class="form-select" name="form_binding" aria-label="Risorsa collegata">
-            <option value="" selected>{{ __("main.nodes.Select") }} ...</option>
-            @foreach($forms as $form)
-                <option value="{{ $form->id }}" @if ($form->id == old('form_binding', $selectedNode->html->form_binding_id)) selected @endif>{{ $form->node->name }}</option>
-            @endforeach
-        </select>
-        <label>{{ __("main.nodes.Linked resource") }}</label>
-    </div>
-
-    @if($selectedNode->html->form_binding_id)
-    <div class="mb-3 form-floating">
-        <select class="form-select" name="form_field_binding" aria-label="Campo risorsa collegato">
-            <option value="" selected>{{ __("main.nodes.Select") }} ...</option>
-            @foreach($formFields as $formField)
-                <option value="{{ $formField->id }}" @if ($formField->id == old('form_field_binding', $selectedNode->html->form_field_binding_id)) selected @endif>{{ $formField->name }}</option>
-            @endforeach
-        </select>
-        <label>{{ __("main.nodes.Linked field") }}</label>
-    </div>
-    @endif
-    @endif
-
     <button type="submit" class="btn btn-primary btn-sm mb-3">
         <i class="bi bi-save"></i> {{ __("main.nodes.Save") }}
     </button>

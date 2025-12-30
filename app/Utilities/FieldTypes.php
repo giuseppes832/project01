@@ -54,7 +54,7 @@ class FieldTypes
         ],
         "FK" => [
             "class" => FKField::class,
-            "form-component" => null,
+            "form-component" => "resources.fk-field",
             "label" => "Foreign Key",
             "default-html-component" => HtmlSelect::class
         ],

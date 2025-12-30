@@ -15,11 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('binding_id')->nullable();
             $table->foreign('binding_id')->references('id')->on('fields');
-            $table->unsignedBigInteger('form_binding_id')->nullable();
-            $table->foreign('form_binding_id')->references('id')->on('html_forms');
-            $table->unsignedBigInteger('form_field_binding_id')->nullable();
-            $table->foreign('form_field_binding_id')->references('id')->on('nodes');
-
             $table->timestamps();
         });
     }
