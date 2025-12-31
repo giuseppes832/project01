@@ -19,6 +19,45 @@ class Row extends Model
         return $this->belongsTo(HtmlForm::class, "form_id", "id");
     }
 
+    public function getValue0($node) {
+
+        if ($node->html && $node->html->renderingNode && $node->html->renderingNode->html && $node->html->renderingNode->html->binding) {
+
+            if ($node->html->multiple) {
+
+                $genericValues = $node->html->renderingNode->html->binding->values($this)->get();
+                if ($genericValues) {
+
+                    $all = [];
+
+                    foreach ($genericValues as $genericValue) {
+                        if ($genericValue->withValue) {
+                            $value = $genericValue->withValue;
+                            $all[] = $value->value;
+                        }
+                    }
+
+                    return $all;
+                }
+
+            } else {
+
+                $genericValue = $node->html->renderingNode->html->binding->values($this)->first();
+
+                if ($genericValue) {
+
+                    if ($genericValue->withValue) {
+                        $value = $genericValue->withValue;
+                        return $value->value;
+                    }
+
+                }
+
+            }
+
+        }
+    }
+
     public function getValue($node) {
 
         if ($node->html && $node->html->binding) {

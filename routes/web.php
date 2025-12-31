@@ -97,6 +97,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/nodes12/{node}', [NodeController::class, 'updateHtmlDateTime']);
         Route::put('/nodes13/{node}', [NodeController::class, 'updateTextarea']);
         Route::put('/nodes14/{node}', [NodeController::class, 'updateHtmlInputFile']);
+        Route::put('/nodes15/{node}', [NodeController::class, 'updateHtmlTd']);
+        Route::put('/nodes16/{node}', [NodeController::class, 'updateHtmlTable']);
 
         Route::get('/roles', [RoleController::class, 'index']);
         Route::post('/roles', [RoleController::class, 'store']);

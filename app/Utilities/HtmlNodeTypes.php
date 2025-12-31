@@ -10,6 +10,7 @@ use App\Models\Nodes\HtmlDateTime;
 use App\Models\Nodes\HtmlFieldset;
 use App\Models\Nodes\HtmlForm;
 use App\Models\Nodes\HtmlInputFile;
+use App\Models\Nodes\HtmlInputRendering;
 use App\Models\Nodes\HtmlInputText;
 use App\Models\Nodes\HtmlList;
 use App\Models\Nodes\HtmlListBody;
@@ -17,8 +18,11 @@ use App\Models\Nodes\HtmlRow;
 use App\Models\Nodes\HtmlSelect;
 use App\Models\Nodes\HtmlSharingSelect;
 use App\Models\Nodes\HtmlStaticSelect;
+use App\Models\Nodes\HtmlTable;
+use App\Models\Nodes\HtmlTd;
 use App\Models\Nodes\HtmlTextarea;
 use App\Models\Nodes\HtmlTime;
+use App\Models\Nodes\HtmlTr;
 use App\Models\Nodes\SublistButton;
 
 class HtmlNodeTypes
@@ -188,6 +192,30 @@ class HtmlNodeTypes
             "label" => "Html Input File",
             "form-component" => "nodes.html-input-file",
             "is-input" => true
+        ],
+        "TR" => [
+            "class" => HtmlTr::class,
+            "preview-component" => null,
+            "start-component" => null,
+            "render-component" => "render.html-tr",
+            "label" => "Html Tr",
+            "form-component" => null
+        ],
+        "TD" => [
+            "class" => HtmlTd::class,
+            "preview-component" => null,
+            "start-component" => null,
+            "render-component" => "render.html-td",
+            "label" => "Html Td",
+            "form-component" => "nodes.html-td"
+        ],
+        "HTML_TABLE" => [
+            "class" => HtmlTable::class,
+            "preview-component" => null,
+            "start-component" => null,
+            "render-component" => "render.html-table",
+            "label" => "Html Table",
+            "form-component" => "nodes.html-table"
         ]
 
     ];

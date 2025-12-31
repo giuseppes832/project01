@@ -300,6 +300,33 @@ class NodeController extends Controller
 
     }
 
+    public function updateHtmlTd(Node $node) {
+
+        // TODO validate
+
+        if ($node->html) {
+            $node->html->node_rendering_id = request()->node_rendering_id;
+            $node->html->save();
+        }
+
+        return redirect("/nodes/$node->id");
+
+    }
+
+    public function updateHtmlTable(Node $node) {
+        // TODO validate
+
+        if ($node->html) {
+            $node->html->html_form_id = request()->html_form_id;
+            $node->html->html_tr_id = request()->html_tr_id;
+            $node->html->save();
+        }
+
+        return redirect("/nodes/$node->id");
+
+
+    }
+
 
 
     public  function storeChild(Node $node) {

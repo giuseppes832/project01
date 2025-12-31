@@ -156,4 +156,13 @@ class CommonService
         return $rows;
     }
 
+
+    public function getHtmlTableFilteredRows($node) {
+
+        $rows = $node->html->form->resource->filteredRows(null, null);
+
+        return $rows;
+
+    }
+
 }
