@@ -124,7 +124,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/nodes/{node}/rows/{row}', [RowController::class, 'update']);
     Route::get('/nodes/{node}/rows/{row}/delete', [RowController::class, 'delete']);
 
-    Route::get('/render/{node}/ajax', [NodeController::class, 'renderHtmlListBody']);
+    Route::get('/render/{node}/ajax', [NodeController::class, 'renderHtmlTableAjax']);
 
     Route::get('/rows/{row}/nodes/{node}/file/{index}', [NodeController::class, 'download']);
 

@@ -159,7 +159,21 @@ class CommonService
 
     public function getHtmlTableFilteredRows($node) {
 
-        $rows = $node->html->form->resource->filteredRows(null, null);
+        $filteringString = Request::query("filter");
+        $filters = [];
+        if ($filteringString) {
+
+            if ($node->html->tr) {
+                foreach ($node->html->tr->node->children as $td) {
+                    if ($td->html->renderingNode) {
+                        $filters[$td->html->renderingNode->html->binding->withType->getValueClass()] = $filteringString;
+                    }
+                }
+            }
+
+        }
+
+        $rows = $node->html->form->resource->filteredRows(null, $filters);
 
         return $rows;
 

@@ -393,13 +393,26 @@ class NodeController extends Controller
 
     }
 
-
+    /*
     public function renderHtmlListBody(Node $node) {
 
         $commonService = app()->make(CommonService::class);
         $rows = $commonService->getHtmlListFilteredRows($node);
 
         return view("components.render.html-list-body", [
+            "selectedNode" => $node,
+            "rows" => $rows
+        ]);
+
+    }
+    */
+
+    public function renderHtmlTableAjax(Node $node) {
+
+        $commonService = app()->make(CommonService::class);
+        $rows = $commonService->getHtmlTableFilteredRows($node);
+
+        return view("components.render.html-table-ajax", [
             "selectedNode" => $node,
             "rows" => $rows
         ]);
