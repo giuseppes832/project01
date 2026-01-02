@@ -3,7 +3,7 @@
     @foreach($selectedNode->children as $tdNode)
 
         @php
-            $tdNode->html->setParameters($selectedNode->html->parameters);
+            $tdNode->html->setOptionalParameters($selectedNode->html->optionalParameters);
             $component = $tdNode->getSelectedNodeRenderComponent();
         @endphp
 
@@ -13,7 +13,17 @@
 
     @endforeach
     <td>
-        <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal" data-bs-target="#globalModal" data-method="put" data-node-id="{{ $selectedNode->html->parameters["form_id"] }}" data-row-id="{{ $selectedNode->html->parameters["row_id"] }}" @if(Request::filled($selectedNode->html->parameters["parent_row_id"])) data-parent-row-id="{{ $selectedNode->html->parameters["parent_row_id"] }}" @endif>
+        <button
+            type="button"
+            class="btn btn-primary me-1"
+            data-bs-toggle="modal"
+            data-bs-target="#globalModal"
+            data-method="put"
+            data-node-id="{{ $selectedNode->html->optionalParameters["form_id"] }}"
+            data-row-id="{{ $selectedNode->html->optionalParameters["row_id"] }}"
+            @if(Request::filled($selectedNode->html->optionalParameters["parent_row_id"]))
+                data-parent-row-id="{{ $selectedNode->html->optionalParameters["parent_row_id"] }}"
+            @endif>
             <i class="bi bi-pencil-square"></i>
         </button>
     </td>

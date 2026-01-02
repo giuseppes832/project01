@@ -1,4 +1,4 @@
-<td>
+<td class="align-middle">
 @if(is_array($value))
 
     @foreach($value as $v)

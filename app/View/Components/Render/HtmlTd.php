@@ -18,8 +18,8 @@ class HtmlTd extends Component
         public NodeModel $selectedNode
     )
     {
-        $parameters = $this->selectedNode->html->parameters;
-        $row = \App\Models\Row::find($parameters["row_id"]);
+        $optionalParameters = $this->selectedNode->html->optionalParameters;
+        $row = \App\Models\Row::find($optionalParameters["row_id"]);
 
         if ($row) {
             $this->value = $row->getValue0($this->selectedNode);
