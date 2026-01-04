@@ -9,6 +9,7 @@ use App\Models\Nodes\HtmlSharingSelect;
 use App\Models\Nodes\HtmlTr;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
 
 class HtmlTable extends Component
@@ -16,6 +17,10 @@ class HtmlTable extends Component
     public $formNodes;
 
     public $rowNodes;
+
+    public $tables;
+
+    public $selects;
 
 
 
@@ -37,6 +42,25 @@ class HtmlTable extends Component
             'html',
             [HtmlTr::class]
         )->get();
+
+        $this->tables = \App\Models\Nodes\HtmlTable::all();
+
+        $this->selects = HtmlSelect::all();
+
+        if ($this->selectedNode->html->html_table_id &&
+            $this->selectedNode->html->parentTable &&
+            $this->selectedNode->html->parentTable->row
+        ) {
+
+            $this->selects = NodeModel::whereHasMorph(
+                'html',
+                [\App\Models\Nodes\HtmlTd::class],
+                function($query) {
+                    $query->whereHas('renderingNode', function ($query) {
+                        $query->whereHasMorph('html', [HtmlSelect::class]);
+                    });
+                })->where("parent_id", $this->selectedNode->html->parentTable->row->node->id)->get();
+        }
 
 
     }

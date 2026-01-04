@@ -19,6 +19,7 @@
 
             @php
                 $trNode = $selectedNode->html->tr->node;
+                $trNode->html->addOptionalParameter("table_node", $selectedNode);
                 $trNode->html->addOptionalParameter("row_id", $row->id);
                 $trNode->html->addOptionalParameter("form_id", $selectedNode->html->form->node->id);
                 $trNode->html->addOptionalParameter("parent_row_id", $parentRowId);

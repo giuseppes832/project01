@@ -22,6 +22,26 @@
         <label>{{ __("main.nodes.Html row") }}</label>
     </div>
 
+    <div class="mb-3 form-floating">
+        <select class="form-select" name="html_table_id" aria-label="Html table">
+            <option value="" selected>{{ __("main.nodes.Select") }} ...</option>
+            @foreach($tables as $table)
+                <option value="{{ $table->id }}" @if ($table->id == old('html_table_id', $selectedNode->html->html_table_id)) selected @endif>{{ $table->node->name }}</option>
+            @endforeach
+        </select>
+        <label>{{ __("main.nodes.Html parent table") }}</label>
+    </div>
+
+    <div class="mb-3 form-floating">
+        <select class="form-select" name="html_select_id" aria-label="Html select">
+            <option value="" selected>{{ __("main.nodes.Select") }} ...</option>
+            @foreach($selects as $select)
+                <option value="{{ $select->id }}" @if ($select->id == old('html_select_id', $selectedNode->html->html_select_id)) selected @endif>{{ $select->node->name }}</option>
+            @endforeach
+        </select>
+        <label>{{ __("main.nodes.Html parent table select") }}</label>
+    </div>
+
     <button type="submit" class="btn btn-primary btn-sm mb-3">
         <i class="bi bi-save"></i> {{ __("main.nodes.Save") }}
     </button>

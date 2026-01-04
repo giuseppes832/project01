@@ -319,6 +319,8 @@ class NodeController extends Controller
         if ($node->html) {
             $node->html->html_form_id = request()->html_form_id;
             $node->html->html_tr_id = request()->html_tr_id;
+            $node->html->html_table_id = request()->html_table_id;
+            $node->html->html_select_id = request()->html_select_id;
             $node->html->save();
         }
 

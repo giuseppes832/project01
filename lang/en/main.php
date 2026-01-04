@@ -77,7 +77,9 @@ return [
         "Find" => "Find",
         "Do you want to create a new sharing ?" => "Do you want to create a new sharing ?",
         "Yes" => "Yes",
-        "Do you want to create a new item ?" => "Do you want to create a new item ?"
+        "Do you want to create a new item ?" => "Do you want to create a new item ?",
+        "Edit" => "Edit",
+        "Action" => "Action"
     ],
     "resources" => [
         "Options" => "Options",
