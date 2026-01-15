@@ -29,26 +29,45 @@ class Resource extends Model
         return $this->hasOne(Row::class, "resource_id", "id")->where("rows.id", $id);
     }
 
-    public function filteredRows($value, $filters) {
+
+    public function filteredRows($value, $othersFilters) {
+
 
         $rel = $this->hasMany(Row::class, "resource_id", "id");
 
-        if ($value) {
-            $rel->whereHas("values", function($query) use ($value) {
-                $query->whereHasMorph("withValue", [FK2Value::class], function ($query) use ($value) {
-                    $query->where("value", $value);
+        if (isset($value["node"]) && isset($value["filterValue"])) {
+
+            $node = $value["node"];
+            $filterValue = $value["filterValue"];
+
+            if (HtmlSelect::class === $node->node->html_type) {
+                $rel->whereHas("values", function($query) use ($filterValue) {
+                    $query->whereHasMorph("withValue", [FKValue::class], function ($query) use ($filterValue) {
+                        $query->where("value", $filterValue);
+                    });
                 });
-            });
+            } else if (HtmlSharingSelect::class === $node->node->html_type) {
+                $rel->whereHas("values", function($query) use ($filterValue) {
+                    $query->whereHasMorph("withValue", [FK2Value::class], function ($query) use ($filterValue) {
+                        $query->where("value", $filterValue);
+                    });
+                });
+            }
+
         }
 
-        if ($filters) {
-            $rel->whereHas("values", function($query) use ($filters) {
+        if ($othersFilters) {
+            $rel->whereHas("values", function($query) use ($othersFilters) {
 
                 $index = 0;
-                foreach ($filters as $filterClass => $filterValue) {
+                foreach ($othersFilters as $otherFilter) {
+
+                    $filterClass = $otherFilter["class"];
+                    $filterValue = $otherFilter["value"];
+
                     if ($index) {
                         $query->orWhereHasMorph("withValue", [$filterClass], function($query) use ($filterValue, $filterClass) {
-                            if ((HtmlSelect::class === $filterClass) || (HtmlSharingSelect::class === $filterClass)) {
+                            if (FKValue::class === $filterClass) {
                                 $query->whereHas("row", function ($query) use ($filterValue) {
                                     $query->whereHas("values", function($query) use ($filterValue) {
                                         $query->whereHas("withValue", function ($query) use ($filterValue) {

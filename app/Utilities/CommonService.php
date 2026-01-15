@@ -86,7 +86,7 @@ class CommonService
 
 
 
-    public function getFilteringValue($filteringNode) {
+    public function     getFilteringValue($filteringNode) {
 
         $defaultFilterValue = null;
 
@@ -159,21 +159,33 @@ class CommonService
 
     public function getHtmlTableFilteredRows($node) {
 
+        $filteringNode = $node->html->parentTableSelect;
+        $defaultFilterValue = null;
+        if ($filteringNode) {
+            $defaultFilterValue = $this->getFilteringValue($filteringNode->node);
+        }
+
         $filteringString = Request::query("filter");
-        $filters = [];
+        $othersFilters = [];
         if ($filteringString) {
 
             if ($node->html->tr) {
                 foreach ($node->html->tr->node->children as $td) {
                     if ($td->html->renderingNode) {
-                        $filters[$td->html->renderingNode->html->binding->withType->getValueClass()] = $filteringString;
+                        $othersFilters[] = [
+                            "class" => $td->html->renderingNode->html->binding->withType->getValueClass(),
+                            "value" => $filteringString
+                        ];
                     }
                 }
             }
 
         }
 
-        $rows = $node->html->form->resource->filteredRows(null, $filters);
+        $rows = $node->html->form->resource->filteredRows([
+            "node" => $filteringNode,
+            "filterValue" => $defaultFilterValue
+        ], $othersFilters);
 
         return $rows;
 

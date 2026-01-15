@@ -23,7 +23,7 @@ class Row extends Model
 
         if ($node->html && $node->html->renderingNode && $node->html->renderingNode->html && $node->html->renderingNode->html->binding) {
 
-            if ($node->html->multiple) {
+            if ($node->html->renderingNode->html->multiple) {
 
                 $genericValues = $node->html->renderingNode->html->binding->values($this)->get();
                 if ($genericValues) {
@@ -31,13 +31,22 @@ class Row extends Model
                     $all = [];
 
                     foreach ($genericValues as $genericValue) {
-                        if ($genericValue->withValue) {
+                        if (HtmlSelect::class === $node->html->renderingNode->html_type) {
+                            $row = $genericValue->withValue->row;
+                            $refValue = $node->html->renderingNode->html->binding->withType->fkField->values($row)->first();
+                            $value = $refValue->withValue;
+                            $all[] = $value->value;
+                        } else if (HtmlSharingSelect::class === $node->html->renderingNode->html_type) {
+                            $sharing = $genericValue->withValue->sharing;
+                            $all[] = $sharing->name;
+                        } else {
                             $value = $genericValue->withValue;
                             $all[] = $value->value;
                         }
                     }
 
                     return $all;
+
                 }
 
             } else {
@@ -46,7 +55,15 @@ class Row extends Model
 
                 if ($genericValue) {
 
-                    if ($genericValue->withValue) {
+                    if (HtmlSelect::class === $node->html->renderingNode->html_type) {
+                        $row = $genericValue->withValue->row;
+                        $refValue = $node->html->renderingNode->html->binding->withType->fkField->values($row)->first();
+                        $value = $refValue->withValue;
+                        return $value->value;
+                    } else if (HtmlSharingSelect::class === $node->html->renderingNode->html_type) {
+                        $sharing = $genericValue->withValue->sharing;
+                        return $sharing->name;
+                    } else {
                         $value = $genericValue->withValue;
                         return $value->value;
                     }
