@@ -33,6 +33,17 @@
         <label>{{ __("main.nodes.Binding field") }}</label>
     </div>
 
+
+    <div class="mb-3 form-floating">
+        <select class="form-select" name="form" aria-label="Form">
+            <option value="" selected>{{ __("main.nodes.Select") }} ...</option>
+            @foreach($forms as $form)
+                <option value="{{ $form->id }}" @if ($form->id == old('form', $selectedNode->html->form_id)) selected @endif>{{ $form->node->name }}</option>
+            @endforeach
+        </select>
+        <label>{{ __("main.nodes.Form") }}</label>
+    </div>
+
     <button type="submit" class="btn btn-primary btn-sm mb-3">
         <i class="bi bi-save"></i> {{ __("main.nodes.Save") }}
     </button>

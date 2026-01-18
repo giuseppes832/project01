@@ -308,8 +308,8 @@ class RowController extends Controller
                         "redirect_inputs" => request()->except(["_method", "_token", "new_node_id"])
                     ]);
                 } elseif (HtmlSelect::class === $newNode->html_type) {
-                    $formBinding = $newNode->html->formBinding->node;
-                    return redirect("/render/$formBinding->id")->withInput([
+                    $form = $newNode->html->form->node;
+                    return redirect("/render/$form->id")->withInput([
                         "redirect_node_id" => $node->id,
                         "redirect_inputs" => request()->except(["_method", "_token", "new_node_id"])
                     ]);

@@ -187,6 +187,7 @@ class NodeController extends Controller
             $node->html->subselect = (request()->subselect === "on") ? true : false;
             $node->html->multiple = (request()->multiple === "on") ? true : false;
             $node->html->binding_id = request()->binding;
+            $node->html->form_id = request()->form;
             $node->html->save();
         }
 

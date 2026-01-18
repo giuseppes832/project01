@@ -21,15 +21,9 @@ class HtmlSelect extends Model
 
     }
 
-    public function formFieldBinding() : BelongsTo {
+    public function form() : BelongsTo {
 
-        return $this->belongsTo(Node::class, "form_field_binding_id", "id");
-
-    }
-
-    public function formBinding() : BelongsTo {
-
-        return $this->belongsTo(HtmlForm::class, "form_binding_id", "id");
+        return $this->belongsTo(HtmlForm::class, "form_id", "id");
 
     }
 }

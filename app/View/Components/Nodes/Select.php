@@ -18,6 +18,8 @@ class Select extends Component
 {
     public $fields;
 
+    public $forms;
+
     /**
      * Create a new component instance.
      */
@@ -31,6 +33,8 @@ class Select extends Component
             'withType',
             [FKField::class]
         )->get();
+
+        $this->forms = HtmlForm::all();
 
     }
 
