@@ -12,6 +12,9 @@ use App\Models\Nodes\BootstrapNavLink;
 use App\Models\Nodes\HtmlForm;
 use App\Models\Nodes\HtmlInputText;
 use App\Models\Nodes\HtmlList;
+use App\Models\Nodes\HtmlTable;
+use App\Models\Nodes\HtmlTd;
+use App\Models\Nodes\HtmlTr;
 use App\Models\Owner;
 use App\Models\Resource;
 use App\Models\Row;
@@ -122,9 +125,11 @@ class AppController extends Controller
             $navbarMenu->node()->save($nodeMenu);
 
             $resources = [];
+            $fields = [];
             $forms = [];
-            $lists = [];
-            $nodes = [];
+            $rows = [];
+            $tables = [];
+
 
             foreach (request()->except(["_token"]) as $inputName => $input) {
 
@@ -147,15 +152,25 @@ class AppController extends Controller
                     $form->node()->save($nodeForm);
                     $forms[$inputName] = $nodeForm;
 
-                    $nodeList = new Node();
-                    $nodeList->name = "List$menuName$input";
-                    $nodeList->label = "List of $input";
-                    $nodeList->save();
-                    $list = new HtmlList();
-                    $list->binding_id = $form->id;
-                    $list->save();
-                    $list->node()->save($nodeList);
-                    $lists[$inputName] = $list;
+                    $nodeRow = new Node();
+                    $nodeRow->name = "Row$menuName$input";
+                    $nodeRow->label = "$input row";
+                    $nodeRow->save();
+                    $row = new HtmlTr();
+                    $row->save();
+                    $row->node()->save($nodeRow);
+                    $rows[$inputName] = $nodeRow;
+
+                    $nodeTable = new Node();
+                    $nodeTable->name = "Table$menuName$input";
+                    $nodeTable->label = "Table of $input";
+                    $nodeTable->save();
+                    $table = new HtmlTable();
+                    $table->html_form_id = $form->id;
+                    $table->html_tr_id = $row->id;
+                    $table->save();
+                    $table->node()->save($nodeTable);
+                    $tables[$inputName] = $table;
 
                     $nodeMenuItem = new Node();
                     $nodeMenuItem->name = "MenuItem$menuName$input";
@@ -163,8 +178,8 @@ class AppController extends Controller
                     $nodeMenuItem->parent_id = $nodeMenu->id;
                     $nodeMenuItem->save();
                     $menuItem = new BootstrapNavLink();
-                    $menuItem->label = "List of $input";
-                    $menuItem->ref_id = $nodeList->id;
+                    $menuItem->label = "Table of $input";
+                    $menuItem->ref_id = $nodeTable->id;
                     $menuItem->save();
                     $menuItem->node()->save($nodeMenuItem);
 
@@ -179,6 +194,7 @@ class AppController extends Controller
                     $field->required = (request()->get($fieldName . "-required") === "on")?true:false;
                     $field->unique = (request()->get($fieldName . "-unique") === "on")?true:false;
                     $field->save();
+                    $fields[$inputName] = $field;
 
                     $fieldClass = null;
                     $type = request()->get($fieldName . "-type");
@@ -194,12 +210,18 @@ class AppController extends Controller
                         $newFieldOfType->field()->save($field);
                     }
 
+                    $ref = $type = request()->get($fieldName . "-ref");
+                    if ($ref) {
+                        $newFieldOfType->fk_resource_id = $resources[$ref]->id;
+                        $newFieldOfType->fk_field_id = $resources[$ref]->fields[0]->id;
+                        $newFieldOfType->save();
+                    }
+
                     $node = new Node();
                     $node->name = "Node$input";
                     $node->label = $input;
                     $node->parent_id = $forms[$resourceName]->id;
                     $node->save();
-                    $nodes[$resourceName][] = $node;
 
                     $defaultHtmlComponent = null;
                     $type = request()->get($fieldName . "-type");
@@ -217,32 +239,22 @@ class AppController extends Controller
                         $newDefaultHtmlComponent->node()->save($node);
                     }
 
-                    $ref = $type = request()->get($fieldName . "-ref");
-                    if ($ref) {
-                        $newDefaultHtmlComponent->form_binding_id = $forms[$ref]->html->id;
-                        $newDefaultHtmlComponent->form_field_binding_id = $nodes[$ref][0]->id;
-                        $newDefaultHtmlComponent->save();
-                    }
+
+                    $nodeTd = new Node();
+                    $nodeTd->name = "Cell$input";
+                    $nodeTd->label = $input;
+                    $nodeTd->parent_id = $rows[$resourceName]->id;
+                    $nodeTd->save();
+                    $td = new HtmlTd();
+                    $td->node_rendering_id = $node->id;
+                    $td->save();
+                    $td->node()->save($nodeTd);
 
 
                 }
 
             }
 
-
-            foreach ($lists as $listName => $list) {
-
-                if (isset($nodes[$listName][0])) {
-                    $list->node_id1 = $nodes[$listName][0]->id;
-                }
-
-                if (isset($nodes[$listName][1])) {
-                    $list->node_id2 = $nodes[$listName][1]->id;
-                }
-
-                $list->save();
-
-            }
 
         });
 
